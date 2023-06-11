@@ -1,40 +1,63 @@
 import 'package:socket_io_client/socket_io_client.dart' as IO;
+import 'package:tiktok_tool/src/domain/model/room.dart';
 import 'package:tiktok_tool/src/utils/log.dart';
 
 import '../domain/model/comment.dart';
+import '../presentation/stream_status/stream_status_bloc.dart';
 
 typedef CommentListener = void Function(CommentModel comment);
 
 class SocketService {
   static IO.Socket? socket;
 
-  static void connectSocket() {
+  static void connectServer(StreamStatusBloc bloc) {
     IO.Socket socket = IO.io('http://192.168.88.254:8081', <String, dynamic>{
       'transports': ['websocket'],
       'autoConnect': false,
     });
     socket.onConnect((_) {
-      logD('Server Connected');
+      bloc.serverOn();
     });
-    socket.onError((data) => logD(data.toString()));
+    socket.onError((data) {
+      bloc.connectError('Error occurred!');
+      logD('Connect server error: ${data.toString()}');
+    });
     // The host end livestream
     socket.on('streamEnd', (_) {
+      bloc.offline();
       logD('The host end livestream');
       offLivestreamListen();
     });
     socket.on('tiktokDisconnected', (_) {
+      bloc.offline();
       logD('End stream');
       offLivestreamListen();
     });
-    socket.onDisconnect((_) => logD('Server Disconnected'));
+    socket.onDisconnect((_) {
+      bloc.serverOff();
+    });
     SocketService.socket = socket;
     socket.connect();
   }
 
-  static void connectLivestream() {
-    socket?.emit('setUniqueId', '@408gosh');
+  static void connectLivestream(StreamStatusBloc bloc,
+      [String uniqueId = '@my_vanh']) {
+    bloc.connecting(uniqueId);
+    socket?.emit('setUniqueId', uniqueId);
     socket?.once('tiktokConnected', (data) {
-      logD('Start stream: roomId=${data['roomId']}');
+      final room = RoomModel(
+        roomId: data['roomId'],
+        userId: data['roomInfo']['owner_user_id'].toString(),
+        uniqueId: data['roomInfo']['owner']['display_id'].toString(),
+        nickname: data['roomInfo']['owner']['nickname'].toString(),
+        avatar: (data['roomInfo']['owner']['avatar_thumb']['url_list']
+                    as List<dynamic>?)
+                ?.first
+                .toString() ??
+            '',
+        status: 'Online',
+      );
+      bloc.online(room);
     });
   }
 
@@ -48,7 +71,8 @@ class SocketService {
     }
   }
 
-  static void listenComment(CommentListener? commentListener, CommentListener? socialListener) {
+  static void listenComment(
+      CommentListener? commentListener, CommentListener? socialListener) {
     if (commentListener != null) {
       SocketService.socket?.on('chat', (data) {
         final CommentModel comment = _parseModel(data);

@@ -31,10 +31,16 @@ class UserCommentWidget extends StatelessWidget {
                 const SizedBox(height: 10),
                 Text(
                   comment.nickname,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                   style: context.textTheme.titleSmall,
                 ),
                 const SizedBox(height: 10),
-                Text(comment.comment),
+                Text(
+                  comment.comment,
+                  maxLines: 3,
+                  overflow: TextOverflow.ellipsis,
+                ),
               ],
             ),
           )

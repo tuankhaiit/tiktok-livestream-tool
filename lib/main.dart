@@ -1,27 +1,32 @@
 import 'package:flutter/material.dart';
-import 'package:tiktok_tool/src/socket/socket_connector.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tiktok_tool/src/presentation/index.dart';
+import 'package:tiktok_tool/src/presentation/stream_status/stream_status_bar.dart';
 
 import 'src/presentation/stream_comment_list/widget/comment_list.dart';
+import 'src/presentation/stream_status/stream_status_bloc.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  SocketService.connectSocket();
-  SocketService.connectLivestream();
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (_) => StreamStatusBloc()),
+      ],
+      child: MaterialApp(
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        home: const MyHomePage(title: 'Flutter Demo Home Page'),
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
 }
@@ -44,11 +49,12 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: Column(
         children: [
+          const StreamStatusBarWidget(),
           Expanded(
             flex: 1,
             child: Column(
               children: const [
-                Text("Thông báo"),
+                HeaderWidget(title: 'Thông báo'),
                 Expanded(child: StreamSocialListWidget())
               ],
             ),
@@ -57,7 +63,7 @@ class _MyHomePageState extends State<MyHomePage> {
             flex: 3,
             child: Column(
               children: const [
-                Text("Bình luận"),
+                HeaderWidget(title: 'Bình luận'),
                 Expanded(child: StreamCommentListWidget())
               ],
             ),
@@ -70,4 +76,22 @@ class _MyHomePageState extends State<MyHomePage> {
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
+}
+
+class HeaderWidget extends StatelessWidget {
+  final String title;
+
+  const HeaderWidget({super.key, required this.title});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      color: context.color.background,
+      alignment: Alignment.center,
+      padding: const EdgeInsets.symmetric(vertical: 4),
+      child: Text(title, style: TextStyle(color: context.color.onPrimary),),
+    );
+  }
+
 }

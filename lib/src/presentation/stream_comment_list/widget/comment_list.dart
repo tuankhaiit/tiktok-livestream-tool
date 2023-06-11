@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tiktok_tool/src/socket/socket_connector.dart';
+import 'package:tiktok_tool/src/utils/log.dart';
 
 import '../../../domain/model/comment.dart';
 import 'comment.dart';
@@ -11,7 +12,8 @@ class StreamCommentListWidget extends StatefulWidget {
   State<StatefulWidget> createState() => _StreamCommentListState();
 }
 
-class _StreamCommentListState extends _CommentListState<StreamCommentListWidget> {
+class _StreamCommentListState
+    extends _CommentListState<StreamCommentListWidget> {
   @override
   void initState() {
     SocketService.listenComment((comment) => addComment(comment), null);
@@ -71,12 +73,25 @@ abstract class _CommentListState<T extends StatefulWidget> extends State<T> {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      controller: controller,
-      itemBuilder: (context, index) {
-        return UserCommentWidget(comment: comments[index]);
+    return NotificationListener<ScrollUpdateNotification>(
+      child: ListView.builder(
+        controller: controller,
+        itemBuilder: (context, index) {
+          return UserCommentWidget(comment: comments[index]);
+        },
+        itemCount: comments.length,
+      ),
+      onNotification: (notification) {
+        if (notification is ScrollEndNotification) {
+          logD(controller.position.pixels);
+        }
+        //How many pixels scrolled from pervious frame
+        logD(notification.scrollDelta);
+
+        //List scroll position
+        logD(notification.metrics.pixels);
+        return true;
       },
-      itemCount: comments.length,
     );
   }
 }
