@@ -1,21 +1,24 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tiktok_tool/src/domain/model/room.dart';
-import 'package:tiktok_tool/src/presentation/stream_status/stream_status_state.dart';
+import 'package:tiktok_tool/src/presentation/stream_container/stream_status/bloc/stream_status_state.dart';
 
-import '../../socket/socket_connector.dart';
+import '../../../../socket/socket_connector.dart';
 
 class StreamStatusBloc extends Cubit<StreamStatusState> {
   StreamStatusBloc() : super(StreamStatusState.empty()) {
     SocketService.connectServer(this);
-    SocketService.connectLivestream(this);
   }
 
-  void connectError(String error) {
+  void serverError(String error) {
     emit(state.copyWith(status: error, serverOnline: false));
   }
 
-  void connecting(String uniqueId) {
-    emit(state.copyWith(status: 'Connecting to $uniqueId'));
+  void status(String status) {
+    emit(state.copyWith(status: status));
+  }
+
+  void updateMember(int memberNum) {
+    emit(state.copyWith(memberNum: memberNum));
   }
 
   void online(RoomModel model) {
@@ -25,6 +28,7 @@ class StreamStatusBloc extends Cubit<StreamStatusState> {
       nickname: model.nickname,
       avatar: model.avatar,
       status: 'Online',
+      streamerOnline: true,
     ));
   }
 

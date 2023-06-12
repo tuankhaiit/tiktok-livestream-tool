@@ -12,6 +12,7 @@ class StreamStatusState with _$StreamStatusState {
     required String avatar,
     required String status,
     required int memberNum,
+    required bool streamerOnline,
     required bool serverOnline,
   }) = _StreamStatusState;
 
@@ -22,6 +23,7 @@ class StreamStatusState with _$StreamStatusState {
       avatar: '',
       status: '',
       memberNum: 0,
+      streamerOnline: false,
       serverOnline: false);
 
   static StreamStatusState offline() => const StreamStatusState(
@@ -31,5 +33,6 @@ class StreamStatusState with _$StreamStatusState {
       avatar: '',
       status: 'Offline',
       memberNum: 0,
+      streamerOnline: false,
       serverOnline: true);
 }

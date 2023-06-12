@@ -20,6 +20,9 @@ class UserCommentWidget extends StatelessWidget {
               comment.avatar,
               width: 40,
               height: 40,
+              errorBuilder: (_, __, ___) {
+                return Container();
+              },
             ),
           ),
           const SizedBox(width: 10),
