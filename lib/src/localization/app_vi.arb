@@ -1,0 +1,11 @@
+{
+    "appName": "HomeX Flutter",
+    "login": "Đăng nhập",
+    "username": "Tài khoản",
+    "password": "Mật khẩu",
+    "logout": "Đăng xuất",
+    "hello": "hello World",
+    "agree": "Đồng ý",
+    "ok": "OK",
+    "cancel": "hủy"
+}

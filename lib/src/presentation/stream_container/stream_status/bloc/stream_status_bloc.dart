@@ -9,6 +9,10 @@ class StreamStatusBloc extends Cubit<StreamStatusState> {
     SocketService.connectServer(this);
   }
 
+  void reConnectServer() {
+    SocketService.connectServer(this);
+  }
+
   void serverError(String error) {
     emit(state.copyWith(status: error, serverOnline: false));
   }

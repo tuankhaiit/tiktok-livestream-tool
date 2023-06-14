@@ -30,16 +30,21 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_localizations:
+    sdk: flutter
 
   intl: ^0.17.0
   flutter_bloc: ^8.1.2
+  auto_route: ^6.1.0
   logger: ^1.4.0
+  http: ^0.13.5
   socket_io_client: ^2.0.2
   freezed_annotation: ^2.2.0
   equatable: ^2.0.5
   get_it: ^7.2.0
   rxdart: ^0.27.7
   shared_preferences: ^2.1.2
+  json_annotation: ^4.8.0
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -49,7 +54,9 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   build_runner: ^2.3.3
+  auto_route_generator: ^6.1.0
   freezed: ^2.3.5
+  json_serializable: ^6.6.1
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
@@ -69,6 +76,9 @@ flutter:
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
+
+  # Enable generation of localized Strings from arb files.
+  generate: true
 
   # To add assets to your application, add an assets section, like this:
   # assets:

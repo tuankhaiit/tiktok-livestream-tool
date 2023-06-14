@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:tiktok_tool/src/socket/socket_connector.dart';
-import 'package:tiktok_tool/src/utils/log.dart';
 
 import '../../../../domain/model/comment.dart';
 import 'comment.dart';
@@ -100,31 +99,24 @@ abstract class _CommentListState<T extends StatefulWidget> extends State<T> {
       children: [
         GestureDetector(
           onTapDown: (_) {
-            logD('onTapDown');
             isScrollManual = true;
           },
           onVerticalDragStart: (_) {
-            logD('onVerticalDragStart');
             isScrollManual = true;
           },
           onVerticalDragDown: (_) {
-            logD('onVerticalDragDown');
             isScrollManual = true;
           },
           onHorizontalDragDown: (_) {
-            logD('onHorizontalDragDown');
             isScrollManual = true;
           },
           onLongPressDown: (_) {
-            logD('onLongPressDown');
             isScrollManual = true;
           },
           onPanDown: (_) {
-            logD('onPanDown');
             isScrollManual = true;
           },
           onDoubleTapDown: (_) {
-            logD('onDoubleTapDown');
             isScrollManual = true;
           },
           child: ListView.builder(

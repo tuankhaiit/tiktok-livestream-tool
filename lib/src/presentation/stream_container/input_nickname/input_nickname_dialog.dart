@@ -87,7 +87,12 @@ class _InputNicknameState extends State<_InputNicknameWidget> {
               ),
               const SizedBox(height: 20),
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  final nickname = _controller.text;
+                  if (nickname.isNotEmpty) {
+                    Navigator.of(context, rootNavigator: true).pop();
+                  }
+                },
                 child: const Padding(
                   padding: EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                   child: Text('Connect'),

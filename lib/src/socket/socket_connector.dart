@@ -4,6 +4,7 @@ import 'package:rxdart/rxdart.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 import 'package:tiktok_tool/src/data/service/app_storage.dart';
 import 'package:tiktok_tool/src/domain/model/room.dart';
+import 'package:tiktok_tool/src/utils/log.dart';
 
 import '../domain/model/comment.dart';
 import '../presentation/stream_container/stream_status/bloc/stream_status_bloc.dart';
@@ -23,6 +24,7 @@ class SocketService {
       .throttleTime(const Duration(milliseconds: 50));
 
   static void connectServer(StreamStatusBloc bloc) {
+    SocketService.socket?.close();
     IO.Socket socket = IO.io('http://10.0.2.2:8081', <String, dynamic>{
       'transports': ['websocket'],
       'autoConnect': false,
@@ -47,10 +49,12 @@ class SocketService {
     socket.onConnectError((data) {
       _offLivestreamListen();
       bloc.serverError('Error occurred!');
+      logE(data.toString());
     });
     socket.onError((data) {
       _offLivestreamListen();
       bloc.serverError('Error occurred!');
+      logE(data.toString());
     });
     socket.onDisconnect((_) {
       _offLivestreamListen();
