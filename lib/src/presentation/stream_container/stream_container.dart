@@ -14,6 +14,10 @@ class LiveStreamContainerWidget extends StatelessWidget {
     return Column(
       children: [
         const StreamStatusBarWidget(),
+        Container(
+          height: 1,
+          color: context.color.background,
+        ),
         Expanded(
           child: BlocBuilder<StreamStatusBloc, StreamStatusState>(
             buildWhen: (previous, next) {
@@ -63,12 +67,11 @@ class HeaderWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      color: context.color.background,
       alignment: Alignment.center,
       padding: const EdgeInsets.symmetric(vertical: 4),
       child: Text(
         title,
-        style: TextStyle(color: context.color.onPrimary),
+        style: TextStyle(color: context.color.primary),
       ),
     );
   }

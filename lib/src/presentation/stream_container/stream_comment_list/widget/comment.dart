@@ -21,7 +21,12 @@ class UserCommentWidget extends StatelessWidget {
               width: 40,
               height: 40,
               errorBuilder: (_, __, ___) {
-                return Container();
+                return Container(
+                  alignment: Alignment.center,
+                  width: 40,
+                  height: 40,
+                  child: const Icon(Icons.error),
+                );
               },
             ),
           ),

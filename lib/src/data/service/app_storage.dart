@@ -1,7 +1,7 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AppStorage {
-  static String defaultUniqueId = '@kbc_news';
+  static String defaultUniqueId = 'kbc_news';
   static String uniqueKey = '';
   static final AppStorage _instance = AppStorage._internal();
 

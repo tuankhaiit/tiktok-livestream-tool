@@ -25,6 +25,7 @@ class SocketService {
 
   static void connectServer(StreamStatusBloc bloc) {
     SocketService.socket?.close();
+    SocketService.socket = null;
     IO.Socket socket = IO.io('http://10.0.2.2:8081', <String, dynamic>{
       'transports': ['websocket'],
       'autoConnect': false,
@@ -40,7 +41,8 @@ class SocketService {
       bloc.status('Connecting to server');
     });
     socket.onReconnect((_) {
-      bloc.status('Connecting to server');
+      logI('Socket reconnect');
+      bloc.status('Reconnecting to server');
     });
     socket.onReconnecting((_) {
       bloc.status('Connecting to server');
@@ -74,11 +76,14 @@ class SocketService {
     final socket = SocketService.socket;
     if (socket == null) return;
 
-    final uniqueId = await AppStorage().getUniqueId();
+    final uniqueId = await AppStorage().getUniqueId().then((value) => '@$value');
 
+    bloc.emptyState();
     bloc.status('Connecting to $uniqueId');
     socket.emit('setUniqueId', uniqueId);
 
+    // Listen recording status before connect to uniqueId
+    _listenRecordStatus(bloc);
     socket.once('streamEnd', (_) {
       bloc.offline();
       _offLivestreamListen();
@@ -120,6 +125,12 @@ class SocketService {
         'roomUser', (data) => bloc.updateMember(int.parse(data.toString())));
   }
 
+  static void _listenRecordStatus(StreamStatusBloc bloc) {
+    final socket = SocketService.socket;
+    if (socket == null) return;
+    socket.on('recording', (data) => bloc.recordStatus(data));
+  }
+
   static void _listenComment(
     CommentListener? commentListener,
     CommentListener? socialListener,
@@ -159,8 +170,23 @@ class SocketService {
       socket.off('social');
       socket.off('roomUser');
       socket.off('streamEnd');
+      socket.off('recording');
       socket.off('tiktokConnected');
       socket.off('tiktokDisconnected');
+    }
+  }
+
+  static void startRecordLivestream() {
+    final socket = SocketService.socket;
+    if (socket != null) {
+      socket.emit('startRecord');
+    }
+  }
+
+  static void stopRecordLivestream() {
+    final socket = SocketService.socket;
+    if (socket != null) {
+      socket.emit('stopRecord');
     }
   }
 

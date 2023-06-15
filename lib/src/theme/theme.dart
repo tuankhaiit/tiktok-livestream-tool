@@ -79,6 +79,10 @@ class XTheme {
         inputDecorationTheme: InputDecorationTheme(
           floatingLabelBehavior: FloatingLabelBehavior.always,
           alignLabelWithHint: true,
+          hintStyle: const TextStyle(
+            color: XColors.textGreyLight,
+            fontWeight: FontWeight.w300
+          ),
           contentPadding: const EdgeInsets.symmetric(vertical: 12, horizontal: 14),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(K.borderRadius),
@@ -127,7 +131,6 @@ class XTheme {
         ),
         outlinedButtonTheme: OutlinedButtonThemeData(
           style: OutlinedButton.styleFrom(
-            fixedSize: const Size.fromHeight(K.buttonHeight),
             textStyle: XStyles.button,
           ),
         ),

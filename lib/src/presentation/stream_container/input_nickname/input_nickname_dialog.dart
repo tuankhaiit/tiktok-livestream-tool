@@ -1,8 +1,10 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tiktok_tool/src/data/service/app_storage.dart';
 import 'package:tiktok_tool/src/presentation/index.dart';
+import 'package:tiktok_tool/src/presentation/stream_container/stream_status/bloc/stream_status_bloc.dart';
 
 class InputNicknameDialog {
   InputNicknameDialog._();
@@ -43,17 +45,38 @@ class _InputNicknameWidget extends StatefulWidget {
 
 class _InputNicknameState extends State<_InputNicknameWidget> {
   late final TextEditingController _controller;
+  String? _previousNickname;
+  String _nickname = '';
+  bool _enabled = false;
 
   @override
   void initState() {
-    _controller = TextEditingController();
+    _controller = TextEditingController()
+      ..addListener(() {
+        final newValue = _controller.text;
+        setState(() {
+          if (newValue.startsWith('https://')) {
+            final exp = RegExp(r'@(\w+)');
+            final result = exp.firstMatch(newValue);
+            if (result != null && result.groupCount > 0) {
+              _nickname = result.group(0) ?? '';
+            } else {
+              _nickname = '';
+            }
+          } else {
+            _nickname = newValue;
+          }
+
+          _enabled = _nickname.isNotEmpty && _nickname != _previousNickname;
+        });
+      });
     _fillCurrentNickname();
     super.initState();
   }
 
   Future _fillCurrentNickname() async {
-    final nickname = await AppStorage().getUniqueId();
-    _controller.text = nickname ?? '';
+    _previousNickname = await AppStorage().getUniqueId();
+    _controller.text = _previousNickname ?? '';
   }
 
   @override
@@ -75,8 +98,9 @@ class _InputNicknameState extends State<_InputNicknameWidget> {
               TextField(
                 controller: _controller,
                 decoration: InputDecoration(
-                  hintText: '@nickname',
+                  hintText: 'nickname',
                   border: const OutlineInputBorder(),
+                  prefix: Text('@', style: context.textTheme.bodyLarge),
                   suffixIcon: GestureDetector(
                     onTap: () {
                       _controller.text = '';
@@ -86,13 +110,18 @@ class _InputNicknameState extends State<_InputNicknameWidget> {
                 ),
               ),
               const SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: () {
-                  final nickname = _controller.text;
-                  if (nickname.isNotEmpty) {
-                    Navigator.of(context, rootNavigator: true).pop();
-                  }
-                },
+              FilledButton(
+                onPressed: _enabled
+                    ? () async {
+                        final nickname = _controller.text;
+                        if (nickname.isNotEmpty) {
+                          Navigator.of(context).pop();
+                          context
+                              .read<StreamStatusBloc>()
+                              .reConnectServer(nickname);
+                        }
+                      }
+                    : null,
                 child: const Padding(
                   padding: EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                   child: Text('Connect'),

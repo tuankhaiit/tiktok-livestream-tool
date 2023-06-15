@@ -1,5 +1,4 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:tiktok_tool/src/domain/model/room.dart';
 
 part 'stream_status_state.freezed.dart';
 
@@ -12,6 +11,7 @@ class StreamStatusState with _$StreamStatusState {
     required String avatar,
     required String status,
     required int memberNum,
+    required bool? recording,
     required bool streamerOnline,
     required bool serverOnline,
   }) = _StreamStatusState;
@@ -23,6 +23,7 @@ class StreamStatusState with _$StreamStatusState {
       avatar: '',
       status: '',
       memberNum: 0,
+      recording: null,
       streamerOnline: false,
       serverOnline: false);
 
@@ -33,6 +34,7 @@ class StreamStatusState with _$StreamStatusState {
       avatar: '',
       status: 'Offline',
       memberNum: 0,
+      recording: null,
       streamerOnline: false,
       serverOnline: true);
 }

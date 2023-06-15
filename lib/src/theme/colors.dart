@@ -7,9 +7,11 @@ extension XColorExtensions on BuildContext {
 }
 
 class XColors {
-  static const Color primaryColors = redColor;
+  static const Color primaryColors = greenColor;
 
   static const redColor = Color(0xFFE21838);
+  static const orangeColor = Color(0xFFF78B10);
+  static const greenColor = Color(0xFF008fff);
 
   static const white = Color(0xFFFFFFFF);
   static const black = Color(0xFF000000);

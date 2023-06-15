@@ -7,7 +7,6 @@ import 'package:tiktok_tool/src/network/http.dart';
 import 'package:tiktok_tool/src/presentation/stream_container/stream_status/bloc/stream_status_bloc.dart';
 import 'package:tiktok_tool/src/router/auto_route.dart';
 import 'package:tiktok_tool/src/theme/theme.dart';
-import 'package:tiktok_tool/src/utils/log.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -32,7 +31,11 @@ Future _registerDI() async {
   _registerRepository();
 
   // Bloc
-  XDI.I.registerLazySingleton(() => StreamStatusBloc());
+  _registerBloc();
+}
+
+void _registerBloc() {
+  XDI.I.registerSingleton(() => StreamStatusBloc());
 }
 
 void _registerRepository() {
@@ -43,12 +46,12 @@ class AppBlocObserver extends BlocObserver {
   @override
   void onChange(BlocBase bloc, Change change) {
     super.onChange(bloc, change);
-    logI(change);
+    // logI(change);
   }
 
   @override
   void onTransition(Bloc bloc, Transition transition) {
     super.onTransition(bloc, transition);
-    logI(transition);
+    // logI(transition);
   }
 }

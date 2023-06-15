@@ -2,6 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tiktok_tool/src/domain/model/room.dart';
 import 'package:tiktok_tool/src/presentation/stream_container/stream_status/bloc/stream_status_state.dart';
 
+import '../../../../data/service/app_storage.dart';
 import '../../../../socket/socket_connector.dart';
 
 class StreamStatusBloc extends Cubit<StreamStatusState> {
@@ -9,12 +10,33 @@ class StreamStatusBloc extends Cubit<StreamStatusState> {
     SocketService.connectServer(this);
   }
 
-  void reConnectServer() {
+  void startRecord() {
+    SocketService.startRecordLivestream();
+  }
+
+  void stopRecord() {
+    SocketService.stopRecordLivestream();
+  }
+
+  void recordStatus(bool? recording) {
+    emit(state.copyWith(recording: recording));
+  }
+
+  void reConnectServer([String? nickname]) async {
+    if (nickname != null && nickname.isNotEmpty) {
+      await AppStorage().setUniqueId(nickname);
+    }
     SocketService.connectServer(this);
   }
 
   void serverError(String error) {
     emit(state.copyWith(status: error, serverOnline: false));
+  }
+
+  void emptyState() {
+    emit(StreamStatusState.empty().copyWith(
+      serverOnline: state.serverOnline
+    ));
   }
 
   void status(String status) {

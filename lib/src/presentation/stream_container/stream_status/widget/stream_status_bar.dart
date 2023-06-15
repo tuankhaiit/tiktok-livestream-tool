@@ -16,81 +16,111 @@ class _StreamStatusBarState extends State<StreamStatusBarWidget> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+      behavior: HitTestBehavior.translucent,
       onTap: () {
         InputNicknameDialog.show(context);
       },
       child: BlocBuilder<StreamStatusBloc, StreamStatusState>(
         builder: (BuildContext context, state) {
           return Container(
-            color: context.color.background.withOpacity(0.2),
             padding: const EdgeInsets.all(8),
-            child: Row(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
               children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(22),
-                  child: state.avatar.contains('http')
-                      ? Image.network(
-                    state.avatar,
-                    width: 44,
-                    height: 44,
-                  )
-                      : Container(),
-                ),
-                const SizedBox(width: 8),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.center,
+                Row(
                   children: [
-                    Text(
-                      state.nickname,
-                      style: context.textTheme.titleSmall,
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(22),
+                      child: state.avatar.contains('http')
+                          ? Image.network(
+                              state.avatar,
+                              width: 44,
+                              height: 44,
+                              errorBuilder: (_, __, ___) {
+                                return Container(
+                                  alignment: Alignment.center,
+                                  width: 44,
+                                  height: 44,
+                                  child: const Icon(Icons.error),
+                                );
+                              },
+                            )
+                          : Container(),
                     ),
-                    if (state.uniqueId.isNotEmpty) Text('@${state.uniqueId}'),
-                  ],
-                ),
-                const SizedBox(width: 20),
-                Expanded(
-                  child: Align(
-                    alignment: Alignment.centerRight,
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
+                    const SizedBox(width: 8),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        if (state.status == 'Online')
-                          Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Text(
-                                '${state.memberNum}',
-                                style: context.textTheme.titleSmall
-                                    ?.copyWith(fontSize: 13),
-                              ),
-                              const SizedBox(width: 2),
-                              const Icon(Icons.person, size: 16),
-                              const SizedBox(width: 20)
-                            ],
-                          ),
                         Text(
-                          state.status,
-                          style: context.textTheme.titleSmall?.copyWith(
-                              color: state.status == 'Online'
-                                  ? Colors.green
-                                  : Colors.black),
+                          state.nickname,
+                          style: context.textTheme.titleSmall,
                         ),
-                        const SizedBox(width: 20),
-                        Container(
-                          width: 12,
-                          height: 12,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(6),
-                            color: state.serverOnline ? Colors.green : Colors.red,
-                          ),
-                        )
+                        if (state.uniqueId.isNotEmpty)
+                          Text('@${state.uniqueId}'),
                       ],
                     ),
+                    const SizedBox(width: 20),
+                    Expanded(
+                      child: Align(
+                        alignment: Alignment.centerRight,
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            if (state.status == 'Online')
+                              Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text(
+                                    '${state.memberNum}',
+                                    style: context.textTheme.titleSmall
+                                        ?.copyWith(fontSize: 13),
+                                  ),
+                                  const SizedBox(width: 2),
+                                  const Icon(Icons.person, size: 16),
+                                  const SizedBox(width: 20)
+                                ],
+                              ),
+                            Text(
+                              state.status,
+                              style: context.textTheme.titleSmall?.copyWith(
+                                  color: state.status == 'Online'
+                                      ? Colors.green
+                                      : Colors.black),
+                            ),
+                            const SizedBox(width: 20),
+                            Container(
+                              width: 12,
+                              height: 12,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(6),
+                                color: state.serverOnline
+                                    ? Colors.green
+                                    : Colors.red,
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+                if (state.recording == false)
+                  FilledButton(
+                    onPressed: () {
+                      context.read<StreamStatusBloc>().startRecord();
+                    },
+                    child: const Text('Record'),
                   ),
-                )
+                if (state.recording == true)
+                  FilledButton(
+                    onPressed: () {
+                      context.read<StreamStatusBloc>().stopRecord();
+                    },
+                    child: const Text('Stop'),
+                  )
               ],
             ),
           );

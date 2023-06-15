@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tiktok_tool/src/presentation/index.dart';
 import 'package:tiktok_tool/src/socket/socket_connector.dart';
 
 import '../../../../domain/model/comment.dart';
@@ -36,6 +37,12 @@ class _StreamSocialListState extends _CommentListState<StreamSocialListWidget> {
       addComment(comment);
     });
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
   }
 }
 
@@ -95,66 +102,69 @@ abstract class _CommentListState<T extends StatefulWidget> extends State<T> {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        GestureDetector(
-          onTapDown: (_) {
-            isScrollManual = true;
-          },
-          onVerticalDragStart: (_) {
-            isScrollManual = true;
-          },
-          onVerticalDragDown: (_) {
-            isScrollManual = true;
-          },
-          onHorizontalDragDown: (_) {
-            isScrollManual = true;
-          },
-          onLongPressDown: (_) {
-            isScrollManual = true;
-          },
-          onPanDown: (_) {
-            isScrollManual = true;
-          },
-          onDoubleTapDown: (_) {
-            isScrollManual = true;
-          },
-          child: ListView.builder(
-            controller: controller,
-            itemBuilder: (context, index) {
-              return UserCommentWidget(comment: comments[index]);
+    return Container(
+      color: context.color.background,
+      child: Stack(
+        children: [
+          GestureDetector(
+            onTapDown: (_) {
+              isScrollManual = true;
             },
-            itemCount: comments.length,
+            onVerticalDragStart: (_) {
+              isScrollManual = true;
+            },
+            onVerticalDragDown: (_) {
+              isScrollManual = true;
+            },
+            onHorizontalDragDown: (_) {
+              isScrollManual = true;
+            },
+            onLongPressDown: (_) {
+              isScrollManual = true;
+            },
+            onPanDown: (_) {
+              isScrollManual = true;
+            },
+            onDoubleTapDown: (_) {
+              isScrollManual = true;
+            },
+            child: ListView.builder(
+              controller: controller,
+              itemBuilder: (context, index) {
+                return UserCommentWidget(comment: comments[index]);
+              },
+              itemCount: comments.length,
+            ),
           ),
-        ),
-        if (hasNewMessage)
-          Align(
-            alignment: Alignment.bottomRight,
-            child: Container(
-              margin: const EdgeInsets.all(14),
-              child: OutlinedButton(
-                onPressed: () {
-                  if (controller.hasClients) {
-                    final position = controller.position.maxScrollExtent;
-                    controller.animateTo(
-                      position,
-                      duration: const Duration(milliseconds: 200),
-                      curve: Curves.easeOut,
-                    );
-                  }
-                  setState(() {
-                    hasNewMessage = false;
-                    isScrollManual = false;
-                  });
-                },
-                child: const Text(
-                  'New messages',
-                  style: TextStyle(fontSize: 12),
+          if (hasNewMessage)
+            Align(
+              alignment: Alignment.bottomRight,
+              child: Container(
+                margin: const EdgeInsets.all(14),
+                child: OutlinedButton(
+                  onPressed: () {
+                    if (controller.hasClients) {
+                      final position = controller.position.maxScrollExtent;
+                      controller.animateTo(
+                        position,
+                        duration: const Duration(milliseconds: 200),
+                        curve: Curves.easeOut,
+                      );
+                    }
+                    setState(() {
+                      hasNewMessage = false;
+                      isScrollManual = false;
+                    });
+                  },
+                  child: const Text(
+                    'New messages',
+                    style: TextStyle(fontSize: 12),
+                  ),
                 ),
               ),
-            ),
-          )
-      ],
+            )
+        ],
+      ),
     );
   }
 }
