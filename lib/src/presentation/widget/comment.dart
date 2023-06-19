@@ -41,9 +41,11 @@ class UserCommentWidget extends StatelessWidget {
                   comment.nickname,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: context.textTheme.titleSmall,
+                  style: context.textTheme.titleSmall?.copyWith(
+                    fontSize: 14
+                  ),
                 ),
-                const SizedBox(height: 10),
+                const SizedBox(height: 4),
                 Text(
                   comment.comment,
                   maxLines: 3,

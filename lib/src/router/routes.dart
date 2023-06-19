@@ -1,8 +1,10 @@
 class XRoutes {
   static const splash = '/';
-  static const dev = '/dev';
-  static const login = '/login';
   static const home = '/home';
+  static const livestream = '/livestream';
+  static const host = '/host';
+  static const room = '/room';
+  static const comment = '/comment';
 }
 
 // For navigation bar

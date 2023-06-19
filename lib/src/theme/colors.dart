@@ -7,6 +7,8 @@ extension XColorExtensions on BuildContext {
 }
 
 class XColors {
+  XColors._();
+
   static const Color primaryColors = greenColor;
 
   static const redColor = Color(0xFFE21838);

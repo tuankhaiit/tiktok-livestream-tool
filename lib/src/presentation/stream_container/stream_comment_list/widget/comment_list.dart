@@ -3,7 +3,7 @@ import 'package:tiktok_tool/src/presentation/index.dart';
 import 'package:tiktok_tool/src/socket/socket_connector.dart';
 
 import '../../../../domain/model/comment.dart';
-import 'comment.dart';
+import '../../../widget/comment.dart';
 
 class StreamCommentListWidget extends StatefulWidget {
   const StreamCommentListWidget({super.key});

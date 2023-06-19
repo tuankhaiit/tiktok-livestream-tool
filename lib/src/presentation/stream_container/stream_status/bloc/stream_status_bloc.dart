@@ -7,26 +7,22 @@ import '../../../../socket/socket_connector.dart';
 
 class StreamStatusBloc extends Cubit<StreamStatusState> {
   StreamStatusBloc() : super(StreamStatusState.empty()) {
-    SocketService.connectServer(this);
-  }
-
-  void startRecord() {
-    SocketService.startRecordLivestream();
-  }
-
-  void stopRecord() {
-    SocketService.stopRecordLivestream();
+    // SocketService.connectServer(this);
   }
 
   void recordStatus(bool? recording) {
     emit(state.copyWith(recording: recording));
   }
 
-  void reConnectServer([String? nickname]) async {
+  void connectServer([String? nickname]) async {
     if (nickname != null && nickname.isNotEmpty) {
       await AppStorage().setUniqueId(nickname);
     }
     SocketService.connectServer(this);
+  }
+
+  void disconnectServer() {
+    SocketService.disconnectServer(this);
   }
 
   void serverError(String error) {

@@ -4,16 +4,14 @@ import 'package:tiktok_tool/src/network/request.dart';
 
 import '../utils/log.dart';
 
-
 class XRestService {
   static const int _timeout = 120;
 
-  late String? domain;
-  Map<String, String>? headers;
+  static const String _domain = 'http://192.168.88.254:8081';
+  Map<String, String>? _headers;
 
   Future setup() async {
-    headers = {
-      'User-Agent': 'okHttp/4.x Android',
+    _headers = {
       'Content-type': 'application/json',
       'Accept': 'application/json',
     };
@@ -27,12 +25,12 @@ class XRestService {
         parameters += '&$key=$value';
       });
     }
-    final uri = Uri.parse('$domain/$path$parameters');
+    final uri = Uri.parse('$_domain/$path$parameters');
     return uri;
   }
 
   Future<http.Response> execute(XRestRequest request) async {
-    final path = '${request.service}/${request.path}';
+    final path = request.path;
     if (request.type == XRestRequestType.get) {
       return get(path, queries: request.queries);
     } else if (request.type == XRestRequestType.post) {
@@ -43,12 +41,12 @@ class XRestService {
   }
 
   Future<http.Response> get(String path, {Map<String, String>? queries}) async {
-    logD(headers);
+    logD(_headers);
     try {
-      final uri = _uriOf(path);
+      final uri = _uriOf(path, queries);
       logI('> GET REQUEST <${uri.toString()}>');
       final response = await http
-          .get(uri, headers: headers)
+          .get(uri, headers: _headers)
           .timeout(const Duration(seconds: _timeout));
       logI(
           '> GET RESPONSE [${response.statusCode}]<${uri.toString()}\n${response.body}');
@@ -62,10 +60,10 @@ class XRestService {
   Future<http.Response> post(String path,
       {Map<String, String>? queries, Object? body}) async {
     try {
-      final uri = _uriOf(path);
+      final uri = _uriOf(path, queries);
       logI('> POST REQUEST [${uri.toString()}]< BODY = $body');
       final response = await http
-          .post(uri, body: body, headers: headers)
+          .post(uri, body: body, headers: _headers)
           .timeout(const Duration(seconds: _timeout));
       logI(
           '> POST RESPONSE [${response.statusCode}]< $path ${response.body}');

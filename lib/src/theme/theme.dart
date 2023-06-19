@@ -29,11 +29,7 @@ class XTheme {
         scaffoldBackgroundColor: XColors.scaffoldBackground,
         dividerColor: XColors.divider,
         dividerTheme: const DividerThemeData(
-          color: XColors.divider,
-          thickness: 1,
-          space: 0
-        ),
-
+            color: XColors.divider, thickness: 1, space: 0),
         textSelectionTheme: const TextSelectionThemeData(
           cursorColor: XColors.foreground,
         ),
@@ -80,10 +76,9 @@ class XTheme {
           floatingLabelBehavior: FloatingLabelBehavior.always,
           alignLabelWithHint: true,
           hintStyle: const TextStyle(
-            color: XColors.textGreyLight,
-            fontWeight: FontWeight.w300
-          ),
-          contentPadding: const EdgeInsets.symmetric(vertical: 12, horizontal: 14),
+              color: XColors.textGreyLight, fontWeight: FontWeight.w300),
+          contentPadding:
+              const EdgeInsets.symmetric(vertical: 12, horizontal: 14),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(K.borderRadius),
             borderSide: const BorderSide(
@@ -145,6 +140,11 @@ class XTheme {
         /// Icons
         iconTheme: const IconThemeData(
           color: XColors.iconBlack,
+        ),
+        scrollbarTheme: ScrollbarThemeData(
+          crossAxisMargin: 10,
+          thumbColor: MaterialStateProperty.resolveWith(
+              (states) => XColors.primaryColors.withOpacity(0.6)),
         ),
       );
 

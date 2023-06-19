@@ -118,7 +118,7 @@ class _InputNicknameState extends State<_InputNicknameWidget> {
                           Navigator.of(context).pop();
                           context
                               .read<StreamStatusBloc>()
-                              .reConnectServer(nickname);
+                              .connectServer(nickname);
                         }
                       }
                     : null,

@@ -23,18 +23,33 @@ class SocketService {
   static Stream<CommentModel> socialStream = _socialStreamController.stream
       .throttleTime(const Duration(milliseconds: 50));
 
-  static void connectServer(StreamStatusBloc bloc) {
+  static void disconnectServer(StreamStatusBloc bloc) {
+    _offLivestreamListen();
     SocketService.socket?.close();
     SocketService.socket = null;
-    IO.Socket socket = IO.io('http://10.0.2.2:8081', <String, dynamic>{
-      'transports': ['websocket'],
-      'autoConnect': false,
-      'reconnectionDelay': 1000,
-      'reconnectionDelayMax': 5000,
-      'timeout': 5000,
-    });
+  }
+
+  static void connectServer(StreamStatusBloc bloc) {
+    logI('Socket is connecting to server');
+    SocketService.socket?.close();
+    SocketService.socket = null;
+    IO.Socket socket = IO.io(
+        // 'http://home.tuankhaiit.com:8081',
+        'http://192.168.88.254:8081',
+        IO.OptionBuilder()
+            .setTransports(['websocket']) // for Flutter or Dart VM
+            .disableAutoConnect()
+            .enableForceNew()
+            .enableReconnection()
+            .setTimeout(10000)
+            .setReconnectionDelay(10000)
+            .setReconnectionDelayMax(20000)
+            .setReconnectionAttempts(100000)
+            .build());
+
     socket.onConnect((_) {
       bloc.serverOn();
+      _offLivestreamListen();
       connectLivestream(bloc);
     });
     socket.onConnecting((_) {
@@ -76,14 +91,13 @@ class SocketService {
     final socket = SocketService.socket;
     if (socket == null) return;
 
-    final uniqueId = await AppStorage().getUniqueId().then((value) => '@$value');
+    final uniqueId = await AppStorage().getUniqueId().then((value) => '$value');
 
     bloc.emptyState();
+    logI('Socket is connecting to $uniqueId');
     bloc.status('Connecting to $uniqueId');
     socket.emit('setUniqueId', uniqueId);
 
-    // Listen recording status before connect to uniqueId
-    _listenRecordStatus(bloc);
     socket.once('streamEnd', (_) {
       bloc.offline();
       _offLivestreamListen();
@@ -106,6 +120,8 @@ class SocketService {
                 .toString() ??
             '',
         status: 'Online',
+        commentCount: 0,
+        createTime: 0
       );
       bloc.online(room);
 
@@ -123,12 +139,6 @@ class SocketService {
     if (socket == null) return;
     socket.on(
         'roomUser', (data) => bloc.updateMember(int.parse(data.toString())));
-  }
-
-  static void _listenRecordStatus(StreamStatusBloc bloc) {
-    final socket = SocketService.socket;
-    if (socket == null) return;
-    socket.on('recording', (data) => bloc.recordStatus(data));
   }
 
   static void _listenComment(
@@ -170,7 +180,6 @@ class SocketService {
       socket.off('social');
       socket.off('roomUser');
       socket.off('streamEnd');
-      socket.off('recording');
       socket.off('tiktokConnected');
       socket.off('tiktokDisconnected');
     }

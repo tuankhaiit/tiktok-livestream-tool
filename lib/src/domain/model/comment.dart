@@ -10,6 +10,6 @@ class CommentModel with _$CommentModel {
     required String nickname,
     required String avatar,
     required String comment,
-    required String createTime,
+    required int createTime,
   }) = _CommentModel;
 }

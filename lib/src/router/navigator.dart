@@ -12,16 +12,24 @@ class XNavigator {
   static BuildContext get context =>
       rootRouter.navigatorKey.currentState!.context;
 
-  // static Future<dynamic> dev(BuildContext context) {
-  //   return context.router.push(const DevRoute());
-  // }
-  //
-  // static Future<dynamic> login(BuildContext context) {
-  //   return context.router.pushNamed(XRoutes.login);
-  // }
-
   static Future<dynamic> home(BuildContext context) {
-    context.router.removeWhere((route) => route.name != SplashRoute.name);
+    context.router.removeWhere((route) => route.name == SplashRoute.name);
     return context.router.pushNamed(XRoutes.home);
+  }
+
+  static Future<dynamic> livestream(BuildContext context) {
+    return context.router.pushNamed(XRoutes.livestream);
+  }
+
+  static Future<dynamic> host(BuildContext context) {
+    return context.router.pushNamed(XRoutes.host);
+  }
+
+  static Future<dynamic> room(BuildContext context, String uniqueId) {
+    return context.router.push(RoomRoute(uniqueId: uniqueId));
+  }
+
+  static Future<dynamic> comment(BuildContext context, String roomId) {
+    return context.router.push(CommentRoute(roomId: roomId));
   }
 }

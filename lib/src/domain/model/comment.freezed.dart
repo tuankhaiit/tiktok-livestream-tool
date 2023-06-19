@@ -21,7 +21,7 @@ mixin _$CommentModel {
   String get nickname => throw _privateConstructorUsedError;
   String get avatar => throw _privateConstructorUsedError;
   String get comment => throw _privateConstructorUsedError;
-  String get createTime => throw _privateConstructorUsedError;
+  int get createTime => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $CommentModelCopyWith<CommentModel> get copyWith =>
@@ -40,7 +40,7 @@ abstract class $CommentModelCopyWith<$Res> {
       String nickname,
       String avatar,
       String comment,
-      String createTime});
+      int createTime});
 }
 
 /// @nodoc
@@ -87,7 +87,7 @@ class _$CommentModelCopyWithImpl<$Res, $Val extends CommentModel>
       createTime: null == createTime
           ? _value.createTime
           : createTime // ignore: cast_nullable_to_non_nullable
-              as String,
+              as int,
     ) as $Val);
   }
 }
@@ -106,7 +106,7 @@ abstract class _$$_CommentModelCopyWith<$Res>
       String nickname,
       String avatar,
       String comment,
-      String createTime});
+      int createTime});
 }
 
 /// @nodoc
@@ -151,7 +151,7 @@ class __$$_CommentModelCopyWithImpl<$Res>
       createTime: null == createTime
           ? _value.createTime
           : createTime // ignore: cast_nullable_to_non_nullable
-              as String,
+              as int,
     ));
   }
 }
@@ -178,7 +178,7 @@ class _$_CommentModel implements _CommentModel {
   @override
   final String comment;
   @override
-  final String createTime;
+  final int createTime;
 
   @override
   String toString() {
@@ -218,7 +218,7 @@ abstract class _CommentModel implements CommentModel {
       required final String nickname,
       required final String avatar,
       required final String comment,
-      required final String createTime}) = _$_CommentModel;
+      required final int createTime}) = _$_CommentModel;
 
   @override
   String get id;
@@ -231,7 +231,7 @@ abstract class _CommentModel implements CommentModel {
   @override
   String get comment;
   @override
-  String get createTime;
+  int get createTime;
   @override
   @JsonKey(ignore: true)
   _$$_CommentModelCopyWith<_$_CommentModel> get copyWith =>

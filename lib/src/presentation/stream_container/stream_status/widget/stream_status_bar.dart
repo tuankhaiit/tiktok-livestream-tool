@@ -107,20 +107,6 @@ class _StreamStatusBarState extends State<StreamStatusBarWidget> {
                     )
                   ],
                 ),
-                if (state.recording == false)
-                  FilledButton(
-                    onPressed: () {
-                      context.read<StreamStatusBloc>().startRecord();
-                    },
-                    child: const Text('Record'),
-                  ),
-                if (state.recording == true)
-                  FilledButton(
-                    onPressed: () {
-                      context.read<StreamStatusBloc>().stopRecord();
-                    },
-                    child: const Text('Stop'),
-                  )
               ],
             ),
           );
