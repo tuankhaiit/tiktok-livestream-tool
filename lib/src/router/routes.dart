@@ -5,6 +5,8 @@ class XRoutes {
   static const host = '/host';
   static const room = '/room';
   static const comment = '/comment';
+  static const potentialUser = '/potentialUser';
+  static const userProfile = '/userProfile';
 }
 
 // For navigation bar

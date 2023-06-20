@@ -1,16 +1,15 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'comment.freezed.dart';
+part 'user.freezed.dart';
 
 @freezed
-class CommentModel with _$CommentModel {
-  const factory CommentModel({
-    required String id,
+class UserModel with _$UserModel {
+  const factory UserModel({
     required String userId,
     required String uniqueId,
     required String nickname,
     required String avatar,
-    required String comment,
+    required String phoneNumber,
     required int createTime,
-  }) = _CommentModel;
+  }) = _UserModel;
 }

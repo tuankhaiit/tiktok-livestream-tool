@@ -203,10 +203,11 @@ class SocketService {
     return CommentModel(
       id: data['msgId'] ?? '',
       userId: data['userId'] ?? '',
+      uniqueId: data['uniqueId'] ?? '',
       nickname: data['nickname'] ?? '',
       avatar: data['profilePictureUrl'] ?? '',
       comment: data['comment']?.toString() ?? '',
-      createTime: data['createTime'],
+      createTime: int.parse(data['createTime']),
     );
   }
 }

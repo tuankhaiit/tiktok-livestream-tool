@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../configuration/constant/constants.dart';
-import '../utils/color_utils.dart';
+import '../utils/color.dart';
 import 'colors.dart';
 import 'fonts.dart';
 import 'styles.dart';
@@ -22,7 +22,7 @@ class XTheme {
         fontFamily: XFonts.myriadpro,
 
         /// Colors
-        primarySwatch: ColorUtils.generateMaterialColor(XColors.primaryColors),
+        primarySwatch: XColors.primaryColors.generateMaterialColor(),
         primaryColor: XColors.primaryColors,
         brightness: Brightness.light,
         textTheme: XStyles.textTheme,

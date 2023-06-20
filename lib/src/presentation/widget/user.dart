@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:tiktok_tool/src/domain/model/comment.dart';
+import 'package:tiktok_tool/src/domain/model/user.dart';
 import 'package:tiktok_tool/src/presentation/index.dart';
+import 'package:tiktok_tool/src/router/navigator.dart';
 
-import '../../router/navigator.dart';
+class UserWidget extends StatelessWidget {
+  final UserModel user;
 
-class CommentWidget extends StatelessWidget {
-  final CommentModel comment;
-
-  const CommentWidget({super.key, required this.comment});
+  const UserWidget({super.key, required this.user});
 
   @override
   Widget build(BuildContext context) {
@@ -20,14 +19,14 @@ class CommentWidget extends StatelessWidget {
           ClipRRect(
             borderRadius: BorderRadius.circular(avatarSize / 2),
             child: Image.network(
-              comment.avatar,
+              user.avatar,
               width: avatarSize,
               height: avatarSize,
               errorBuilder: (_, __, ___) {
                 return Container(
                   alignment: Alignment.center,
-                  width: avatarSize,
-                  height: avatarSize,
+                  width: 40,
+                  height: 40,
                   child: const Icon(Icons.error),
                 );
               },
@@ -39,26 +38,23 @@ class CommentWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                const SizedBox(height: 6),
                 Text(
-                  comment.nickname,
+                  user.nickname,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: context.textTheme.titleSmall?.copyWith(fontSize: 15),
+                  style: context.textTheme.titleSmall?.copyWith(fontSize: 14),
                 ),
-                const SizedBox(height: 4),
                 Text(
-                  comment.comment,
-                  maxLines: 5,
+                  user.phoneNumber,
+                  maxLines: 3,
                   overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(fontSize: 15),
                 ),
               ],
             ),
           ),
           IconButton(
             onPressed: () {
-              XNavigator.userProfile(context, comment.uniqueId);
+              XNavigator.userProfile(context, user.uniqueId);
             },
             icon: Icon(
               Icons.contacts,

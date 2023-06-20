@@ -1,6 +1,18 @@
 import 'package:tiktok_tool/src/network/request.dart';
 
-class GetCommentByRoomRequest extends XRestRequest {
+class GetCommentsByHostRequest extends XRestRequest {
+  final String uniqueId;
+
+  @override
+  String get path => 'host/$uniqueId/comment';
+
+  @override
+  XRestRequestType get type => XRestRequestType.get;
+
+  GetCommentsByHostRequest({required this.uniqueId});
+}
+
+class GetCommentsByRoomRequest extends XRestRequest {
   final String roomId;
 
   @override
@@ -9,5 +21,5 @@ class GetCommentByRoomRequest extends XRestRequest {
   @override
   XRestRequestType get type => XRestRequestType.get;
 
-  GetCommentByRoomRequest({required this.roomId});
+  GetCommentsByRoomRequest({required this.roomId});
 }

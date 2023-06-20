@@ -1,14 +1,11 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:tiktok_tool/src/domain/model/comment.dart';
+import 'package:tiktok_tool/src/domain/model/user.dart';
 
-part 'comment_resp_dto.g.dart';
+part 'user_resp_dto.g.dart';
 
 @JsonSerializable()
-class CommentResponseDTO {
-  @JsonKey(name: 'msgId')
-  final dynamic msgId;
-  @JsonKey(name: 'roomId')
-  final dynamic roomId;
+class UserResponseDTO {
   @JsonKey(name: 'userId')
   final dynamic userId;
   @JsonKey(name: 'uniqueId')
@@ -17,32 +14,29 @@ class CommentResponseDTO {
   final dynamic nickname;
   @JsonKey(name: 'avatar')
   final dynamic avatar;
-  @JsonKey(name: 'comment')
-  final dynamic comment;
+  @JsonKey(name: 'phoneNumber')
+  final dynamic phoneNumber;
   @JsonKey(name: 'createTime')
   final dynamic createTime;
 
-  CommentResponseDTO({
-    required this.msgId,
-    required this.roomId,
+  UserResponseDTO({
     required this.userId,
     required this.uniqueId,
     required this.nickname,
     required this.avatar,
-    required this.comment,
+    required this.phoneNumber,
     required this.createTime,
   });
 
-  factory CommentResponseDTO.fromJson(Map<String, dynamic> json) =>
-      _$CommentResponseDTOFromJson(json);
+  factory UserResponseDTO.fromJson(Map<String, dynamic> json) =>
+      _$UserResponseDTOFromJson(json);
 
-  CommentModel toModel() => CommentModel(
-        id: userId ?? '',
+  UserModel toModel() => UserModel(
         userId: userId ?? '',
         uniqueId: uniqueId ?? '',
         nickname: nickname ?? '',
         avatar: avatar ?? '',
-        comment: comment ?? '',
+        phoneNumber: phoneNumber ?? '',
         createTime: createTime ?? 0,
       );
 }

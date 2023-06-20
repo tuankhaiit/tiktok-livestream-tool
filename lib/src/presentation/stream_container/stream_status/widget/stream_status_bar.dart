@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 import 'package:tiktok_tool/src/presentation/index.dart';
 import 'package:tiktok_tool/src/presentation/stream_container/input_nickname/input_nickname_dialog.dart';
 import 'package:tiktok_tool/src/presentation/stream_container/stream_status/bloc/stream_status_bloc.dart';
@@ -74,7 +75,7 @@ class _StreamStatusBarState extends State<StreamStatusBarWidget> {
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
                                   Text(
-                                    '${state.memberNum}',
+                                    NumberFormat.compact().format(state.memberNum),
                                     style: context.textTheme.titleSmall
                                         ?.copyWith(fontSize: 13),
                                   ),

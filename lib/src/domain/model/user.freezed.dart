@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'comment.dart';
+part of 'user.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -15,40 +15,37 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
-mixin _$CommentModel {
-  String get id => throw _privateConstructorUsedError;
+mixin _$UserModel {
   String get userId => throw _privateConstructorUsedError;
   String get uniqueId => throw _privateConstructorUsedError;
   String get nickname => throw _privateConstructorUsedError;
   String get avatar => throw _privateConstructorUsedError;
-  String get comment => throw _privateConstructorUsedError;
+  String get phoneNumber => throw _privateConstructorUsedError;
   int get createTime => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
-  $CommentModelCopyWith<CommentModel> get copyWith =>
+  $UserModelCopyWith<UserModel> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $CommentModelCopyWith<$Res> {
-  factory $CommentModelCopyWith(
-          CommentModel value, $Res Function(CommentModel) then) =
-      _$CommentModelCopyWithImpl<$Res, CommentModel>;
+abstract class $UserModelCopyWith<$Res> {
+  factory $UserModelCopyWith(UserModel value, $Res Function(UserModel) then) =
+      _$UserModelCopyWithImpl<$Res, UserModel>;
   @useResult
   $Res call(
-      {String id,
-      String userId,
+      {String userId,
       String uniqueId,
       String nickname,
       String avatar,
-      String comment,
+      String phoneNumber,
       int createTime});
 }
 
 /// @nodoc
-class _$CommentModelCopyWithImpl<$Res, $Val extends CommentModel>
-    implements $CommentModelCopyWith<$Res> {
-  _$CommentModelCopyWithImpl(this._value, this._then);
+class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
+    implements $UserModelCopyWith<$Res> {
+  _$UserModelCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -58,19 +55,14 @@ class _$CommentModelCopyWithImpl<$Res, $Val extends CommentModel>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
     Object? userId = null,
     Object? uniqueId = null,
     Object? nickname = null,
     Object? avatar = null,
-    Object? comment = null,
+    Object? phoneNumber = null,
     Object? createTime = null,
   }) {
     return _then(_value.copyWith(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
       userId: null == userId
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
@@ -87,9 +79,9 @@ class _$CommentModelCopyWithImpl<$Res, $Val extends CommentModel>
           ? _value.avatar
           : avatar // ignore: cast_nullable_to_non_nullable
               as String,
-      comment: null == comment
-          ? _value.comment
-          : comment // ignore: cast_nullable_to_non_nullable
+      phoneNumber: null == phoneNumber
+          ? _value.phoneNumber
+          : phoneNumber // ignore: cast_nullable_to_non_nullable
               as String,
       createTime: null == createTime
           ? _value.createTime
@@ -100,47 +92,40 @@ class _$CommentModelCopyWithImpl<$Res, $Val extends CommentModel>
 }
 
 /// @nodoc
-abstract class _$$_CommentModelCopyWith<$Res>
-    implements $CommentModelCopyWith<$Res> {
-  factory _$$_CommentModelCopyWith(
-          _$_CommentModel value, $Res Function(_$_CommentModel) then) =
-      __$$_CommentModelCopyWithImpl<$Res>;
+abstract class _$$_UserModelCopyWith<$Res> implements $UserModelCopyWith<$Res> {
+  factory _$$_UserModelCopyWith(
+          _$_UserModel value, $Res Function(_$_UserModel) then) =
+      __$$_UserModelCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
-      {String id,
-      String userId,
+      {String userId,
       String uniqueId,
       String nickname,
       String avatar,
-      String comment,
+      String phoneNumber,
       int createTime});
 }
 
 /// @nodoc
-class __$$_CommentModelCopyWithImpl<$Res>
-    extends _$CommentModelCopyWithImpl<$Res, _$_CommentModel>
-    implements _$$_CommentModelCopyWith<$Res> {
-  __$$_CommentModelCopyWithImpl(
-      _$_CommentModel _value, $Res Function(_$_CommentModel) _then)
+class __$$_UserModelCopyWithImpl<$Res>
+    extends _$UserModelCopyWithImpl<$Res, _$_UserModel>
+    implements _$$_UserModelCopyWith<$Res> {
+  __$$_UserModelCopyWithImpl(
+      _$_UserModel _value, $Res Function(_$_UserModel) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
     Object? userId = null,
     Object? uniqueId = null,
     Object? nickname = null,
     Object? avatar = null,
-    Object? comment = null,
+    Object? phoneNumber = null,
     Object? createTime = null,
   }) {
-    return _then(_$_CommentModel(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
+    return _then(_$_UserModel(
       userId: null == userId
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
@@ -157,9 +142,9 @@ class __$$_CommentModelCopyWithImpl<$Res>
           ? _value.avatar
           : avatar // ignore: cast_nullable_to_non_nullable
               as String,
-      comment: null == comment
-          ? _value.comment
-          : comment // ignore: cast_nullable_to_non_nullable
+      phoneNumber: null == phoneNumber
+          ? _value.phoneNumber
+          : phoneNumber // ignore: cast_nullable_to_non_nullable
               as String,
       createTime: null == createTime
           ? _value.createTime
@@ -171,18 +156,15 @@ class __$$_CommentModelCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_CommentModel implements _CommentModel {
-  const _$_CommentModel(
-      {required this.id,
-      required this.userId,
+class _$_UserModel implements _UserModel {
+  const _$_UserModel(
+      {required this.userId,
       required this.uniqueId,
       required this.nickname,
       required this.avatar,
-      required this.comment,
+      required this.phoneNumber,
       required this.createTime});
 
-  @override
-  final String id;
   @override
   final String userId;
   @override
@@ -192,55 +174,52 @@ class _$_CommentModel implements _CommentModel {
   @override
   final String avatar;
   @override
-  final String comment;
+  final String phoneNumber;
   @override
   final int createTime;
 
   @override
   String toString() {
-    return 'CommentModel(id: $id, userId: $userId, uniqueId: $uniqueId, nickname: $nickname, avatar: $avatar, comment: $comment, createTime: $createTime)';
+    return 'UserModel(userId: $userId, uniqueId: $uniqueId, nickname: $nickname, avatar: $avatar, phoneNumber: $phoneNumber, createTime: $createTime)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_CommentModel &&
-            (identical(other.id, id) || other.id == id) &&
+            other is _$_UserModel &&
             (identical(other.userId, userId) || other.userId == userId) &&
             (identical(other.uniqueId, uniqueId) ||
                 other.uniqueId == uniqueId) &&
             (identical(other.nickname, nickname) ||
                 other.nickname == nickname) &&
             (identical(other.avatar, avatar) || other.avatar == avatar) &&
-            (identical(other.comment, comment) || other.comment == comment) &&
+            (identical(other.phoneNumber, phoneNumber) ||
+                other.phoneNumber == phoneNumber) &&
             (identical(other.createTime, createTime) ||
                 other.createTime == createTime));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType, id, userId, uniqueId, nickname, avatar, comment, createTime);
+      runtimeType, userId, uniqueId, nickname, avatar, phoneNumber, createTime);
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_CommentModelCopyWith<_$_CommentModel> get copyWith =>
-      __$$_CommentModelCopyWithImpl<_$_CommentModel>(this, _$identity);
+  _$$_UserModelCopyWith<_$_UserModel> get copyWith =>
+      __$$_UserModelCopyWithImpl<_$_UserModel>(this, _$identity);
 }
 
-abstract class _CommentModel implements CommentModel {
-  const factory _CommentModel(
-      {required final String id,
-      required final String userId,
+abstract class _UserModel implements UserModel {
+  const factory _UserModel(
+      {required final String userId,
       required final String uniqueId,
       required final String nickname,
       required final String avatar,
-      required final String comment,
-      required final int createTime}) = _$_CommentModel;
+      required final String phoneNumber,
+      required final int createTime}) = _$_UserModel;
 
-  @override
-  String get id;
   @override
   String get userId;
   @override
@@ -250,11 +229,11 @@ abstract class _CommentModel implements CommentModel {
   @override
   String get avatar;
   @override
-  String get comment;
+  String get phoneNumber;
   @override
   int get createTime;
   @override
   @JsonKey(ignore: true)
-  _$$_CommentModelCopyWith<_$_CommentModel> get copyWith =>
+  _$$_UserModelCopyWith<_$_UserModel> get copyWith =>
       throw _privateConstructorUsedError;
 }

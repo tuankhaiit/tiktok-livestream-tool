@@ -7,6 +7,8 @@ import '../presentation/stream_container/stream_page.dart';
 import '../presentation/host/host_page.dart';
 import '../presentation/room/room_page.dart';
 import '../presentation/comment/comment_page.dart';
+import '../presentation/user/user_page.dart';
+import '../presentation/user/user_profile_page.dart';
 
 part 'auto_route.gr.dart';
 
@@ -25,6 +27,8 @@ class XRouter extends _$XRouter {
         AutoRoute(path: XRoutes.host, page: HostRoute.page),
         AutoRoute(path: XRoutes.room, page: RoomRoute.page),
         AutoRoute(path: XRoutes.comment, page: CommentRoute.page),
+        AutoRoute(path: XRoutes.potentialUser, page: PotentialUsersRoute.page),
+        AutoRoute(path: XRoutes.userProfile, page: UserProfileRoute.page),
         RedirectRoute(path: '*', redirectTo: '/'),
       ];
 

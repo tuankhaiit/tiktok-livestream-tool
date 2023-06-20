@@ -2,38 +2,48 @@ import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:tiktok_tool/src/domain/model/comment.dart';
+import 'package:tiktok_tool/src/domain/model/room.dart';
 import 'package:tiktok_tool/src/domain/repository/host_repository.dart';
 import 'package:tiktok_tool/src/network/result.dart';
 import 'package:tiktok_tool/src/presentation/index.dart';
 import 'package:tiktok_tool/src/presentation/widget/comment.dart';
 
 import '../../di/di.dart';
+import '../../domain/model/user.dart';
+import '../widget/user.dart';
 
 @RoutePage()
-class CommentPage extends StatelessWidget {
-  final String? hostId;
-  final String? roomId;
+class PotentialUsersPage extends StatelessWidget {
   final String? uniqueId;
+  final String? roomId;
 
-  const CommentPage({super.key, required this.hostId, required this.roomId, required this.uniqueId});
+  const PotentialUsersPage(
+      {super.key, required this.uniqueId, required this.roomId});
 
   @override
   Widget build(BuildContext context) {
-    late final Future<XApiSnapshot<Iterable<CommentModel>>> feature;
+    final roomModel = XDI.I<HostRepository>().getRoomModelFromCache(roomId);
+    final hostModel =
+        XDI.I<HostRepository>().getHostModelFromCache(roomModel?.uniqueId);
+    late final Future<XApiSnapshot<Iterable<UserModel>>> feature;
     if (uniqueId != null) {
-      feature = XDI.I.get<HostRepository>().getCommentsByHost(uniqueId ?? '');
+      feature =
+          XDI.I.get<HostRepository>().getPotentialUsersByHost(uniqueId ?? '');
     } else {
-      feature = XDI.I.get<HostRepository>().getCommentsByRoom(roomId ?? '');
+      feature =
+          XDI.I.get<HostRepository>().getPotentialUsersByRoom(roomId ?? '');
     }
     return Scaffold(
-      appBar: AppBar(),
-      body: FutureBuilder<XApiSnapshot<Iterable<CommentModel>>>(
+      appBar: AppBar(
+        title: Text(hostModel?.nickname ?? ''),
+      ),
+      body: FutureBuilder<XApiSnapshot<Iterable<UserModel>>>(
         future: feature,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             final data = snapshot.requireData;
             if (data.hasData) {
-              final comments = data.requireData;
+              final users = data.requireData;
               return Column(
                 children: [
                   Container(
@@ -44,7 +54,7 @@ class CommentPage extends StatelessWidget {
                         const EdgeInsets.symmetric(vertical: 5, horizontal: 14),
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      '${NumberFormat.compact().format(comments.length)} bình luận',
+                      '${NumberFormat.compact().format(users.length)} users',
                       style: context.textTheme.titleSmall
                           ?.copyWith(color: context.color.onPrimary),
                     ),
@@ -57,9 +67,9 @@ class CommentPage extends StatelessWidget {
                       radius: const Radius.circular(5),
                       child: ListView.separated(
                         itemBuilder: (context, index) {
-                          final item = comments.elementAt(index);
-                          return CommentWidget(
-                            comment: item,
+                          final item = users.elementAt(index);
+                          return UserWidget(
+                            user: item,
                           );
                         },
                         separatorBuilder: (context, index) {
@@ -67,7 +77,7 @@ class CommentPage extends StatelessWidget {
                             color: context.color.onPrimary,
                           );
                         },
-                        itemCount: comments.length,
+                        itemCount: users.length,
                       ),
                     ),
                   )

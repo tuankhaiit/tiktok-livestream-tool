@@ -5,6 +5,7 @@ import 'package:tiktok_tool/src/domain/repository/host_repository.dart';
 import 'package:tiktok_tool/src/network/result.dart';
 import 'package:tiktok_tool/src/presentation/index.dart';
 import 'package:tiktok_tool/src/presentation/room/widget/room_item.dart';
+import 'package:tiktok_tool/src/router/navigator.dart';
 
 import '../../di/di.dart';
 
@@ -20,6 +21,17 @@ class RoomPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(hostModel?.nickname ?? ''),
+        actions: [
+          IconButton(
+            onPressed: () {
+              XNavigator.potentialUsers(context, uniqueId, null);
+            },
+            icon: Icon(
+              Icons.person,
+              color: context.color.primary,
+            ),
+          )
+        ],
       ),
       body: FutureBuilder<XApiSnapshot<Iterable<RoomModel>>>(
         future: XDI.I.get<HostRepository>().getRoomByHost(uniqueId),

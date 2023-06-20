@@ -2,9 +2,9 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 
-class ColorUtils {
-
-  static MaterialColor generateMaterialColor(Color color) {
+extension ColorHelper on Color {
+  MaterialColor generateMaterialColor() {
+    final color = this;
     int tintValue(int value, double factor) =>
         max(0, min((value + ((255 - value) * factor)).round(), 255));
 
@@ -34,5 +34,6 @@ class ColorUtils {
       800: shadeColor(color, 0.3),
       900: shadeColor(color, 0.4),
     });
+
   }
 }

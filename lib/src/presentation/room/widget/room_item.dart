@@ -3,6 +3,8 @@ import 'package:intl/intl.dart';
 import 'package:tiktok_tool/src/domain/model/room.dart';
 import 'package:tiktok_tool/src/presentation/index.dart';
 import 'package:tiktok_tool/src/router/navigator.dart';
+import 'package:tiktok_tool/src/utils/date.dart';
+
 class RoomItemWidget extends StatelessWidget {
   final RoomModel data;
 
@@ -10,14 +12,23 @@ class RoomItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final timeFormatted = DateFormat('HH:mm dd/MM/yyyy')
-        .format(DateTime.fromMillisecondsSinceEpoch(data.createTime * 1000));
+    final dateTime =
+        DateTime.fromMillisecondsSinceEpoch(data.createTime * 1000);
+    final timeFormatted = DateFormat('HH:mm').format(dateTime);
+    late final String dayFormatted;
+    if (dateTime.isToday()) {
+      dayFormatted = 'Hôm nay';
+    } else if (dateTime.isYesterday()) {
+      dayFormatted = 'Hôm qua';
+    } else {
+      dayFormatted = DateFormat('dd/MM/yyyy').format(dateTime);
+    }
     final commentCountFormatted =
         NumberFormat.compact().format(data.commentCount);
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
       onTap: () {
-        XNavigator.comment(context, data.roomId);
+        XNavigator.comment(context, null, data.roomId, null);
       },
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
@@ -28,7 +39,7 @@ class RoomItemWidget extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
-                  timeFormatted,
+                  '$timeFormatted - $dayFormatted',
                   style: context.textTheme.titleMedium?.copyWith(fontSize: 18),
                 ),
                 Text(

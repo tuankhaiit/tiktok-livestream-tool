@@ -55,7 +55,30 @@ abstract class _$XRouter extends RootStackRouter {
         routeData: routeData,
         child: CommentPage(
           key: args.key,
+          hostId: args.hostId,
           roomId: args.roomId,
+          uniqueId: args.uniqueId,
+        ),
+      );
+    },
+    PotentialUsersRoute.name: (routeData) {
+      final args = routeData.argsAs<PotentialUsersRouteArgs>();
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: PotentialUsersPage(
+          key: args.key,
+          uniqueId: args.uniqueId,
+          roomId: args.roomId,
+        ),
+      );
+    },
+    UserProfileRoute.name: (routeData) {
+      final args = routeData.argsAs<UserProfileRouteArgs>();
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: UserProfilePage(
+          key: args.key,
+          uniqueId: args.uniqueId,
         ),
       );
     },
@@ -160,13 +183,17 @@ class RoomRouteArgs {
 class CommentRoute extends PageRouteInfo<CommentRouteArgs> {
   CommentRoute({
     Key? key,
-    required String roomId,
+    required String? hostId,
+    required String? roomId,
+    required String? uniqueId,
     List<PageRouteInfo>? children,
   }) : super(
           CommentRoute.name,
           args: CommentRouteArgs(
             key: key,
+            hostId: hostId,
             roomId: roomId,
+            uniqueId: uniqueId,
           ),
           initialChildren: children,
         );
@@ -180,15 +207,102 @@ class CommentRoute extends PageRouteInfo<CommentRouteArgs> {
 class CommentRouteArgs {
   const CommentRouteArgs({
     this.key,
+    required this.hostId,
+    required this.roomId,
+    required this.uniqueId,
+  });
+
+  final Key? key;
+
+  final String? hostId;
+
+  final String? roomId;
+
+  final String? uniqueId;
+
+  @override
+  String toString() {
+    return 'CommentRouteArgs{key: $key, hostId: $hostId, roomId: $roomId, uniqueId: $uniqueId}';
+  }
+}
+
+/// generated route for
+/// [PotentialUsersPage]
+class PotentialUsersRoute extends PageRouteInfo<PotentialUsersRouteArgs> {
+  PotentialUsersRoute({
+    Key? key,
+    required String? uniqueId,
+    required String? roomId,
+    List<PageRouteInfo>? children,
+  }) : super(
+          PotentialUsersRoute.name,
+          args: PotentialUsersRouteArgs(
+            key: key,
+            uniqueId: uniqueId,
+            roomId: roomId,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'PotentialUsersRoute';
+
+  static const PageInfo<PotentialUsersRouteArgs> page =
+      PageInfo<PotentialUsersRouteArgs>(name);
+}
+
+class PotentialUsersRouteArgs {
+  const PotentialUsersRouteArgs({
+    this.key,
+    required this.uniqueId,
     required this.roomId,
   });
 
   final Key? key;
 
-  final String roomId;
+  final String? uniqueId;
+
+  final String? roomId;
 
   @override
   String toString() {
-    return 'CommentRouteArgs{key: $key, roomId: $roomId}';
+    return 'PotentialUsersRouteArgs{key: $key, uniqueId: $uniqueId, roomId: $roomId}';
+  }
+}
+
+/// generated route for
+/// [UserProfilePage]
+class UserProfileRoute extends PageRouteInfo<UserProfileRouteArgs> {
+  UserProfileRoute({
+    Key? key,
+    required String uniqueId,
+    List<PageRouteInfo>? children,
+  }) : super(
+          UserProfileRoute.name,
+          args: UserProfileRouteArgs(
+            key: key,
+            uniqueId: uniqueId,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'UserProfileRoute';
+
+  static const PageInfo<UserProfileRouteArgs> page =
+      PageInfo<UserProfileRouteArgs>(name);
+}
+
+class UserProfileRouteArgs {
+  const UserProfileRouteArgs({
+    this.key,
+    required this.uniqueId,
+  });
+
+  final Key? key;
+
+  final String uniqueId;
+
+  @override
+  String toString() {
+    return 'UserProfileRouteArgs{key: $key, uniqueId: $uniqueId}';
   }
 }

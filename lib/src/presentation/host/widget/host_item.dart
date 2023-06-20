@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tiktok_tool/src/data/service/app_storage.dart';
 import 'package:tiktok_tool/src/domain/model/host.dart';
 import 'package:tiktok_tool/src/presentation/index.dart';
 
@@ -13,10 +14,10 @@ class HostItemWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     const avatarSize = 60.0;
     return GestureDetector(
-      behavior: HitTestBehavior.opaque,
       onTap: () {
         XNavigator.room(context, data.uniqueId);
       },
+      behavior: HitTestBehavior.opaque,
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
         child: Row(
@@ -44,7 +45,8 @@ class HostItemWidget extends StatelessWidget {
                 children: [
                   Text(
                     data.nickname,
-                    style: context.textTheme.titleMedium?.copyWith(fontSize: 18),
+                    style:
+                        context.textTheme.titleMedium?.copyWith(fontSize: 18),
                   ),
                   Text(
                     '@${data.uniqueId}',
@@ -53,7 +55,21 @@ class HostItemWidget extends StatelessWidget {
                 ],
               ),
             ),
-            const Icon(Icons.arrow_forward_ios)
+            GestureDetector(
+              onTap: () async {
+                final storage = AppStorage();
+                storage.setUniqueId(data.uniqueId);
+                XNavigator.livestream(context);
+              },
+              child: Container(
+                padding: const EdgeInsets.all(10),
+                child: Icon(
+                  Icons.play_circle,
+                  size: 26,
+                  color: context.color.primary,
+                ),
+              ),
+            )
           ],
         ),
       ),
