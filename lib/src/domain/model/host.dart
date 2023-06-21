@@ -9,6 +9,7 @@ class HostModel with _$HostModel {
     required String uniqueId,
     required String nickname,
     required String avatar,
+    required bool isRecording,
     required int createTime,
   }) = _HostModel;
 }

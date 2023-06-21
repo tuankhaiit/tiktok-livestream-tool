@@ -13,6 +13,8 @@ class HostResponseDTO {
   final dynamic nickname;
   @JsonKey(name: 'avatar')
   final dynamic avatar;
+  @JsonKey(name: 'isRecording')
+  final dynamic isRecording;
   @JsonKey(name: 'createTime')
   final dynamic createTime;
 
@@ -21,6 +23,7 @@ class HostResponseDTO {
     required this.uniqueId,
     required this.nickname,
     required this.avatar,
+    required this.isRecording,
     required this.createTime,
   });
 
@@ -32,6 +35,7 @@ class HostResponseDTO {
         uniqueId: uniqueId ?? '',
         nickname: nickname ?? '',
         avatar: avatar ?? '',
+        isRecording: isRecording ?? false,
         createTime: createTime ?? 0,
       );
 }

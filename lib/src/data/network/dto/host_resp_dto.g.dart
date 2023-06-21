@@ -12,6 +12,7 @@ HostResponseDTO _$HostResponseDTOFromJson(Map<String, dynamic> json) =>
       uniqueId: json['uniqueId'],
       nickname: json['nickname'],
       avatar: json['avatar'],
+      isRecording: json['isRecording'],
       createTime: json['createTime'],
     );
 
@@ -21,5 +22,6 @@ Map<String, dynamic> _$HostResponseDTOToJson(HostResponseDTO instance) =>
       'uniqueId': instance.uniqueId,
       'nickname': instance.nickname,
       'avatar': instance.avatar,
+      'isRecording': instance.isRecording,
       'createTime': instance.createTime,
     };

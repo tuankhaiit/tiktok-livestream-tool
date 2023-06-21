@@ -66,9 +66,7 @@ class UserProfilePage extends StatelessWidget {
               },
             ),
           ),
-          const SizedBox(
-            height: 10,
-          ),
+          const SizedBox(height: 14),
           Text(
             user.nickname,
             style: context.textTheme.titleLarge,
@@ -77,21 +75,28 @@ class UserProfilePage extends StatelessWidget {
             '@${user.uniqueId}',
             style: context.textTheme.bodyLarge,
           ),
-          const SizedBox(height: 10),
+          const SizedBox(height: 20),
           if (user.phoneNumber.isNotEmpty)
-            Row(
-              children: [
-                Icon(
-                  Icons.phone,
-                  color: context.color.primary,
-                ),
-                const SizedBox(width: 10),
-                Text(
-                  user.phoneNumber,
-                  style: context.textTheme.bodyLarge,
-                )
-              ],
+            GestureDetector(
+              onTap: () {
+                _call(user.phoneNumber);
+              },
+              child: Row(
+                children: [
+                  Icon(
+                    Icons.phone,
+                    color: context.color.primary,
+                    size: 22,
+                  ),
+                  const SizedBox(width: 11),
+                  Text(
+                    user.phoneNumber,
+                    style: context.textTheme.bodyLarge,
+                  )
+                ],
+              ),
             ),
+          const SizedBox(height: 4),
           GestureDetector(
             onTap: () {
               _openProfile(url);
@@ -105,8 +110,7 @@ class UserProfilePage extends StatelessWidget {
                 const SizedBox(width: 10),
                 Text(
                   url,
-                  style: context.textTheme.bodyMedium
-                      ?.copyWith(color: context.color.primary),
+                  style: context.textTheme.bodyMedium?.copyWith(),
                 )
               ],
             ),
@@ -119,6 +123,14 @@ class UserProfilePage extends StatelessWidget {
   void _openProfile(String url) async {
     try {
       await launchUrl(Uri.parse(url));
+    } catch (e) {
+      logE(e);
+    }
+  }
+
+  void _call(String phoneNumber) async {
+    try {
+      await launchUrl(Uri.parse('tel:$phoneNumber'));
     } catch (e) {
       logE(e);
     }

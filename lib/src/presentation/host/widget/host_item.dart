@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:tiktok_tool/src/data/service/app_storage.dart';
 import 'package:tiktok_tool/src/domain/model/host.dart';
 import 'package:tiktok_tool/src/presentation/index.dart';
 
+import '../../../data/service/app_storage.dart';
 import '../../../router/navigator.dart';
 
 class HostItemWidget extends StatelessWidget {
   final HostModel data;
+  final VoidCallback? onStop;
 
-  const HostItemWidget({super.key, required this.data});
+  const HostItemWidget({super.key, required this.data, this.onStop});
 
   @override
   Widget build(BuildContext context) {
@@ -55,19 +56,29 @@ class HostItemWidget extends StatelessWidget {
                 ],
               ),
             ),
-            GestureDetector(
-              onTap: () async {
+            if (data.isRecording)
+              IconButton(
+                key: const ValueKey('host_page_stop_record_action'),
+                onPressed: () {
+                  onStop?.call();
+                },
+                icon: const Icon(
+                  Icons.stop,
+                  color: Colors.red,
+                  size: 26,
+                ),
+              ),
+            IconButton(
+              key: const ValueKey('room_page_start_record_action'),
+              onPressed: () async {
                 final storage = AppStorage();
                 storage.setUniqueId(data.uniqueId);
                 XNavigator.livestream(context);
               },
-              child: Container(
-                padding: const EdgeInsets.all(10),
-                child: Icon(
-                  Icons.play_circle,
-                  size: 26,
-                  color: context.color.primary,
-                ),
+              icon: const Icon(
+                Icons.play_circle,
+                size: 26,
+                color: Colors.green,
               ),
             )
           ],

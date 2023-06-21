@@ -9,8 +9,34 @@ import 'package:tiktok_tool/src/presentation/index.dart';
 import '../../di/di.dart';
 
 @RoutePage()
-class HostPage extends StatelessWidget {
+class HostPage extends StatefulWidget {
   const HostPage({super.key});
+
+  @override
+  State<StatefulWidget> createState() => _HostState();
+}
+
+class _HostState extends State<HostPage> {
+  List<HostModel> hosts = [];
+  XApiSnapshot? snapshot;
+
+  @override
+  void initState() {
+    _fetchData();
+    super.initState();
+  }
+
+  void _fetchData() {
+    XDI.I.get<HostRepository>().getHosts().then(
+          (value) => setState(() {
+            snapshot = value;
+            if (value.hasData) {
+              hosts.clear();
+              hosts.addAll(value.requireData);
+            }
+          }),
+        );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -18,45 +44,58 @@ class HostPage extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Danh sách Tiktoker'),
       ),
-      body: FutureBuilder<XApiSnapshot<Iterable<HostModel>>>(
-        future: XDI.I.get<HostRepository>().getHost(),
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            final data = snapshot.requireData;
-            if (data.hasData) {
-              final hosts = data.requireData;
-              return ListView.separated(
-                itemBuilder: (context, index) {
-                  final item = hosts.elementAt(index);
-                  return HostItemWidget(data: item);
-                },
-                separatorBuilder: (context, index) {
-                  return Divider(
-                    color: context.color.onPrimary,
-                  );
-                },
-                itemCount: hosts.length,
-              );
-            } else {
-              return Container(
-                alignment: Alignment.center,
-                child: Text(data.error.toString()),
-              );
-            }
-          }
-          if (snapshot.hasError) {
-            return Container(
-              alignment: Alignment.center,
-              child: Text(snapshot.error.toString()),
-            );
-          } else {
-            return Container(
-              alignment: Alignment.center,
-              child: const CircularProgressIndicator(),
-            );
-          }
+      body: RefreshIndicator(
+        onRefresh: () async {
+          setState(() {
+            hosts.clear();
+            snapshot = null;
+          });
+          _fetchData();
         },
+        child: _buildBody(context),
       ),
     );
+  }
+
+  Widget _buildBody(BuildContext context) {
+    if (snapshot != null) {
+      if (snapshot?.hasData == true) {
+        return ListView.separated(
+          itemBuilder: (context, index) {
+            final item = hosts.elementAt(index);
+            return HostItemWidget(
+              key: ValueKey('room_page_item_${item.uniqueId}'),
+              data: item,
+              onStop: () {
+                _stopRecord(context, index, item);
+              },
+            );
+          },
+          separatorBuilder: (context, index) {
+            return Divider(
+              color: context.color.onPrimary,
+            );
+          },
+          itemCount: hosts.length,
+        );
+      } else {
+        return Container(
+          alignment: Alignment.center,
+          child: Text(snapshot?.error?.toString() ?? ''),
+        );
+      }
+    } else {
+      return Container(
+        alignment: Alignment.center,
+        child: const CircularProgressIndicator(),
+      );
+    }
+  }
+
+  Future _stopRecord(BuildContext context, int index, HostModel item) async {
+    XDI.I<HostRepository>().stopRecord(item.uniqueId);
+    setState(() {
+      hosts[index] = item.copyWith(isRecording: false);
+    });
   }
 }

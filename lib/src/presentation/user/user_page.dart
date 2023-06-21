@@ -22,9 +22,6 @@ class PotentialUsersPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final roomModel = XDI.I<HostRepository>().getRoomModelFromCache(roomId);
-    final hostModel =
-        XDI.I<HostRepository>().getHostModelFromCache(roomModel?.uniqueId);
     late final Future<XApiSnapshot<Iterable<UserModel>>> feature;
     if (uniqueId != null) {
       feature =
@@ -35,7 +32,7 @@ class PotentialUsersPage extends StatelessWidget {
     }
     return Scaffold(
       appBar: AppBar(
-        title: Text(hostModel?.nickname ?? ''),
+        // title: Text(hostModel?.nickname ?? ''),
       ),
       body: FutureBuilder<XApiSnapshot<Iterable<UserModel>>>(
         future: feature,

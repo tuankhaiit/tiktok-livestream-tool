@@ -23,12 +23,6 @@ class HomePage extends StatelessWidget {
                 children: [
                   FilledButton(
                     onPressed: () {
-                      XNavigator.livestream(context);
-                    },
-                    child: const Text('Livestream'),
-                  ),
-                  FilledButton(
-                    onPressed: () {
                       XNavigator.host(context);
                     },
                     child: const Text('Host'),

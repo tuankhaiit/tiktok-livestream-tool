@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:tiktok_tool/src/configuration/env/ENV.dart';
 import 'package:tiktok_tool/src/network/request.dart';
 
 import '../utils/log.dart';
@@ -7,7 +8,7 @@ import '../utils/log.dart';
 class XRestService {
   static const int _timeout = 120;
 
-  static const String _domain = 'http://192.168.88.254:8081';
+  static const String _domain = ENV.apiServer;
   Map<String, String>? _headers;
 
   Future setup() async {
@@ -41,7 +42,6 @@ class XRestService {
   }
 
   Future<http.Response> get(String path, {Map<String, String>? queries}) async {
-    logD(_headers);
     try {
       final uri = _uriOf(path, queries);
       logI('> GET REQUEST <${uri.toString()}>');

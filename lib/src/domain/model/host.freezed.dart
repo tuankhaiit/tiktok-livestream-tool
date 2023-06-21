@@ -20,6 +20,7 @@ mixin _$HostModel {
   String get uniqueId => throw _privateConstructorUsedError;
   String get nickname => throw _privateConstructorUsedError;
   String get avatar => throw _privateConstructorUsedError;
+  bool get isRecording => throw _privateConstructorUsedError;
   int get createTime => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -37,6 +38,7 @@ abstract class $HostModelCopyWith<$Res> {
       String uniqueId,
       String nickname,
       String avatar,
+      bool isRecording,
       int createTime});
 }
 
@@ -57,6 +59,7 @@ class _$HostModelCopyWithImpl<$Res, $Val extends HostModel>
     Object? uniqueId = null,
     Object? nickname = null,
     Object? avatar = null,
+    Object? isRecording = null,
     Object? createTime = null,
   }) {
     return _then(_value.copyWith(
@@ -76,6 +79,10 @@ class _$HostModelCopyWithImpl<$Res, $Val extends HostModel>
           ? _value.avatar
           : avatar // ignore: cast_nullable_to_non_nullable
               as String,
+      isRecording: null == isRecording
+          ? _value.isRecording
+          : isRecording // ignore: cast_nullable_to_non_nullable
+              as bool,
       createTime: null == createTime
           ? _value.createTime
           : createTime // ignore: cast_nullable_to_non_nullable
@@ -96,6 +103,7 @@ abstract class _$$_HostModelCopyWith<$Res> implements $HostModelCopyWith<$Res> {
       String uniqueId,
       String nickname,
       String avatar,
+      bool isRecording,
       int createTime});
 }
 
@@ -114,6 +122,7 @@ class __$$_HostModelCopyWithImpl<$Res>
     Object? uniqueId = null,
     Object? nickname = null,
     Object? avatar = null,
+    Object? isRecording = null,
     Object? createTime = null,
   }) {
     return _then(_$_HostModel(
@@ -133,6 +142,10 @@ class __$$_HostModelCopyWithImpl<$Res>
           ? _value.avatar
           : avatar // ignore: cast_nullable_to_non_nullable
               as String,
+      isRecording: null == isRecording
+          ? _value.isRecording
+          : isRecording // ignore: cast_nullable_to_non_nullable
+              as bool,
       createTime: null == createTime
           ? _value.createTime
           : createTime // ignore: cast_nullable_to_non_nullable
@@ -149,6 +162,7 @@ class _$_HostModel implements _HostModel {
       required this.uniqueId,
       required this.nickname,
       required this.avatar,
+      required this.isRecording,
       required this.createTime});
 
   @override
@@ -160,11 +174,13 @@ class _$_HostModel implements _HostModel {
   @override
   final String avatar;
   @override
+  final bool isRecording;
+  @override
   final int createTime;
 
   @override
   String toString() {
-    return 'HostModel(userId: $userId, uniqueId: $uniqueId, nickname: $nickname, avatar: $avatar, createTime: $createTime)';
+    return 'HostModel(userId: $userId, uniqueId: $uniqueId, nickname: $nickname, avatar: $avatar, isRecording: $isRecording, createTime: $createTime)';
   }
 
   @override
@@ -178,13 +194,15 @@ class _$_HostModel implements _HostModel {
             (identical(other.nickname, nickname) ||
                 other.nickname == nickname) &&
             (identical(other.avatar, avatar) || other.avatar == avatar) &&
+            (identical(other.isRecording, isRecording) ||
+                other.isRecording == isRecording) &&
             (identical(other.createTime, createTime) ||
                 other.createTime == createTime));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, userId, uniqueId, nickname, avatar, createTime);
+  int get hashCode => Object.hash(
+      runtimeType, userId, uniqueId, nickname, avatar, isRecording, createTime);
 
   @JsonKey(ignore: true)
   @override
@@ -199,6 +217,7 @@ abstract class _HostModel implements HostModel {
       required final String uniqueId,
       required final String nickname,
       required final String avatar,
+      required final bool isRecording,
       required final int createTime}) = _$_HostModel;
 
   @override
@@ -209,6 +228,8 @@ abstract class _HostModel implements HostModel {
   String get nickname;
   @override
   String get avatar;
+  @override
+  bool get isRecording;
   @override
   int get createTime;
   @override

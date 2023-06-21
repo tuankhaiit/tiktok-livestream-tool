@@ -14,7 +14,7 @@ class SplashPage extends StatefulWidget {
 class _SplashState extends State<SplashPage> {
   @override
   void initState() {
-    Future.delayed(const Duration(seconds: 2), () {
+    Future.delayed(const Duration(seconds: 1), () {
       XNavigator.home(context);
     });
     super.initState();

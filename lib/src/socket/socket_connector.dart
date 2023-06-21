@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:rxdart/rxdart.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
+import 'package:tiktok_tool/src/configuration/env/ENV.dart';
 import 'package:tiktok_tool/src/data/service/app_storage.dart';
 import 'package:tiktok_tool/src/domain/model/room.dart';
 import 'package:tiktok_tool/src/utils/log.dart';
@@ -34,8 +35,7 @@ class SocketService {
     SocketService.socket?.close();
     SocketService.socket = null;
     IO.Socket socket = IO.io(
-        // 'http://home.tuankhaiit.com:8081',
-        'http://192.168.88.254:8081',
+        ENV.socketServer,
         IO.OptionBuilder()
             .setTransports(['websocket']) // for Flutter or Dart VM
             .disableAutoConnect()

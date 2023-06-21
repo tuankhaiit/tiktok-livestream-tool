@@ -4,7 +4,7 @@ class GetPotentialUsersByHostRequest extends XRestRequest {
   final String hostId;
 
   @override
-  String get path => 'host/$hostId/potentialUser';
+  String get path => 'api/host/$hostId/potentialUser';
 
   @override
   XRestRequestType get type => XRestRequestType.get;
@@ -16,7 +16,7 @@ class GetPotentialUsersByRoomRequest extends XRestRequest {
   final String roomId;
 
   @override
-  String get path => 'room/$roomId/potentialUser';
+  String get path => 'api/room/$roomId/potentialUser';
 
   @override
   XRestRequestType get type => XRestRequestType.get;
@@ -28,7 +28,7 @@ class GetUserProfileRequest extends XRestRequest {
   final String uniqueId;
 
   @override
-  String get path => 'user/$uniqueId';
+  String get path => 'api/user/$uniqueId';
 
   @override
   XRestRequestType get type => XRestRequestType.get;

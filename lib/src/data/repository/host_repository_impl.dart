@@ -1,5 +1,8 @@
+import 'dart:ffi';
+
 import 'package:tiktok_tool/src/data/network/dto/room_resp_dto.dart';
 import 'package:tiktok_tool/src/data/network/request/host_request.dart';
+import 'package:tiktok_tool/src/data/network/request/record_request.dart';
 import 'package:tiktok_tool/src/data/network/request/room_request.dart';
 import 'package:tiktok_tool/src/data/network/request/user_request.dart';
 import 'package:tiktok_tool/src/domain/model/host.dart';
@@ -20,12 +23,9 @@ class HostRepositoryImpl implements HostRepository {
 
   HostRepositoryImpl(this.service);
 
-  List<HostModel>? _hostCache;
-  List<RoomModel>? _roomCache;
-
   @override
-  Future<XApiSnapshot<Iterable<HostModel>>> getHost() async {
-    final request = GetAllHostRequest();
+  Future<XApiSnapshot<Iterable<HostModel>>> getHosts() async {
+    final request = GetHostsRequest();
     final snapshot = XApiHandler(restService: service).execute(
       request,
       (arrayJson) => List<HostModel>.from(
@@ -35,13 +35,22 @@ class HostRepositoryImpl implements HostRepository {
         ),
       ),
     );
-    snapshot.then((value) => _hostCache = value.data);
     return snapshot;
   }
 
   @override
-  Future<XApiSnapshot<Iterable<RoomModel>>> getRoomByHost(String hostId) {
-    final request = GetRoomsByHostRequest(hostId);
+  Future<XApiSnapshot<HostModel>> getHostDetail(String hostId) {
+    final request = GetHostDetailRequest(hostId: hostId);
+    final snapshot = XApiHandler(restService: service).execute(
+      request,
+      (json) => HostResponseDTO.fromJson(json).toModel(),
+    );
+    return snapshot;
+  }
+
+  @override
+  Future<XApiSnapshot<Iterable<RoomModel>>> getRooms(String hostId) {
+    final request = GetRoomsRequest(hostId: hostId);
     final snapshot = XApiHandler(restService: service).execute(
       request,
       (arrayJson) => List<RoomModel>.from(
@@ -51,14 +60,27 @@ class HostRepositoryImpl implements HostRepository {
         ),
       ),
     );
-    snapshot.then((value) => _roomCache = value.data);
+    return snapshot;
+  }
+
+  @override
+  Future<XApiSnapshot<RoomModel>> getRoomDetail(String roomId) {
+    final request = GetRoomDetailRequest(roomId: roomId);
+    final snapshot = XApiHandler(restService: service).execute(
+      request,
+      (json) =>
+          RoomResponseDTO.fromJson(json as Map<String, dynamic>).toModel(),
+    );
     return snapshot;
   }
 
   @override
   Future<XApiSnapshot<Iterable<CommentModel>>> getCommentsByHost(
-      String uniqueId) {
-    final request = GetCommentsByHostRequest(uniqueId: uniqueId);
+    String hostId,
+    String? uniqueId,
+  ) {
+    final request =
+        GetCommentsByHostRequest(hostId: hostId, uniqueId: uniqueId);
     final snapshot = XApiHandler(restService: service).execute(
       request,
       (arrayJson) => List<CommentModel>.from(
@@ -73,8 +95,11 @@ class HostRepositoryImpl implements HostRepository {
 
   @override
   Future<XApiSnapshot<Iterable<CommentModel>>> getCommentsByRoom(
-      String roomId) {
-    final request = GetCommentsByRoomRequest(roomId: roomId);
+    String roomId,
+    String? uniqueId,
+  ) {
+    final request =
+        GetCommentsByRoomRequest(roomId: roomId, uniqueId: uniqueId);
     final snapshot = XApiHandler(restService: service).execute(
       request,
       (arrayJson) => List<CommentModel>.from(
@@ -130,22 +155,26 @@ class HostRepositoryImpl implements HostRepository {
   }
 
   @override
-  HostModel? getHostModelFromCache(String? uniqueId) {
-    final index =
-        _hostCache?.indexWhere((element) => element.uniqueId == uniqueId) ?? -1;
-    if (index >= 0) {
-      return _hostCache?.elementAt(index);
-    }
-    return null;
+  Future<XApiSnapshot<Bool>> isRecording(String hostId) {
+    final request = CheckRecordingRequest(hostId: hostId);
+    final snapshot = XApiHandler(restService: service)
+        .execute(request, (result) => result as Bool);
+    return snapshot;
   }
 
   @override
-  RoomModel? getRoomModelFromCache(String? roomId) {
-    final index =
-        _roomCache?.indexWhere((element) => element.roomId == roomId) ?? -1;
-    if (index >= 0) {
-      return _roomCache?.elementAt(index);
-    }
-    return null;
+  Future<XApiSnapshot<Bool>> startRecord(String hostId) {
+    final request = StartRecordRequest(hostId: hostId);
+    final snapshot = XApiHandler(restService: service)
+        .execute(request, (result) => result as Bool);
+    return snapshot;
+  }
+
+  @override
+  Future<XApiSnapshot<Bool>> stopRecord(String hostId) {
+    final request = StopRecordRequest(hostId: hostId);
+    final snapshot = XApiHandler(restService: service)
+        .execute(request, (result) => result as Bool);
+    return snapshot;
   }
 }

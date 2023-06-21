@@ -6,6 +6,7 @@ import 'package:tiktok_tool/src/domain/repository/host_repository.dart';
 import 'package:tiktok_tool/src/network/result.dart';
 import 'package:tiktok_tool/src/presentation/index.dart';
 import 'package:tiktok_tool/src/presentation/widget/comment.dart';
+import 'package:tiktok_tool/src/router/navigator.dart';
 
 import '../../di/di.dart';
 
@@ -15,18 +16,26 @@ class CommentPage extends StatelessWidget {
   final String? roomId;
   final String? uniqueId;
 
-  const CommentPage({super.key, required this.hostId, required this.roomId, required this.uniqueId});
+  const CommentPage(
+      {super.key,
+      required this.hostId,
+      required this.roomId,
+      required this.uniqueId});
 
   @override
   Widget build(BuildContext context) {
     late final Future<XApiSnapshot<Iterable<CommentModel>>> feature;
-    if (uniqueId != null) {
-      feature = XDI.I.get<HostRepository>().getCommentsByHost(uniqueId ?? '');
+    if (hostId != null) {
+      feature =
+          XDI.I.get<HostRepository>().getCommentsByHost(hostId ?? '', uniqueId);
     } else {
-      feature = XDI.I.get<HostRepository>().getCommentsByRoom(roomId ?? '');
+      feature =
+          XDI.I.get<HostRepository>().getCommentsByRoom(roomId ?? '', uniqueId);
     }
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        actions: _buildActions(context),
+      ),
       body: FutureBuilder<XApiSnapshot<Iterable<CommentModel>>>(
         future: feature,
         builder: (context, snapshot) {
@@ -59,6 +68,7 @@ class CommentPage extends StatelessWidget {
                         itemBuilder: (context, index) {
                           final item = comments.elementAt(index);
                           return CommentWidget(
+                            key: ValueKey('comment_page_item_${item.uniqueId}'),
                             comment: item,
                           );
                         },
@@ -94,5 +104,20 @@ class CommentPage extends StatelessWidget {
         },
       ),
     );
+  }
+
+  List<Widget> _buildActions(BuildContext context) {
+    return [
+      if (hostId != null || roomId != null)
+        IconButton(
+          onPressed: () {
+            XNavigator.potentialUsers(context, hostId, roomId);
+          },
+          icon: Icon(
+            Icons.person,
+            color: context.color.primary,
+          ),
+        )
+    ];
   }
 }

@@ -15,40 +15,6 @@ abstract class _$XRouter extends RootStackRouter {
 
   @override
   final Map<String, PageFactory> pagesMap = {
-    HomeRoute.name: (routeData) {
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const HomePage(),
-      );
-    },
-    SplashRoute.name: (routeData) {
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const SplashPage(),
-      );
-    },
-    HostRoute.name: (routeData) {
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const HostPage(),
-      );
-    },
-    StreamRoute.name: (routeData) {
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const StreamPage(),
-      );
-    },
-    RoomRoute.name: (routeData) {
-      final args = routeData.argsAs<RoomRouteArgs>();
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: RoomPage(
-          key: args.key,
-          uniqueId: args.uniqueId,
-        ),
-      );
-    },
     CommentRoute.name: (routeData) {
       final args = routeData.argsAs<CommentRouteArgs>();
       return AutoRoutePage<dynamic>(
@@ -59,6 +25,40 @@ abstract class _$XRouter extends RootStackRouter {
           roomId: args.roomId,
           uniqueId: args.uniqueId,
         ),
+      );
+    },
+    HomeRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const HomePage(),
+      );
+    },
+    HostRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const HostPage(),
+      );
+    },
+    RoomRoute.name: (routeData) {
+      final args = routeData.argsAs<RoomRouteArgs>();
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: RoomPage(
+          key: args.key,
+          hostId: args.hostId,
+        ),
+      );
+    },
+    SplashRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const SplashPage(),
+      );
+    },
+    StreamRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const StreamPage(),
       );
     },
     PotentialUsersRoute.name: (routeData) {
@@ -83,99 +83,6 @@ abstract class _$XRouter extends RootStackRouter {
       );
     },
   };
-}
-
-/// generated route for
-/// [HomePage]
-class HomeRoute extends PageRouteInfo<void> {
-  const HomeRoute({List<PageRouteInfo>? children})
-      : super(
-          HomeRoute.name,
-          initialChildren: children,
-        );
-
-  static const String name = 'HomeRoute';
-
-  static const PageInfo<void> page = PageInfo<void>(name);
-}
-
-/// generated route for
-/// [SplashPage]
-class SplashRoute extends PageRouteInfo<void> {
-  const SplashRoute({List<PageRouteInfo>? children})
-      : super(
-          SplashRoute.name,
-          initialChildren: children,
-        );
-
-  static const String name = 'SplashRoute';
-
-  static const PageInfo<void> page = PageInfo<void>(name);
-}
-
-/// generated route for
-/// [HostPage]
-class HostRoute extends PageRouteInfo<void> {
-  const HostRoute({List<PageRouteInfo>? children})
-      : super(
-          HostRoute.name,
-          initialChildren: children,
-        );
-
-  static const String name = 'HostRoute';
-
-  static const PageInfo<void> page = PageInfo<void>(name);
-}
-
-/// generated route for
-/// [StreamPage]
-class StreamRoute extends PageRouteInfo<void> {
-  const StreamRoute({List<PageRouteInfo>? children})
-      : super(
-          StreamRoute.name,
-          initialChildren: children,
-        );
-
-  static const String name = 'StreamRoute';
-
-  static const PageInfo<void> page = PageInfo<void>(name);
-}
-
-/// generated route for
-/// [RoomPage]
-class RoomRoute extends PageRouteInfo<RoomRouteArgs> {
-  RoomRoute({
-    Key? key,
-    required String uniqueId,
-    List<PageRouteInfo>? children,
-  }) : super(
-          RoomRoute.name,
-          args: RoomRouteArgs(
-            key: key,
-            uniqueId: uniqueId,
-          ),
-          initialChildren: children,
-        );
-
-  static const String name = 'RoomRoute';
-
-  static const PageInfo<RoomRouteArgs> page = PageInfo<RoomRouteArgs>(name);
-}
-
-class RoomRouteArgs {
-  const RoomRouteArgs({
-    this.key,
-    required this.uniqueId,
-  });
-
-  final Key? key;
-
-  final String uniqueId;
-
-  @override
-  String toString() {
-    return 'RoomRouteArgs{key: $key, uniqueId: $uniqueId}';
-  }
 }
 
 /// generated route for
@@ -224,6 +131,99 @@ class CommentRouteArgs {
   String toString() {
     return 'CommentRouteArgs{key: $key, hostId: $hostId, roomId: $roomId, uniqueId: $uniqueId}';
   }
+}
+
+/// generated route for
+/// [HomePage]
+class HomeRoute extends PageRouteInfo<void> {
+  const HomeRoute({List<PageRouteInfo>? children})
+      : super(
+          HomeRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'HomeRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [HostPage]
+class HostRoute extends PageRouteInfo<void> {
+  const HostRoute({List<PageRouteInfo>? children})
+      : super(
+          HostRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'HostRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [RoomPage]
+class RoomRoute extends PageRouteInfo<RoomRouteArgs> {
+  RoomRoute({
+    Key? key,
+    required String hostId,
+    List<PageRouteInfo>? children,
+  }) : super(
+          RoomRoute.name,
+          args: RoomRouteArgs(
+            key: key,
+            hostId: hostId,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'RoomRoute';
+
+  static const PageInfo<RoomRouteArgs> page = PageInfo<RoomRouteArgs>(name);
+}
+
+class RoomRouteArgs {
+  const RoomRouteArgs({
+    this.key,
+    required this.hostId,
+  });
+
+  final Key? key;
+
+  final String hostId;
+
+  @override
+  String toString() {
+    return 'RoomRouteArgs{key: $key, hostId: $hostId}';
+  }
+}
+
+/// generated route for
+/// [SplashPage]
+class SplashRoute extends PageRouteInfo<void> {
+  const SplashRoute({List<PageRouteInfo>? children})
+      : super(
+          SplashRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'SplashRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [StreamPage]
+class StreamRoute extends PageRouteInfo<void> {
+  const StreamRoute({List<PageRouteInfo>? children})
+      : super(
+          StreamRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'StreamRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
 }
 
 /// generated route for

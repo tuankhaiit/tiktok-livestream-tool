@@ -4,10 +4,13 @@ import 'package:tiktok_tool/src/presentation/index.dart';
 
 import '../../router/navigator.dart';
 
+typedef OnCommonClick = void Function(CommentModel comment);
+
 class CommentWidget extends StatelessWidget {
   final CommentModel comment;
+  final OnCommonClick? onClick;
 
-  const CommentWidget({super.key, required this.comment});
+  const CommentWidget({super.key, required this.comment, this.onClick});
 
   @override
   Widget build(BuildContext context) {

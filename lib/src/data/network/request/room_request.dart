@@ -1,13 +1,25 @@
 import 'package:tiktok_tool/src/network/request.dart';
 
-class GetRoomsByHostRequest extends XRestRequest {
+class GetRoomDetailRequest extends XRestRequest {
+  final String roomId;
+
   @override
-  String get path => 'room';
+  String get path => 'api/room/$roomId';
 
   @override
   XRestRequestType get type => XRestRequestType.get;
 
-  GetRoomsByHostRequest(String hostId) {
-    queries = {'hostId': hostId};
-  }
+  GetRoomDetailRequest({required this.roomId});
+}
+
+class GetRoomsRequest extends XRestRequest {
+  final String hostId;
+
+  @override
+  String get path => 'api/host/$hostId/room';
+
+  @override
+  XRestRequestType get type => XRestRequestType.get;
+
+  GetRoomsRequest({required this.hostId});
 }

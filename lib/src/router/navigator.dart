@@ -26,7 +26,7 @@ class XNavigator {
   }
 
   static Future<dynamic> room(BuildContext context, String uniqueId) {
-    return context.router.push(RoomRoute(uniqueId: uniqueId));
+    return context.router.push(RoomRoute(hostId: uniqueId));
   }
 
   static Future<dynamic> comment(
