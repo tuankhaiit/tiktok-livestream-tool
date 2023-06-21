@@ -40,7 +40,7 @@ class CommentResponseDTO {
         id: userId ?? '',
         userId: userId ?? '',
         uniqueId: uniqueId ?? '',
-        nickname: nickname ?? '',
+        nickname: nickname?.toString().trim() ?? '',
         avatar: avatar ?? '',
         comment: comment ?? '',
         createTime: createTime ?? 0,

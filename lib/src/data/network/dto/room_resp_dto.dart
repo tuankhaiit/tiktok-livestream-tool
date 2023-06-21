@@ -37,7 +37,7 @@ class RoomResponseDTO {
         roomId: roomId ?? '',
         userId: userId ?? '',
         uniqueId: uniqueId ?? '',
-        nickname: nickname ?? '',
+        nickname: nickname?.toString().trim() ?? '',
         avatar: avatar ?? '',
         status: '',
         commentCount: commentCount ?? 0,

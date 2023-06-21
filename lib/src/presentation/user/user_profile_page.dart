@@ -108,9 +108,13 @@ class UserProfilePage extends StatelessWidget {
                   color: context.color.primary,
                 ),
                 const SizedBox(width: 10),
-                Text(
-                  url,
-                  style: context.textTheme.bodyMedium?.copyWith(),
+                Expanded(
+                  child: Text(
+                    url,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: context.textTheme.bodyMedium?.copyWith(),
+                  ),
                 )
               ],
             ),
@@ -122,7 +126,7 @@ class UserProfilePage extends StatelessWidget {
 
   void _openProfile(String url) async {
     try {
-      await launchUrl(Uri.parse(url));
+      await launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication);
     } catch (e) {
       logE(e);
     }

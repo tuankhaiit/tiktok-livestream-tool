@@ -34,7 +34,7 @@ class UserResponseDTO {
   UserModel toModel() => UserModel(
         userId: userId ?? '',
         uniqueId: uniqueId ?? '',
-        nickname: nickname ?? '',
+        nickname: nickname?.toString().trim() ?? '',
         avatar: avatar ?? '',
         phoneNumber: phoneNumber ?? '',
         createTime: createTime ?? 0,

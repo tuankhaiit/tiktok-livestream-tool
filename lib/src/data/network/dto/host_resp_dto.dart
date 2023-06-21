@@ -33,7 +33,7 @@ class HostResponseDTO {
   HostModel toModel() => HostModel(
         userId: userId ?? '',
         uniqueId: uniqueId ?? '',
-        nickname: nickname ?? '',
+        nickname: nickname?.toString().trim() ?? '',
         avatar: avatar ?? '',
         isRecording: isRecording ?? false,
         createTime: createTime ?? 0,

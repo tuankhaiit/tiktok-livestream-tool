@@ -142,7 +142,7 @@ class XTheme {
           color: XColors.iconBlack,
         ),
         scrollbarTheme: ScrollbarThemeData(
-          crossAxisMargin: 10,
+          crossAxisMargin: 4,
           thumbColor: MaterialStateProperty.resolveWith(
               (states) => XColors.primaryColors.withOpacity(0.6)),
         ),
