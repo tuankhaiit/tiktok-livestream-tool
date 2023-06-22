@@ -167,7 +167,7 @@ jobs:
         with:
           appName: tuankhai0811/${{ matrix.appcenter_name }}
           token: ${{ secrets.APP_CENTER_TOKEN }}
-          group: Publish
+          group: Public
           file: ${{ matrix.build_path }}
           notifyTesters: false
           debug: false
