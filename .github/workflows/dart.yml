@@ -60,19 +60,21 @@ jobs:
         uses: subosito/flutter-action@v2
         with:
           channel: ${{ matrix.sdk }}
-          #flutter-version: '2.2.2'
+          flutter-version: '3.7.10'
 
       # GET FLUTTER DEPENDENCY
-      - run: flutter doctor -v
-      - name: Install project dependencies
-        run: flutter pub get
-      - name: Generate code
-        run: flutter packages pub run build_runner build --delete-conflicting-outputs
+      - name: Install Flutter project dependency
+        run: |
+          flutter doctor -v
+          flutter pub get
+          flutter packages pub run build_runner build --delete-conflicting-outputs
 
       # START BUILD ANDROID ----------------------
-      - name: Build apk
+      - name: Build Android
         if: matrix.target == 'Android'
-        run: flutter build ${{matrix.build_target}} -t ./lib/main.dart --release
+        run: |
+          yes | flutter doctor --android-licenses
+          flutter build ${{matrix.build_target}} -t ./lib/main.dart --release
       # END BUILD ANDROID ------------------------
 
       # START BUILD IOS --------------------------
@@ -115,7 +117,7 @@ jobs:
           cp $PP_PATH ~/Library/MobileDevice/Provisioning\ Profiles
 
       # BUILD IPA FILE
-      - name: Build ipa
+      - name: Build iOS
         if: matrix.target == 'iOS'
         run: |
           cd kt_app
@@ -150,7 +152,7 @@ jobs:
       #  run: dart test
 
       # UPLOAD IPA TO ARTIFACT BEFORE DISTRIBUTE TO APP CENTER
-      - name: Upload ipa to artifact
+      - name: Upload iOS to artifact
         if: matrix.target == 'iOS'
         uses: actions/upload-artifact@v2
         with:
@@ -158,7 +160,7 @@ jobs:
           path: ${{ matrix.build_path }}
 
       # DISTRIBUTE APK TO APP CENTER
-      - name: Upload apk to App Center
+      - name: Distribute Android to App Center
         if: matrix.target == 'Android'
         uses: wzieba/AppCenter-Github-Action@v1
         with:
