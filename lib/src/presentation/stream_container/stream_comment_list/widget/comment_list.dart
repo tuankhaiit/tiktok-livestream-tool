@@ -131,7 +131,7 @@ abstract class _CommentListState<T extends StatefulWidget> extends State<T> {
             child: ListView.builder(
               controller: controller,
               itemBuilder: (context, index) {
-                return CommentWidget(comment: comments[index]);
+                return CommentItemWidget(comment: comments[index]);
               },
               itemCount: comments.length,
             ),

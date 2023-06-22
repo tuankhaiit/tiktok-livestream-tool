@@ -12,17 +12,6 @@ class RoomItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dateTime =
-        DateTime.fromMillisecondsSinceEpoch(data.createTime * 1000);
-    final timeFormatted = DateFormat('HH:mm').format(dateTime);
-    late final String dayFormatted;
-    if (dateTime.isToday()) {
-      dayFormatted = 'Hôm nay';
-    } else if (dateTime.isYesterday()) {
-      dayFormatted = 'Hôm qua';
-    } else {
-      dayFormatted = DateFormat('dd/MM/yyyy').format(dateTime);
-    }
     final commentCountFormatted =
         NumberFormat.compact().format(data.commentCount);
     return GestureDetector(
@@ -39,7 +28,7 @@ class RoomItemWidget extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
-                  '$timeFormatted - $dayFormatted',
+                  data.displayTitle(),
                   style: context.textTheme.titleMedium?.copyWith(fontSize: 18),
                 ),
                 Text(

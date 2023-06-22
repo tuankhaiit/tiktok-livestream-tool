@@ -1,19 +1,20 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:tiktok_tool/src/presentation/user/user_page.dart';
 import 'package:tiktok_tool/src/router/routes.dart';
 
 import 'auto_route.dart';
 
 class XNavigator {
+  XNavigator._();
+
   static XRouter get rootRouter => GetIt.I<XRouter>();
 
   static BuildContext get context =>
       rootRouter.navigatorKey.currentState!.context;
 
   static Future<dynamic> home(BuildContext context) {
-    context.router.removeWhere((route) => route.name == SplashRoute.name);
+    context.router.removeWhere((route) => true);
     return context.router.pushNamed(XRoutes.home);
   }
 
@@ -42,7 +43,7 @@ class XNavigator {
   static Future<dynamic> potentialUsers(
       BuildContext context, String? hostId, String? roomId) {
     return context.router.push(PotentialUsersRoute(
-      uniqueId: hostId,
+      hostId: hostId,
       roomId: roomId,
     ));
   }

@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:tiktok_tool/src/utils/date.dart';
 
 part 'comment.freezed.dart';
 
@@ -13,4 +14,11 @@ class CommentModel with _$CommentModel {
     required String comment,
     required int createTime,
   }) = _CommentModel;
+}
+
+extension RoomModelExtensions on CommentModel {
+  String displayTime() {
+    final dateTime = DateTime.fromMillisecondsSinceEpoch(createTime);
+    return dateTime.shortDateTimeFormatted();
+  }
 }

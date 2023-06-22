@@ -5,7 +5,7 @@ class GetCommentsByHostRequest extends XRestRequest {
   final String? uniqueId;
 
   @override
-  String get path => 'api/host/$uniqueId/comment';
+  String get path => 'api/host/$hostId/comment';
 
   @override
   XRestRequestType get type => XRestRequestType.get;

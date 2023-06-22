@@ -1,67 +1,56 @@
 import 'package:flutter/material.dart';
 import 'package:tiktok_tool/src/domain/model/user.dart';
 import 'package:tiktok_tool/src/presentation/index.dart';
-import 'package:tiktok_tool/src/router/navigator.dart';
+import 'package:tiktok_tool/src/presentation/widget/avatar.dart';
 
-class UserWidget extends StatelessWidget {
+typedef OnUserClick = void Function(UserModel comment);
+
+class UserItemWidget extends StatelessWidget {
   final UserModel user;
+  final OnUserClick? onClick;
 
-  const UserWidget({super.key, required this.user});
+  const UserItemWidget({super.key, required this.user, this.onClick});
 
   @override
   Widget build(BuildContext context) {
-    const avatarSize = 40.0;
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(avatarSize / 2),
-            child: Image.network(
-              user.avatar,
-              width: avatarSize,
-              height: avatarSize,
-              errorBuilder: (_, __, ___) {
-                return Container(
-                  alignment: Alignment.center,
-                  width: 40,
-                  height: 40,
-                  child: const Icon(Icons.error),
-                );
-              },
+    return GestureDetector(
+      behavior: HitTestBehavior.opaque,
+      onTap: () {
+        onClick?.call(user);
+      },
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            AvatarWidget(
+              key: ValueKey('user_avatar_${user.uniqueId}'),
+              url: user.avatar,
+              size: 40,
+              uniqueId: user.uniqueId,
             ),
-          ),
-          const SizedBox(width: 10),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Text(
-                  user.nickname,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: context.textTheme.titleSmall?.copyWith(fontSize: 14),
-                ),
-                Text(
-                  user.phoneNumber,
-                  maxLines: 3,
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ],
+            const SizedBox(width: 10),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Text(
+                    user.nickname,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: context.textTheme.titleSmall?.copyWith(fontSize: 14),
+                  ),
+                  Text(
+                    user.phoneNumber,
+                    maxLines: 3,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ],
+              ),
             ),
-          ),
-          IconButton(
-            onPressed: () {
-              XNavigator.userProfile(context, user.uniqueId);
-            },
-            icon: Icon(
-              Icons.contacts,
-              color: context.color.primary,
-            ),
-          )
-        ],
+          ],
+        ),
       ),
     );
   }

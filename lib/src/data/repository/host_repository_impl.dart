@@ -39,8 +39,8 @@ class HostRepositoryImpl implements HostRepository {
   }
 
   @override
-  Future<XApiSnapshot<HostModel>> getHostDetail(String hostId) {
-    final request = GetHostDetailRequest(hostId: hostId);
+  Future<XApiSnapshot<HostModel>> getHostDetail(String? hostId, String? roomId) {
+    final request = GetHostDetailRequest(hostId: hostId, roomId: roomId);
     final snapshot = XApiHandler(restService: service).execute(
       request,
       (json) => HostResponseDTO.fromJson(json).toModel(),

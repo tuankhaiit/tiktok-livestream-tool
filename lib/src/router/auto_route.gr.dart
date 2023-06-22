@@ -67,7 +67,7 @@ abstract class _$XRouter extends RootStackRouter {
         routeData: routeData,
         child: PotentialUsersPage(
           key: args.key,
-          uniqueId: args.uniqueId,
+          hostId: args.hostId,
           roomId: args.roomId,
         ),
       );
@@ -231,14 +231,14 @@ class StreamRoute extends PageRouteInfo<void> {
 class PotentialUsersRoute extends PageRouteInfo<PotentialUsersRouteArgs> {
   PotentialUsersRoute({
     Key? key,
-    required String? uniqueId,
+    required String? hostId,
     required String? roomId,
     List<PageRouteInfo>? children,
   }) : super(
           PotentialUsersRoute.name,
           args: PotentialUsersRouteArgs(
             key: key,
-            uniqueId: uniqueId,
+            hostId: hostId,
             roomId: roomId,
           ),
           initialChildren: children,
@@ -253,19 +253,19 @@ class PotentialUsersRoute extends PageRouteInfo<PotentialUsersRouteArgs> {
 class PotentialUsersRouteArgs {
   const PotentialUsersRouteArgs({
     this.key,
-    required this.uniqueId,
+    required this.hostId,
     required this.roomId,
   });
 
   final Key? key;
 
-  final String? uniqueId;
+  final String? hostId;
 
   final String? roomId;
 
   @override
   String toString() {
-    return 'PotentialUsersRouteArgs{key: $key, uniqueId: $uniqueId, roomId: $roomId}';
+    return 'PotentialUsersRouteArgs{key: $key, hostId: $hostId, roomId: $roomId}';
   }
 }
 

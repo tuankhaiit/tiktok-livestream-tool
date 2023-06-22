@@ -11,14 +11,21 @@ class GetHostsRequest extends XRestRequest {
 }
 
 class GetHostDetailRequest extends XRestRequest {
-  final String hostId;
+  final String? hostId;
+  final String? roomId;
 
   @override
-  String get path => 'api/host/$hostId';
+  String get path => hostId != null ? 'api/host/$hostId' : 'api/host';
 
   @override
   XRestRequestType get type => XRestRequestType.get;
 
 
-  GetHostDetailRequest({required this.hostId});
+  GetHostDetailRequest({this.hostId, this.roomId}) {
+    if (roomId != null) {
+      queries = {
+        'roomId': roomId ?? '',
+      };
+    }
+  }
 }

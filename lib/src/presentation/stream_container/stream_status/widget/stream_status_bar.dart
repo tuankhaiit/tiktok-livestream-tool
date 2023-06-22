@@ -5,6 +5,7 @@ import 'package:tiktok_tool/src/presentation/index.dart';
 import 'package:tiktok_tool/src/presentation/stream_container/input_nickname/input_nickname_dialog.dart';
 import 'package:tiktok_tool/src/presentation/stream_container/stream_status/bloc/stream_status_bloc.dart';
 import 'package:tiktok_tool/src/presentation/stream_container/stream_status/bloc/stream_status_state.dart';
+import 'package:tiktok_tool/src/presentation/widget/avatar.dart';
 
 class StreamStatusBarWidget extends StatefulWidget {
   const StreamStatusBarWidget({super.key});
@@ -30,24 +31,8 @@ class _StreamStatusBarState extends State<StreamStatusBarWidget> {
               children: [
                 Row(
                   children: [
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(22),
-                      child: state.avatar.contains('http')
-                          ? Image.network(
-                              state.avatar,
-                              width: 44,
-                              height: 44,
-                              errorBuilder: (_, __, ___) {
-                                return Container(
-                                  alignment: Alignment.center,
-                                  width: 44,
-                                  height: 44,
-                                  child: const Icon(Icons.error),
-                                );
-                              },
-                            )
-                          : Container(),
-                    ),
+                    AvatarWidget(
+                        url: state.avatar, size: 44, uniqueId: state.uniqueId),
                     const SizedBox(width: 8),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -75,7 +60,8 @@ class _StreamStatusBarState extends State<StreamStatusBarWidget> {
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
                                   Text(
-                                    NumberFormat.compact().format(state.memberNum),
+                                    NumberFormat.compact()
+                                        .format(state.memberNum),
                                     style: context.textTheme.titleSmall
                                         ?.copyWith(fontSize: 13),
                                   ),

@@ -5,6 +5,7 @@ import 'package:tiktok_tool/src/domain/repository/host_repository.dart';
 import 'package:tiktok_tool/src/network/result.dart';
 import 'package:tiktok_tool/src/presentation/host/widget/host_item.dart';
 import 'package:tiktok_tool/src/presentation/index.dart';
+import 'package:tiktok_tool/src/presentation/widget/appbar.dart';
 
 import '../../di/di.dart';
 
@@ -41,7 +42,7 @@ class _HostState extends State<HostPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
+      appBar: MyAppBar(
         title: const Text('Danh sách Tiktoker'),
       ),
       body: RefreshIndicator(
@@ -65,7 +66,7 @@ class _HostState extends State<HostPage> {
             final item = hosts.elementAt(index);
             return HostItemWidget(
               key: ValueKey('room_page_item_${item.uniqueId}'),
-              data: item,
+              host: item,
               onStop: () {
                 _stopRecord(context, index, item);
               },

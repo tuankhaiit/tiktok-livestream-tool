@@ -16,20 +16,14 @@ class HomePage extends StatelessWidget {
       body: Container(
         alignment: Alignment.center,
         child: Column(
+          mainAxisSize: MainAxisSize.min,
           children: [
-            const StreamStatusBarWidget(),
-            Expanded(
-              child: Column(
-                children: [
-                  FilledButton(
-                    onPressed: () {
-                      XNavigator.host(context);
-                    },
-                    child: const Text('Host'),
-                  ),
-                ],
-              ),
-            )
+            FilledButton(
+              onPressed: () {
+                XNavigator.host(context);
+              },
+              child: const Text('Danh sách Tiktoker'),
+            ),
           ],
         ),
       ),

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:tiktok_tool/src/domain/model/user.dart';
 import 'package:tiktok_tool/src/domain/repository/host_repository.dart';
 import 'package:tiktok_tool/src/presentation/index.dart';
+import 'package:tiktok_tool/src/presentation/widget/appbar.dart';
 import 'package:tiktok_tool/src/utils/log.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -17,7 +18,7 @@ class UserProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
+      appBar: MyAppBar(
         title: const Text('Profile'),
       ),
       body: FutureBuilder(
@@ -113,7 +114,6 @@ class UserProfilePage extends StatelessWidget {
                     url,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: context.textTheme.bodyMedium?.copyWith(),
                   ),
                 )
               ],

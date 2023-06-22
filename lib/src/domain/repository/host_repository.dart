@@ -10,7 +10,7 @@ import '../model/host.dart';
 abstract class HostRepository {
   Future<XApiSnapshot<Iterable<HostModel>>> getHosts();
 
-  Future<XApiSnapshot<HostModel>> getHostDetail(String hostId);
+  Future<XApiSnapshot<HostModel>> getHostDetail(String? hostId, String? roomId);
 
   Future<XApiSnapshot<Iterable<RoomModel>>> getRooms(String hostId);
 

@@ -1,43 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:tiktok_tool/src/domain/model/host.dart';
 import 'package:tiktok_tool/src/presentation/index.dart';
+import 'package:tiktok_tool/src/presentation/widget/avatar.dart';
 
 import '../../../data/service/app_storage.dart';
 import '../../../router/navigator.dart';
 
 class HostItemWidget extends StatelessWidget {
-  final HostModel data;
+  final HostModel host;
   final VoidCallback? onStop;
 
-  const HostItemWidget({super.key, required this.data, this.onStop});
+  const HostItemWidget({super.key, required this.host, this.onStop});
 
   @override
   Widget build(BuildContext context) {
-    const avatarSize = 60.0;
     return GestureDetector(
       onTap: () {
-        XNavigator.room(context, data.uniqueId);
+        XNavigator.room(context, host.uniqueId);
       },
       behavior: HitTestBehavior.opaque,
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
         child: Row(
           children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(avatarSize / 2),
-              child: Image.network(
-                data.avatar,
-                width: avatarSize,
-                height: avatarSize,
-                errorBuilder: (_, __, ___) {
-                  return Container(
-                    alignment: Alignment.center,
-                    width: avatarSize,
-                    height: avatarSize,
-                    child: const Icon(Icons.error),
-                  );
-                },
-              ),
+            AvatarWidget(
+              key: ValueKey('user_avatar_${host.uniqueId}'),
+              url: host.avatar,
+              size: 60,
+              uniqueId: host.uniqueId,
             ),
             const SizedBox(width: 16),
             Expanded(
@@ -45,18 +35,18 @@ class HostItemWidget extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    data.nickname,
+                    host.nickname,
                     style:
                         context.textTheme.titleMedium?.copyWith(fontSize: 18),
                   ),
                   Text(
-                    '@${data.uniqueId}',
+                    '@${host.uniqueId}',
                     style: context.textTheme.bodyLarge,
                   ),
                 ],
               ),
             ),
-            if (data.isRecording)
+            if (host.isRecording)
               IconButton(
                 key: const ValueKey('host_page_stop_record_action'),
                 onPressed: () {
@@ -72,7 +62,7 @@ class HostItemWidget extends StatelessWidget {
               key: const ValueKey('room_page_start_record_action'),
               onPressed: () async {
                 final storage = AppStorage();
-                storage.setUniqueId(data.uniqueId);
+                storage.setUniqueId(host.uniqueId);
                 XNavigator.livestream(context);
               },
               icon: const Icon(

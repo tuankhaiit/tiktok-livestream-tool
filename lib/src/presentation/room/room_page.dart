@@ -1,12 +1,15 @@
 import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:tiktok_tool/src/domain/model/host.dart';
 import 'package:tiktok_tool/src/domain/model/room.dart';
 import 'package:tiktok_tool/src/domain/repository/host_repository.dart';
 import 'package:tiktok_tool/src/network/result.dart';
 import 'package:tiktok_tool/src/presentation/index.dart';
 import 'package:tiktok_tool/src/presentation/room/widget/room_item.dart';
-import 'package:tiktok_tool/src/router/navigator.dart';
+import 'package:tiktok_tool/src/presentation/widget/action.dart';
+import 'package:tiktok_tool/src/presentation/widget/appbar.dart';
+import 'package:tiktok_tool/src/presentation/widget/host.dart';
 
 import '../../di/di.dart';
 
@@ -32,7 +35,7 @@ class _RoomState extends State<RoomPage> {
   }
 
   void _fetchData() {
-    XDI.I<HostRepository>().getHostDetail(widget.hostId).then(
+    XDI.I<HostRepository>().getHostDetail(widget.hostId, null).then(
           (value) => setState(
             () {
               if (value.hasData) {
@@ -66,7 +69,15 @@ class _RoomState extends State<RoomPage> {
           });
           _fetchData();
         },
-        child: _buildBody(context),
+        child: Column(
+          children: [
+            HostProfileWidget(hostId: widget.hostId),
+            Divider(color: context.color.background),
+            Expanded(
+              child: _buildBody(context),
+            )
+          ],
+        ),
       ),
     );
   }
@@ -74,17 +85,35 @@ class _RoomState extends State<RoomPage> {
   Widget _buildBody(BuildContext context) {
     if (snapshot != null) {
       if (snapshot?.hasData == true) {
-        return ListView.separated(
-          itemBuilder: (context, index) {
-            final item = rooms.elementAt(index);
-            return RoomItemWidget(data: item);
-          },
-          separatorBuilder: (context, index) {
-            return Divider(
-              color: context.color.onPrimary,
-            );
-          },
-          itemCount: rooms.length,
+        return Column(
+          children: [
+            Container(
+              width: double.infinity,
+              decoration: BoxDecoration(
+                color: context.color.primary,
+              ),
+              padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 14),
+              alignment: Alignment.centerRight,
+              child: Text(
+                '${NumberFormat.compact().format(rooms.length)}  phiên',
+                style: context.textTheme.titleSmall
+                    ?.copyWith(color: context.color.onPrimary),
+              ),
+            ),
+            Expanded(
+                child: ListView.separated(
+              itemBuilder: (context, index) {
+                final item = rooms.elementAt(index);
+                return RoomItemWidget(data: item);
+              },
+              separatorBuilder: (context, index) {
+                return Divider(
+                  color: context.color.onPrimary,
+                );
+              },
+              itemCount: rooms.length,
+            ))
+          ],
         );
       } else {
         return Container(
@@ -101,9 +130,8 @@ class _RoomState extends State<RoomPage> {
   }
 
   AppBar _buildAppBar(BuildContext context) {
-    return AppBar(
-      centerTitle: false,
-      title: Text(hostModel?.nickname ?? ''),
+    return MyAppBar(
+      title: const Text('Phiên Livestream'),
       actions: [
         if (hostModel?.isRecording == true)
           IconButton(
@@ -119,15 +147,9 @@ class _RoomState extends State<RoomPage> {
               color: Colors.red,
             ),
           ),
-        IconButton(
+        PotentialUserActionWidget(
           key: const ValueKey('room_page_users_action'),
-          onPressed: () {
-            XNavigator.potentialUsers(context, widget.hostId, null);
-          },
-          icon: Icon(
-            Icons.person,
-            color: context.color.primary,
-          ),
+          hostId: widget.hostId,
         )
       ],
     );
