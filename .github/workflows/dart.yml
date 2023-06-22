@@ -72,9 +72,10 @@ jobs:
       # START BUILD ANDROID ----------------------
       - name: Build Android
         if: matrix.target == 'Android'
-        run: |
-          yes | flutter doctor --android-licenses
-          flutter build ${{matrix.build_target}} -t ./lib/main.dart --release
+        run: flutter build ${{matrix.build_target}} -t ./lib/main.dart --release
+        #|
+        #yes | flutter doctor --android-licenses
+        #flutter build ${{matrix.build_target}} -t ./lib/main.dart --release
       # END BUILD ANDROID ------------------------
 
       # START BUILD IOS --------------------------
