@@ -29,13 +29,13 @@ jobs:
             file_name: app-release.apk
             artifact_name: android_artifact
             appcenter_name: Tiktok-Connector
-          - os: macos-latest
-            target: iOS
-            build_target: ipa
-            build_path: ./build/ios/ipa/flutter_architecture.ipa
-            file_name: flutter_architecture.ipa
-            artifact_name: ios_artifact
-            appcenter_name: Tiktok-Connector-iOS
+#           - os: macos-latest
+#             target: iOS
+#             build_target: ipa
+#             build_path: ./build/ios/ipa/flutter_architecture.ipa
+#             file_name: flutter_architecture.ipa
+#             artifact_name: ios_artifact
+#             appcenter_name: Tiktok-Connector-iOS
       # Disable fail-fast as we want results from all even if one fails.
       fail-fast: false
     steps:
@@ -52,7 +52,8 @@ jobs:
         if: matrix.target == 'Android'
         uses: actions/setup-java@v2
         with:
-          java-version: '12.x'
+          distribution: 'zulu'
+          java-version: '11'
 
       # INSTALL FLUTTER SDK
       - name: Install Flutter SDK
