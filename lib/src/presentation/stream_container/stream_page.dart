@@ -8,7 +8,9 @@ import 'package:tiktok_tool/src/presentation/widget/action.dart';
 
 @RoutePage()
 class StreamPage extends StatefulWidget {
-  const StreamPage({super.key});
+  final String uniqueId;
+
+  const StreamPage({super.key, required this.uniqueId});
 
   @override
   State<StatefulWidget> createState() => _StreamState();
@@ -19,13 +21,13 @@ class _StreamState extends State<StreamPage> {
 
   @override
   void initState() {
-    bloc = context.read<StreamStatusBloc>()..connectServer();
+    bloc = context.read<StreamStatusBloc>()..connectUniqueId(widget.uniqueId);
     super.initState();
   }
 
   @override
   void dispose() {
-    bloc.disconnectServer();
+    bloc.disconnectUniqueId();
     super.dispose();
   }
 
@@ -49,7 +51,11 @@ class _StreamState extends State<StreamPage> {
           )
         ],
       ),
-      body: const LiveStreamContainerWidget(),
+      body: LiveStreamContainerWidget(onStatusTap: () {
+        if (bloc.state.status != 'Online') {
+          bloc.connectUniqueId(widget.uniqueId);
+        }
+      }),
     );
   }
 }

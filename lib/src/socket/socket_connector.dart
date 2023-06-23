@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:rxdart/rxdart.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 import 'package:tiktok_tool/src/configuration/env/ENV.dart';
-import 'package:tiktok_tool/src/data/service/app_storage.dart';
 import 'package:tiktok_tool/src/domain/model/room.dart';
 import 'package:tiktok_tool/src/utils/log.dart';
 
@@ -24,12 +23,6 @@ class SocketService {
   static Stream<CommentModel> socialStream = _socialStreamController.stream
       .throttleTime(const Duration(milliseconds: 50));
 
-  static void disconnectServer(StreamStatusBloc bloc) {
-    _offLivestreamListen();
-    SocketService.socket?.close();
-    SocketService.socket = null;
-  }
-
   static void connectServer(StreamStatusBloc bloc) {
     logI('Socket is connecting to server');
     SocketService.socket?.close();
@@ -49,20 +42,17 @@ class SocketService {
 
     socket.onConnect((_) {
       bloc.serverOn();
-      _offLivestreamListen();
-      connectLivestream(bloc);
+      _listenStatistic(bloc);
     });
     socket.onConnecting((_) {
-      bloc.status('Connecting to server');
+      logI('Server reconnecting');
     });
     socket.onReconnect((_) {
-      logI('Socket reconnect');
-      bloc.status('Reconnecting to server');
+      logI('Server reconnect');
     });
     socket.onReconnecting((_) {
-      bloc.status('Connecting to server');
+      bloc.status('Reconnecting to server');
     });
-
     socket.onConnectError((data) {
       _offLivestreamListen();
       bloc.serverError('Error occurred!');
@@ -74,39 +64,52 @@ class SocketService {
       logE(data.toString());
     });
     socket.onDisconnect((_) {
-      _offLivestreamListen();
+      bloc.status('Error occurred!');
       bloc.serverOff();
+      _offLivestreamListen();
+      _offServerListen();
     });
     SocketService.socket = socket;
     socket.connect();
   }
 
-  static void _scheduleReconnectLivestream(StreamStatusBloc bloc) {
+  static void disconnectServer(StreamStatusBloc bloc) {
+    _offLivestreamListen();
+    SocketService.socket?.close();
+    SocketService.socket = null;
+  }
+
+  static void disconnectLivestream(StreamStatusBloc bloc) {
+    bloc.emptyState();
+    _offLivestreamListen();
+    final socket = SocketService.socket;
+    if (socket != null) {
+      socket.emit('disconnectTiktok');
+    }
+  }
+
+  static void _scheduleReconnectLivestream(StreamStatusBloc bloc, String uniqueId) {
     Future.delayed(const Duration(seconds: 5), () {
-      connectLivestream(bloc);
+      connectLivestream(bloc, uniqueId);
     });
   }
 
-  static Future connectLivestream(StreamStatusBloc bloc) async {
+  static Future connectLivestream(StreamStatusBloc bloc, String uniqueId) async {
     final socket = SocketService.socket;
     if (socket == null) return;
-
-    final uniqueId = await AppStorage().getUniqueId().then((value) => '$value');
+    _offLivestreamListen();
 
     bloc.emptyState();
     logI('Socket is connecting to $uniqueId');
     bloc.status('Connecting to $uniqueId');
-    socket.emit('setUniqueId', uniqueId);
 
     socket.once('streamEnd', (_) {
       bloc.offline();
       _offLivestreamListen();
-      _scheduleReconnectLivestream(bloc);
     });
     socket.once('tiktokDisconnected', (_) {
       bloc.offline();
       _offLivestreamListen();
-      _scheduleReconnectLivestream(bloc);
     });
     socket.once('tiktokConnected', (data) {
       final room = RoomModel(
@@ -132,6 +135,14 @@ class SocketService {
         _socialStreamController.add(social);
       });
     });
+
+    socket.emit('setUniqueId', uniqueId);
+  }
+
+  static void _listenStatistic(StreamStatusBloc bloc) {
+    final socket = SocketService.socket;
+    if (socket == null) return;
+    socket.on('statistic', (data) => bloc.updateStatistic(data));
   }
 
   static void _listenRoomMember(StreamStatusBloc bloc) {
@@ -182,6 +193,13 @@ class SocketService {
       socket.off('streamEnd');
       socket.off('tiktokConnected');
       socket.off('tiktokDisconnected');
+    }
+  }
+
+  static void _offServerListen() {
+    final socket = SocketService.socket;
+    if (socket != null) {
+      socket.off('globalConnectionCount');
     }
   }
 

@@ -22,8 +22,7 @@ mixin _$StreamStatusState {
   String get avatar => throw _privateConstructorUsedError;
   String get status => throw _privateConstructorUsedError;
   int get memberNum => throw _privateConstructorUsedError;
-  bool? get recording => throw _privateConstructorUsedError;
-  bool get streamerOnline => throw _privateConstructorUsedError;
+  int get connectionNum => throw _privateConstructorUsedError;
   bool get serverOnline => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -44,8 +43,7 @@ abstract class $StreamStatusStateCopyWith<$Res> {
       String avatar,
       String status,
       int memberNum,
-      bool? recording,
-      bool streamerOnline,
+      int connectionNum,
       bool serverOnline});
 }
 
@@ -68,8 +66,7 @@ class _$StreamStatusStateCopyWithImpl<$Res, $Val extends StreamStatusState>
     Object? avatar = null,
     Object? status = null,
     Object? memberNum = null,
-    Object? recording = freezed,
-    Object? streamerOnline = null,
+    Object? connectionNum = null,
     Object? serverOnline = null,
   }) {
     return _then(_value.copyWith(
@@ -97,14 +94,10 @@ class _$StreamStatusStateCopyWithImpl<$Res, $Val extends StreamStatusState>
           ? _value.memberNum
           : memberNum // ignore: cast_nullable_to_non_nullable
               as int,
-      recording: freezed == recording
-          ? _value.recording
-          : recording // ignore: cast_nullable_to_non_nullable
-              as bool?,
-      streamerOnline: null == streamerOnline
-          ? _value.streamerOnline
-          : streamerOnline // ignore: cast_nullable_to_non_nullable
-              as bool,
+      connectionNum: null == connectionNum
+          ? _value.connectionNum
+          : connectionNum // ignore: cast_nullable_to_non_nullable
+              as int,
       serverOnline: null == serverOnline
           ? _value.serverOnline
           : serverOnline // ignore: cast_nullable_to_non_nullable
@@ -128,8 +121,7 @@ abstract class _$$_StreamStatusStateCopyWith<$Res>
       String avatar,
       String status,
       int memberNum,
-      bool? recording,
-      bool streamerOnline,
+      int connectionNum,
       bool serverOnline});
 }
 
@@ -150,8 +142,7 @@ class __$$_StreamStatusStateCopyWithImpl<$Res>
     Object? avatar = null,
     Object? status = null,
     Object? memberNum = null,
-    Object? recording = freezed,
-    Object? streamerOnline = null,
+    Object? connectionNum = null,
     Object? serverOnline = null,
   }) {
     return _then(_$_StreamStatusState(
@@ -179,14 +170,10 @@ class __$$_StreamStatusStateCopyWithImpl<$Res>
           ? _value.memberNum
           : memberNum // ignore: cast_nullable_to_non_nullable
               as int,
-      recording: freezed == recording
-          ? _value.recording
-          : recording // ignore: cast_nullable_to_non_nullable
-              as bool?,
-      streamerOnline: null == streamerOnline
-          ? _value.streamerOnline
-          : streamerOnline // ignore: cast_nullable_to_non_nullable
-              as bool,
+      connectionNum: null == connectionNum
+          ? _value.connectionNum
+          : connectionNum // ignore: cast_nullable_to_non_nullable
+              as int,
       serverOnline: null == serverOnline
           ? _value.serverOnline
           : serverOnline // ignore: cast_nullable_to_non_nullable
@@ -205,8 +192,7 @@ class _$_StreamStatusState implements _StreamStatusState {
       required this.avatar,
       required this.status,
       required this.memberNum,
-      required this.recording,
-      required this.streamerOnline,
+      required this.connectionNum,
       required this.serverOnline});
 
   @override
@@ -222,15 +208,13 @@ class _$_StreamStatusState implements _StreamStatusState {
   @override
   final int memberNum;
   @override
-  final bool? recording;
-  @override
-  final bool streamerOnline;
+  final int connectionNum;
   @override
   final bool serverOnline;
 
   @override
   String toString() {
-    return 'StreamStatusState(roomId: $roomId, uniqueId: $uniqueId, nickname: $nickname, avatar: $avatar, status: $status, memberNum: $memberNum, recording: $recording, streamerOnline: $streamerOnline, serverOnline: $serverOnline)';
+    return 'StreamStatusState(roomId: $roomId, uniqueId: $uniqueId, nickname: $nickname, avatar: $avatar, status: $status, memberNum: $memberNum, connectionNum: $connectionNum, serverOnline: $serverOnline)';
   }
 
   @override
@@ -247,17 +231,15 @@ class _$_StreamStatusState implements _StreamStatusState {
             (identical(other.status, status) || other.status == status) &&
             (identical(other.memberNum, memberNum) ||
                 other.memberNum == memberNum) &&
-            (identical(other.recording, recording) ||
-                other.recording == recording) &&
-            (identical(other.streamerOnline, streamerOnline) ||
-                other.streamerOnline == streamerOnline) &&
+            (identical(other.connectionNum, connectionNum) ||
+                other.connectionNum == connectionNum) &&
             (identical(other.serverOnline, serverOnline) ||
                 other.serverOnline == serverOnline));
   }
 
   @override
   int get hashCode => Object.hash(runtimeType, roomId, uniqueId, nickname,
-      avatar, status, memberNum, recording, streamerOnline, serverOnline);
+      avatar, status, memberNum, connectionNum, serverOnline);
 
   @JsonKey(ignore: true)
   @override
@@ -275,8 +257,7 @@ abstract class _StreamStatusState implements StreamStatusState {
       required final String avatar,
       required final String status,
       required final int memberNum,
-      required final bool? recording,
-      required final bool streamerOnline,
+      required final int connectionNum,
       required final bool serverOnline}) = _$_StreamStatusState;
 
   @override
@@ -292,9 +273,7 @@ abstract class _StreamStatusState implements StreamStatusState {
   @override
   int get memberNum;
   @override
-  bool? get recording;
-  @override
-  bool get streamerOnline;
+  int get connectionNum;
   @override
   bool get serverOnline;
   @override

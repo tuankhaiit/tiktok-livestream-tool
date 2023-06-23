@@ -7,13 +7,15 @@ import 'package:tiktok_tool/src/presentation/stream_container/stream_status/bloc
 import 'package:tiktok_tool/src/presentation/stream_container/stream_status/widget/stream_status_bar.dart';
 
 class LiveStreamContainerWidget extends StatelessWidget {
-  const LiveStreamContainerWidget({super.key});
+  final VoidCallback? onStatusTap;
+
+  const LiveStreamContainerWidget({super.key, this.onStatusTap});
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const StreamStatusBarWidget(),
+        StreamStatusBarWidget(onTap: onStatusTap, showHostInfo: true),
         Container(
           height: 1,
           color: context.color.background,
@@ -21,10 +23,10 @@ class LiveStreamContainerWidget extends StatelessWidget {
         Expanded(
           child: BlocBuilder<StreamStatusBloc, StreamStatusState>(
             buildWhen: (previous, next) {
-              return previous.streamerOnline != next.streamerOnline;
+              return previous.status != next.status;
             },
             builder: (context, state) {
-              if (state.streamerOnline) {
+              if (state.status == 'Online') {
                 return Column(
                   children: [
                     Expanded(
@@ -68,6 +70,7 @@ class HeaderWidget extends StatelessWidget {
     return Container(
       width: double.infinity,
       alignment: Alignment.center,
+      color: context.color.background,
       padding: const EdgeInsets.symmetric(vertical: 4),
       child: Text(
         title,

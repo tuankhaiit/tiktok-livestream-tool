@@ -18,8 +18,8 @@ class XNavigator {
     return context.router.pushNamed(XRoutes.home);
   }
 
-  static Future<dynamic> livestream(BuildContext context) {
-    return context.router.pushNamed(XRoutes.livestream);
+  static Future<dynamic> livestream(BuildContext context, String uniqueId) {
+    return context.router.push(StreamRoute(uniqueId: uniqueId));
   }
 
   static Future<dynamic> host(BuildContext context) {

@@ -11,30 +11,29 @@ class StreamStatusState with _$StreamStatusState {
     required String avatar,
     required String status,
     required int memberNum,
-    required bool? recording,
-    required bool streamerOnline,
+    required int connectionNum,
     required bool serverOnline,
   }) = _StreamStatusState;
 
-  static StreamStatusState empty() => const StreamStatusState(
+  static StreamStatusState none() => const StreamStatusState(
       roomId: '',
       uniqueId: '',
       nickname: '',
       avatar: '',
       status: '',
       memberNum: 0,
-      recording: null,
-      streamerOnline: false,
+      connectionNum: 0,
       serverOnline: false);
 
-  static StreamStatusState offline() => const StreamStatusState(
-      roomId: '',
-      uniqueId: '',
-      nickname: '',
-      avatar: '',
-      status: 'Offline',
-      memberNum: 0,
-      recording: null,
-      streamerOnline: false,
-      serverOnline: true);
+  static StreamStatusState empty(StreamStatusState state) => state.copyWith(
+        roomId: '',
+        uniqueId: '',
+        nickname: '',
+        avatar: '',
+        status: '',
+        memberNum: 0,
+      );
+
+  static StreamStatusState offline(StreamStatusState state) =>
+      empty(state).copyWith(status: 'Offline');
 }

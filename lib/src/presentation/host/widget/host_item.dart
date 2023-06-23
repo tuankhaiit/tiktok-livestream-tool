@@ -36,8 +36,11 @@ class HostItemWidget extends StatelessWidget {
                 children: [
                   Text(
                     host.nickname,
-                    style:
-                        context.textTheme.titleMedium?.copyWith(fontSize: 18),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: context.textTheme.titleMedium?.copyWith(
+                      fontSize: 18,
+                    ),
                   ),
                   Text(
                     '@${host.uniqueId}',
@@ -61,9 +64,7 @@ class HostItemWidget extends StatelessWidget {
             IconButton(
               key: const ValueKey('room_page_start_record_action'),
               onPressed: () async {
-                final storage = AppStorage();
-                storage.setUniqueId(host.uniqueId);
-                XNavigator.livestream(context);
+                XNavigator.livestream(context, host.uniqueId);
               },
               icon: const Icon(
                 Icons.play_circle,

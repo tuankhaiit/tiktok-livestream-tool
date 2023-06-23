@@ -16,8 +16,9 @@ class HomePage extends StatelessWidget {
       body: Container(
         alignment: Alignment.center,
         child: Column(
-          mainAxisSize: MainAxisSize.min,
+          mainAxisSize: MainAxisSize.max,
           children: [
+            const StreamStatusBarWidget(),
             FilledButton(
               onPressed: () {
                 XNavigator.host(context);

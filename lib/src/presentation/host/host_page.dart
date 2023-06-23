@@ -5,6 +5,8 @@ import 'package:tiktok_tool/src/domain/repository/host_repository.dart';
 import 'package:tiktok_tool/src/network/result.dart';
 import 'package:tiktok_tool/src/presentation/host/widget/host_item.dart';
 import 'package:tiktok_tool/src/presentation/index.dart';
+import 'package:tiktok_tool/src/presentation/stream_container/input_nickname/input_nickname_dialog.dart';
+import 'package:tiktok_tool/src/presentation/stream_container/stream_status/widget/stream_status_bar.dart';
 import 'package:tiktok_tool/src/presentation/widget/appbar.dart';
 
 import '../../di/di.dart';
@@ -44,6 +46,17 @@ class _HostState extends State<HostPage> {
     return Scaffold(
       appBar: MyAppBar(
         title: const Text('Danh sách Tiktoker'),
+        actions: [
+          IconButton(
+            onPressed: () {
+              InputNicknameDialog.show(context);
+            },
+            icon: Icon(
+              Icons.add,
+              color: context.color.primary,
+            ),
+          )
+        ],
       ),
       body: RefreshIndicator(
         onRefresh: () async {
@@ -53,7 +66,13 @@ class _HostState extends State<HostPage> {
           });
           _fetchData();
         },
-        child: _buildBody(context),
+        child: Column(
+          children: [
+            const StreamStatusBarWidget(),
+            Divider(color: context.color.background),
+            Expanded(child: _buildBody(context))
+          ],
+        ),
       ),
     );
   }

@@ -6,23 +6,25 @@ import '../../../../data/service/app_storage.dart';
 import '../../../../socket/socket_connector.dart';
 
 class StreamStatusBloc extends Cubit<StreamStatusState> {
-  StreamStatusBloc() : super(StreamStatusState.empty()) {
-    // SocketService.connectServer(this);
+
+  StreamStatusBloc() : super(StreamStatusState.none()) {
+    connectServer();
   }
 
-  void recordStatus(bool? recording) {
-    emit(state.copyWith(recording: recording));
-  }
-
-  void connectServer([String? nickname]) async {
-    if (nickname != null && nickname.isNotEmpty) {
-      await AppStorage().setUniqueId(nickname);
-    }
+  void connectServer() async {
     SocketService.connectServer(this);
+  }
+
+  void connectUniqueId(String uniqueId) {
+    SocketService.connectLivestream(this, uniqueId);
   }
 
   void disconnectServer() {
     SocketService.disconnectServer(this);
+  }
+
+  void disconnectUniqueId() {
+    SocketService.disconnectLivestream(this);
   }
 
   void serverError(String error) {
@@ -30,9 +32,7 @@ class StreamStatusBloc extends Cubit<StreamStatusState> {
   }
 
   void emptyState() {
-    emit(StreamStatusState.empty().copyWith(
-      serverOnline: state.serverOnline
-    ));
+    emit(StreamStatusState.empty(state));
   }
 
   void status(String status) {
@@ -43,6 +43,10 @@ class StreamStatusBloc extends Cubit<StreamStatusState> {
     emit(state.copyWith(memberNum: memberNum));
   }
 
+  void updateStatistic(dynamic data) {
+    emit(state.copyWith(connectionNum: data['globalConnectionCount']));
+  }
+
   void online(RoomModel model) {
     emit(state.copyWith(
       roomId: model.roomId,
@@ -50,12 +54,11 @@ class StreamStatusBloc extends Cubit<StreamStatusState> {
       nickname: model.nickname,
       avatar: model.avatar,
       status: 'Online',
-      streamerOnline: true,
     ));
   }
 
   void offline() {
-    emit(StreamStatusState.offline());
+    emit(StreamStatusState.offline(state));
   }
 
   void serverOn() {

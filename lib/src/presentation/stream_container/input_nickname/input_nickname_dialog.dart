@@ -5,11 +5,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tiktok_tool/src/data/service/app_storage.dart';
 import 'package:tiktok_tool/src/presentation/index.dart';
 import 'package:tiktok_tool/src/presentation/stream_container/stream_status/bloc/stream_status_bloc.dart';
+import 'package:tiktok_tool/src/router/navigator.dart';
 
 class InputNicknameDialog {
   InputNicknameDialog._();
 
-  static void show(BuildContext context) {
+  static void show(BuildContext context, [String previousUniqueId = '']) {
     showGeneralDialog(
       context: context,
       barrierLabel: 'InputNickname',
@@ -17,7 +18,7 @@ class InputNicknameDialog {
       barrierColor: Colors.black.withOpacity(0.5),
       transitionDuration: const Duration(milliseconds: 250),
       pageBuilder: (_, __, ___) {
-        return _InputNicknameWidget();
+        return _InputNicknameWidget(previousUniqueId: previousUniqueId);
       },
       transitionBuilder: (_, anim, __, child) {
         Tween<Offset> tween;
@@ -39,6 +40,10 @@ class InputNicknameDialog {
 }
 
 class _InputNicknameWidget extends StatefulWidget {
+  final String previousUniqueId;
+
+  const _InputNicknameWidget({super.key, required this.previousUniqueId});
+
   @override
   State<StatefulWidget> createState() => _InputNicknameState();
 }
@@ -75,14 +80,16 @@ class _InputNicknameState extends State<_InputNicknameWidget> {
   }
 
   Future _fillCurrentNickname() async {
-    _previousNickname = await AppStorage().getUniqueId();
+    _previousNickname = widget.previousUniqueId;
     _controller.text = _previousNickname ?? '';
   }
 
   @override
   Widget build(BuildContext context) {
     final width = min(MediaQuery.of(context).size.width * 0.85, 600.0);
-    return Center(
+    return Container(
+      alignment: Alignment.center,
+      padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
       child: Material(
         color: Colors.transparent,
         child: Container(
@@ -115,10 +122,8 @@ class _InputNicknameState extends State<_InputNicknameWidget> {
                     ? () async {
                         final nickname = _controller.text;
                         if (nickname.isNotEmpty) {
-                          Navigator.of(context).pop();
-                          context
-                              .read<StreamStatusBloc>()
-                              .connectServer(nickname);
+                          Navigator.pop(context);
+                          XNavigator.livestream(context, nickname);
                         }
                       }
                     : null,
