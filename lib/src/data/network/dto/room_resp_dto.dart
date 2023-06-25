@@ -7,8 +7,8 @@ part 'room_resp_dto.g.dart';
 class RoomResponseDTO {
   @JsonKey(name: 'roomId')
   final dynamic roomId;
-  @JsonKey(name: 'userId')
-  final dynamic userId;
+  @JsonKey(name: 'hostId')
+  final dynamic hostId;
   @JsonKey(name: 'uniqueId')
   final dynamic uniqueId;
   @JsonKey(name: 'nickname')
@@ -22,7 +22,7 @@ class RoomResponseDTO {
 
   RoomResponseDTO({
     required this.roomId,
-    required this.userId,
+    required this.hostId,
     required this.uniqueId,
     required this.nickname,
     required this.avatar,
@@ -35,7 +35,7 @@ class RoomResponseDTO {
 
   RoomModel toModel() => RoomModel(
         roomId: roomId ?? '',
-        userId: userId ?? '',
+        userId: hostId ?? '',
         uniqueId: uniqueId ?? '',
         nickname: nickname?.toString().trim() ?? '',
         avatar: avatar ?? '',

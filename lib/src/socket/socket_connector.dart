@@ -3,11 +3,12 @@ import 'dart:async';
 import 'package:rxdart/rxdart.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 import 'package:tiktok_tool/src/configuration/env/ENV.dart';
+import 'package:tiktok_tool/src/data/service/app_storage.dart';
 import 'package:tiktok_tool/src/domain/model/room.dart';
 import 'package:tiktok_tool/src/utils/log.dart';
 
 import '../domain/model/comment.dart';
-import '../presentation/stream_container/stream_status/bloc/stream_status_bloc.dart';
+import '../presentation/tiktok_management/stream_container/stream_status/bloc/stream_status_bloc.dart';
 
 typedef CommentListener = void Function(CommentModel comment);
 
@@ -34,13 +35,17 @@ class SocketService {
             .disableAutoConnect()
             .enableForceNew()
             .enableReconnection()
-            .setTimeout(10000)
-            .setReconnectionDelay(10000)
-            .setReconnectionDelayMax(20000)
+            .setTimeout(5000)
+            .setReconnectionDelay(5000)
+            .setReconnectionDelayMax(10000)
             .setReconnectionAttempts(100000)
             .build());
 
-    socket.onConnect((_) {
+    socket.onConnect((_) async {
+      final account = await AppStorage().getAccount();
+      if (account != null) {
+        setAccountId(account.id.toString());
+      }
       bloc.serverOn();
       _listenStatistic(bloc);
     });
@@ -227,5 +232,12 @@ class SocketService {
       comment: data['comment']?.toString() ?? '',
       createTime: int.parse(data['createTime']),
     );
+  }
+
+  static void setAccountId(String accountId) {
+    final socket = SocketService.socket;
+    if (socket != null) {
+      socket.emit('setAccountId', accountId);
+    }
   }
 }

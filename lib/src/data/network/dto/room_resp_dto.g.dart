@@ -9,7 +9,7 @@ part of 'room_resp_dto.dart';
 RoomResponseDTO _$RoomResponseDTOFromJson(Map<String, dynamic> json) =>
     RoomResponseDTO(
       roomId: json['roomId'],
-      userId: json['userId'],
+      hostId: json['hostId'],
       uniqueId: json['uniqueId'],
       nickname: json['nickname'],
       avatar: json['avatar'],
@@ -20,7 +20,7 @@ RoomResponseDTO _$RoomResponseDTOFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$RoomResponseDTOToJson(RoomResponseDTO instance) =>
     <String, dynamic>{
       'roomId': instance.roomId,
-      'userId': instance.userId,
+      'hostId': instance.hostId,
       'uniqueId': instance.uniqueId,
       'nickname': instance.nickname,
       'avatar': instance.avatar,

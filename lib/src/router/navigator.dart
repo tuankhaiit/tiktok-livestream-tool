@@ -13,6 +13,10 @@ class XNavigator {
   static BuildContext get context =>
       rootRouter.navigatorKey.currentState!.context;
 
+  static Future<dynamic> login(BuildContext context) {
+    return context.router.pushNamed(XRoutes.login);
+  }
+
   static Future<dynamic> home(BuildContext context) {
     context.router.removeWhere((route) => true);
     return context.router.pushNamed(XRoutes.home);

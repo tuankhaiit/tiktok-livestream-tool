@@ -8,9 +8,9 @@ class CheckRecordingRequest extends XRestRequest {
   @override
   XRestRequestType get type => XRestRequestType.get;
 
-  CheckRecordingRequest({required String hostId}) {
+  CheckRecordingRequest({required String uniqueId}) {
     queries = {
-      'hostId': hostId ?? '',
+      'uniqueId': uniqueId ?? '',
     };
   }
 }
@@ -23,9 +23,9 @@ class StartRecordRequest extends XRestRequest {
   @override
   XRestRequestType get type => XRestRequestType.get;
 
-  StartRecordRequest({required String hostId}) {
+  StartRecordRequest({required String uniqueId}) {
     queries = {
-      'hostId': hostId ?? '',
+      'uniqueId': uniqueId ?? '',
     };
   }
 }
@@ -38,9 +38,9 @@ class StopRecordRequest extends XRestRequest {
   @override
   XRestRequestType get type => XRestRequestType.get;
 
-  StopRecordRequest({required String hostId}) {
+  StopRecordRequest({required String uniqueId}) {
     queries = {
-      'hostId': hostId ?? '',
+      'uniqueId': uniqueId ?? '',
     };
   }
 }

@@ -6,7 +6,8 @@ import 'package:tiktok_tool/src/data/repository/host_repository_impl.dart';
 import 'package:tiktok_tool/src/di/di.dart';
 import 'package:tiktok_tool/src/domain/repository/host_repository.dart';
 import 'package:tiktok_tool/src/network/http.dart';
-import 'package:tiktok_tool/src/presentation/stream_container/stream_status/bloc/stream_status_bloc.dart';
+import 'package:tiktok_tool/src/presentation/account/account_bloc.dart';
+import 'package:tiktok_tool/src/presentation/tiktok_management/stream_container/stream_status/bloc/stream_status_bloc.dart';
 import 'package:tiktok_tool/src/router/auto_route.dart';
 import 'package:tiktok_tool/src/theme/theme.dart';
 
@@ -37,7 +38,8 @@ Future _registerDI() async {
 }
 
 void _registerBloc() {
-  XDI.I.registerSingleton(() => StreamStatusBloc());
+  XDI.I.registerLazySingleton(() => AccountBloc());
+  XDI.I.registerLazySingleton(() => StreamStatusBloc());
 }
 
 void _registerRepository() {

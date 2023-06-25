@@ -1,7 +1,13 @@
 import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
-import 'package:tiktok_tool/src/presentation/stream_container/stream_status/widget/stream_status_bar.dart';
+import 'package:tiktok_tool/src/data/service/app_storage.dart';
+import 'package:tiktok_tool/src/di/di.dart';
+import 'package:tiktok_tool/src/domain/model/account.dart';
+import 'package:tiktok_tool/src/presentation/account/account_bloc.dart';
+import 'package:tiktok_tool/src/presentation/index.dart';
 import 'package:tiktok_tool/src/router/navigator.dart';
+
+import '../tiktok_management/stream_container/stream_status/widget/stream_status_bar.dart';
 
 @RoutePage()
 class HomePage extends StatelessWidget {
@@ -19,12 +25,47 @@ class HomePage extends StatelessWidget {
           mainAxisSize: MainAxisSize.max,
           children: [
             const StreamStatusBarWidget(),
-            FilledButton(
-              onPressed: () {
-                XNavigator.host(context);
+            Divider(color: context.color.background),
+            FutureBuilder(
+              future: AppStorage().getAccount(),
+              builder: (context, snapshot) {
+                if (snapshot.hasData || snapshot.requireData != null) {
+                  final account = snapshot.requireData!;
+                  return Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 14, vertical: 30),
+                    child: Column(
+                      children: [
+                        Text('Hello ${account.nickname}', style: context.textTheme.titleMedium,),
+                      ],
+                    ),
+                  );
+                } else {
+                  return Container();
+                }
               },
-              child: const Text('Danh sách Tiktoker'),
             ),
+            Expanded(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  FilledButton(
+                    onPressed: () {
+                      XNavigator.host(context);
+                    },
+                    child: const Text('Danh sách Tiktoker'),
+                  )
+                ],
+              ),
+            ),
+            TextButton(
+              onPressed: () {
+                XDI.I<AccountBloc>().onUserLoggedOut();
+              },
+              child: const Text('Đăng xuất'),
+            ),
+            const SizedBox(height: 20),
           ],
         ),
       ),

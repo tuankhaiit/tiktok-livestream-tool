@@ -5,9 +5,12 @@ import 'package:tiktok_tool/src/domain/model/room.dart';
 import 'package:tiktok_tool/src/domain/model/user.dart';
 
 import '../../network/result.dart';
+import '../model/account.dart';
 import '../model/host.dart';
 
 abstract class HostRepository {
+  Future<XApiSnapshot<AccountModel>> login(String username, String password);
+
   Future<XApiSnapshot<Iterable<HostModel>>> getHosts();
 
   Future<XApiSnapshot<HostModel>> getHostDetail(String? hostId, String? roomId);
@@ -34,7 +37,9 @@ abstract class HostRepository {
 
   Future<XApiSnapshot<UserModel>> getUserProfile(String uniqueId);
 
-  Future<XApiSnapshot<Bool>> isRecording(String hostId);
-  Future<XApiSnapshot<Bool>> startRecord(String hostId);
-  Future<XApiSnapshot<Bool>> stopRecord(String hostId);
+  Future<XApiSnapshot<Bool>> isRecording(String uniqueId);
+
+  Future<XApiSnapshot<Bool>> startRecord(String uniqueId);
+
+  Future<XApiSnapshot<Bool>> stopRecord(String uniqueId);
 }

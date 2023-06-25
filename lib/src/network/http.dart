@@ -1,21 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:tiktok_tool/src/configuration/env/ENV.dart';
+import 'package:tiktok_tool/src/data/service/app_storage.dart';
 import 'package:tiktok_tool/src/network/request.dart';
+import 'package:tiktok_tool/src/router/navigator.dart';
 
 import '../utils/log.dart';
 
 class XRestService {
   static const int _timeout = 120;
-
   static const String _domain = ENV.apiServer;
-  Map<String, String>? _headers;
+  static const String _tokenKey = 'Authorization';
+
+  late final Map<String, String> _headers;
 
   Future setup() async {
     _headers = {
-      'Content-type': 'application/json',
+      'Content-type': 'application/x-www-form-urlencoded',
       'Accept': 'application/json',
     };
+
+    final account = await AppStorage().getAccount();
+    final token = account?.token;
+    if (token?.isNotEmpty == true) {
+      addAuthorization(token!);
+    }
+  }
+
+  void addAuthorization(String token) {
+    _headers[_tokenKey] = token;
+  }
+
+  void removeAuthorization() {
+    _headers.remove(_tokenKey);
   }
 
   Uri _uriOf(String path, [Map<String, String>? queries]) {
@@ -65,8 +82,7 @@ class XRestService {
       final response = await http
           .post(uri, body: body, headers: _headers)
           .timeout(const Duration(seconds: _timeout));
-      logI(
-          '> POST RESPONSE [${response.statusCode}]< $path ${response.body}');
+      logI('> POST RESPONSE [${response.statusCode}]< $path ${response.body}');
       return response;
     } catch (e) {
       logW('> API CATCH Exception< $e');
@@ -77,4 +93,11 @@ class XRestService {
 
 extension ResponseExtension on http.Response {
   bool isSuccess() => statusCode <= 299;
+
+  http.Response catchUnAuthorize() {
+    if (statusCode == 401) {
+      XNavigator.login(XNavigator.context);
+    }
+    return this;
+  }
 }

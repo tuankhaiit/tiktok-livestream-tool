@@ -5,8 +5,8 @@ part 'host_resp_dto.g.dart';
 
 @JsonSerializable()
 class HostResponseDTO {
-  @JsonKey(name: 'userId')
-  final dynamic userId;
+  @JsonKey(name: 'hostId')
+  final dynamic hostId;
   @JsonKey(name: 'uniqueId')
   final dynamic uniqueId;
   @JsonKey(name: 'nickname')
@@ -19,7 +19,7 @@ class HostResponseDTO {
   final dynamic createTime;
 
   HostResponseDTO({
-    required this.userId,
+    required this.hostId,
     required this.uniqueId,
     required this.nickname,
     required this.avatar,
@@ -31,11 +31,11 @@ class HostResponseDTO {
       _$HostResponseDTOFromJson(json);
 
   HostModel toModel() => HostModel(
-        userId: userId ?? '',
+        userId: hostId ?? '',
         uniqueId: uniqueId ?? '',
         nickname: nickname?.toString().trim() ?? '',
         avatar: avatar ?? '',
-        isRecording: isRecording ?? false,
+        isRecording: isRecording == 1,
         createTime: createTime ?? 0,
       );
 }

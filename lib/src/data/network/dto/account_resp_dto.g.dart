@@ -1,27 +1,27 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'host_resp_dto.dart';
+part of 'account_resp_dto.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-HostResponseDTO _$HostResponseDTOFromJson(Map<String, dynamic> json) =>
-    HostResponseDTO(
-      hostId: json['hostId'],
-      uniqueId: json['uniqueId'],
+AccountResponseDTO _$AccountResponseDTOFromJson(Map<String, dynamic> json) =>
+    AccountResponseDTO(
+      id: json['id'],
+      username: json['username'],
       nickname: json['nickname'],
       avatar: json['avatar'],
-      isRecording: json['isRecording'],
+      token: json['token'],
       createTime: json['createTime'],
     );
 
-Map<String, dynamic> _$HostResponseDTOToJson(HostResponseDTO instance) =>
+Map<String, dynamic> _$AccountResponseDTOToJson(AccountResponseDTO instance) =>
     <String, dynamic>{
-      'hostId': instance.hostId,
-      'uniqueId': instance.uniqueId,
+      'id': instance.id,
+      'username': instance.username,
       'nickname': instance.nickname,
       'avatar': instance.avatar,
-      'isRecording': instance.isRecording,
+      'token': instance.token,
       'createTime': instance.createTime,
     };

@@ -1,5 +1,6 @@
 class XRoutes {
   static const splash = '/';
+  static const login = '/login';
   static const home = '/home';
   static const livestream = '/livestream';
   static const host = '/host';

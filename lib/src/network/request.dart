@@ -4,7 +4,7 @@ abstract class XRestRequest {
 
   Map<String, String>? headers;
   Map<String, String>? queries;
-  Object? body;
+  dynamic? body;
 }
 
 enum XRestRequestType { get, post }

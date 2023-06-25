@@ -15,16 +15,6 @@ abstract class _$XRouter extends RootStackRouter {
 
   @override
   final Map<String, PageFactory> pagesMap = {
-    StreamRoute.name: (routeData) {
-      final args = routeData.argsAs<StreamRouteArgs>();
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: StreamPage(
-          key: args.key,
-          uniqueId: args.uniqueId,
-        ),
-      );
-    },
     HomeRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
@@ -35,6 +25,16 @@ abstract class _$XRouter extends RootStackRouter {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
         child: const SplashPage(),
+      );
+    },
+    StreamRoute.name: (routeData) {
+      final args = routeData.argsAs<StreamRouteArgs>();
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: StreamPage(
+          key: args.key,
+          uniqueId: args.uniqueId,
+        ),
       );
     },
     RoomRoute.name: (routeData) {
@@ -86,7 +86,41 @@ abstract class _$XRouter extends RootStackRouter {
         ),
       );
     },
+    LoginRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const LoginPage(),
+      );
+    },
   };
+}
+
+/// generated route for
+/// [HomePage]
+class HomeRoute extends PageRouteInfo<void> {
+  const HomeRoute({List<PageRouteInfo>? children})
+      : super(
+          HomeRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'HomeRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [SplashPage]
+class SplashRoute extends PageRouteInfo<void> {
+  const SplashRoute({List<PageRouteInfo>? children})
+      : super(
+          SplashRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'SplashRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
 }
 
 /// generated route for
@@ -124,34 +158,6 @@ class StreamRouteArgs {
   String toString() {
     return 'StreamRouteArgs{key: $key, uniqueId: $uniqueId}';
   }
-}
-
-/// generated route for
-/// [HomePage]
-class HomeRoute extends PageRouteInfo<void> {
-  const HomeRoute({List<PageRouteInfo>? children})
-      : super(
-          HomeRoute.name,
-          initialChildren: children,
-        );
-
-  static const String name = 'HomeRoute';
-
-  static const PageInfo<void> page = PageInfo<void>(name);
-}
-
-/// generated route for
-/// [SplashPage]
-class SplashRoute extends PageRouteInfo<void> {
-  const SplashRoute({List<PageRouteInfo>? children})
-      : super(
-          SplashRoute.name,
-          initialChildren: children,
-        );
-
-  static const String name = 'SplashRoute';
-
-  static const PageInfo<void> page = PageInfo<void>(name);
 }
 
 /// generated route for
@@ -332,4 +338,18 @@ class UserProfileRouteArgs {
   String toString() {
     return 'UserProfileRouteArgs{key: $key, uniqueId: $uniqueId}';
   }
+}
+
+/// generated route for
+/// [LoginPage]
+class LoginRoute extends PageRouteInfo<void> {
+  const LoginRoute({List<PageRouteInfo>? children})
+      : super(
+          LoginRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'LoginRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
 }

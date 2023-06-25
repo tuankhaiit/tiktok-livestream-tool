@@ -1,6 +1,10 @@
 import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tiktok_tool/src/presentation/account/account_state.dart';
 import 'package:tiktok_tool/src/presentation/index.dart';
+import 'package:tiktok_tool/src/presentation/account/account_bloc.dart';
 import 'package:tiktok_tool/src/router/navigator.dart';
 
 @RoutePage()
@@ -14,8 +18,14 @@ class SplashPage extends StatefulWidget {
 class _SplashState extends State<SplashPage> {
   @override
   void initState() {
-    Future.delayed(const Duration(seconds: 1), () {
-      XNavigator.home(context);
+    SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
+      Future.delayed(const Duration(seconds: 1), () {
+        if (context.read<AccountBloc>().state.isAnonymous) {
+          XNavigator.login(context);
+        } else {
+          XNavigator.home(context);
+        }
+      });
     });
     super.initState();
   }
