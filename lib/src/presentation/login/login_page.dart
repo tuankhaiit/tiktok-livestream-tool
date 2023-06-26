@@ -1,11 +1,11 @@
 import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:tiktok_tool/src/domain/model/account.dart';
 import 'package:tiktok_tool/src/presentation/account/account_bloc.dart';
 import 'package:tiktok_tool/src/presentation/index.dart';
 import 'package:tiktok_tool/src/presentation/login/bloc/login_bloc.dart';
 import 'package:tiktok_tool/src/presentation/login/bloc/login_state.dart';
+import 'package:tiktok_tool/src/presentation/widget/page.dart';
 import 'package:tiktok_tool/src/presentation/widget/textfield.dart';
 import 'package:tiktok_tool/src/router/navigator.dart';
 
@@ -41,49 +41,54 @@ class LoginPage extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Đăng nhập'),
       ),
-      body: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
-        margin:
-            EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
-        alignment: Alignment.center,
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text('Tiktok Connector', style: context.textTheme.titleLarge),
-              const SizedBox(height: 30),
-              ClearableTextField(
-                controller: bloc.usernameController,
-                focusNode: bloc.usernameFocus,
-                decoration: const InputDecoration(hintText: 'Tên đăng nhập'),
-                textInputAction: TextInputAction.next,
-                onSubmitted: (_) {
-                  bloc.onFocusPassword();
-                },
-              ),
-              const SizedBox(height: 14),
-              ClearableTextField(
-                controller: bloc.passwordController,
-                focusNode: bloc.passwordFocus,
-                decoration: const InputDecoration(hintText: 'Mật khẩu'),
-                textInputAction: TextInputAction.done,
-                onSubmitted: (_) {
-                  bloc.submit();
-                },
-              ),
-              const SizedBox(height: 16),
-              if (state.message?.isNotEmpty == true)
-                Text(
-                  state.message ?? '',
-                  style: TextStyle(color: context.color.error),
+      body: XSinglePageLayoutBuilder(
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          margin:
+              EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+          alignment: Alignment.center,
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const SizedBox(height: 30),
+                Text('Tiktok Connector', style: context.textTheme.titleLarge),
+                const SizedBox(height: 30),
+                ClearableTextField(
+                  controller: bloc.usernameController,
+                  focusNode: bloc.usernameFocus,
+                  decoration: const InputDecoration(hintText: 'Tên đăng nhập'),
+                  textInputAction: TextInputAction.next,
+                  onSubmitted: (_) {
+                    bloc.onFocusPassword();
+                  },
                 ),
-              const SizedBox(height: 30),
-              FilledButton(
+                const SizedBox(height: 14),
+                ClearableTextField(
+                  controller: bloc.passwordController,
+                  focusNode: bloc.passwordFocus,
+                  decoration: const InputDecoration(hintText: 'Mật khẩu'),
+                  textInputAction: TextInputAction.done,
+                  onSubmitted: (_) {
+                    bloc.submit();
+                  },
+                ),
+                const SizedBox(height: 16),
+                if (state.message?.isNotEmpty == true)
+                  Text(
+                    state.message ?? '',
+                    style: TextStyle(color: context.color.error),
+                  ),
+                const SizedBox(height: 30),
+                FilledButton(
                   onPressed: () {
                     bloc.submit();
                   },
-                  child: const Text('Đăng nhập'))
-            ],
+                  child: const Text('Đăng nhập'),
+                ),
+                const SizedBox(height: 30),
+              ],
+            ),
           ),
         ),
       ),

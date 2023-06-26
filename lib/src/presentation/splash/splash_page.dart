@@ -1,4 +1,5 @@
 import 'package:auto_route/annotations.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -21,6 +22,7 @@ class _SplashState extends State<SplashPage> {
     SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
       Future.delayed(const Duration(seconds: 1), () {
         if (context.read<AccountBloc>().state.isAnonymous) {
+          context.router.removeWhere((route) => true);
           XNavigator.login(context);
         } else {
           XNavigator.home(context);

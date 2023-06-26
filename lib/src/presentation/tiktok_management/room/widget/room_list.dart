@@ -6,6 +6,7 @@ import 'package:tiktok_tool/src/domain/model/room.dart';
 import 'package:tiktok_tool/src/domain/repository/host_repository.dart';
 import 'package:tiktok_tool/src/presentation/index.dart';
 import 'package:tiktok_tool/src/presentation/tiktok_management/room/widget/room_item.dart';
+import 'package:tiktok_tool/src/presentation/widget/scroll.dart';
 
 class RoomListWidget extends StatefulWidget {
   final String hostId;
@@ -73,17 +74,20 @@ class _RoomListState extends State<RoomListWidget> {
                   ),
                 ),
                 Expanded(
-                  child: ListView.separated(
-                    itemBuilder: (context, index) {
-                      final item = rooms.elementAt(index);
-                      return RoomItemWidget(data: item);
-                    },
-                    separatorBuilder: (context, index) {
-                      return Divider(
-                        color: context.color.onPrimary,
-                      );
-                    },
-                    itemCount: rooms.length,
+                  child: ScrollConfiguration(
+                    behavior: CustomScrollBehavior(),
+                    child: ListView.separated(
+                      itemBuilder: (context, index) {
+                        final item = rooms.elementAt(index);
+                        return RoomItemWidget(data: item);
+                      },
+                      separatorBuilder: (context, index) {
+                        return Divider(
+                          color: context.color.onPrimary,
+                        );
+                      },
+                      itemCount: rooms.length,
+                    ),
                   ),
                 )
               ],

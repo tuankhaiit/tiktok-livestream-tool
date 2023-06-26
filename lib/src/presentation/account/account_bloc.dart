@@ -9,20 +9,27 @@ import 'account_state.dart';
 
 class AccountBloc extends Cubit<AccountState> {
   AccountBloc() : super(AccountState(account: null)) {
-    AppStorage()
-        .getAccount()
-        .then((value) => emit(state.copyWith(account: value)));
+    AppStorage().getAccount().then((account) {
+      if (account != null) {
+        _setupWithAccount(account);
+      }
+      emit(state.copyWith(account: account));
+    });
+  }
+
+  _setupWithAccount(AccountModel account) {
+    XDI.I<XRestService>().addAuthorization(account.token);
+    SocketService.setAccountId(account.id.toString());
   }
 
   onUserLoggedIn(AccountModel account) async {
-    await AppStorage().saveAccount(account);
-    XDI.I<XRestService>().addAuthorization(account.token);
-    SocketService.setAccountId(account.id.toString());
+    AppStorage().saveAccount(account);
+    _setupWithAccount(account);
     emit(state.copyWith(account: account));
   }
 
   onUserLoggedOut() async {
-    await AppStorage().clearAccount();
+    AppStorage().clearAccount();
     XDI.I<XRestService>().removeAuthorization();
     SocketService.setAccountId('');
     emit(state.copyWith(account: null));

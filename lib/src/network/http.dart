@@ -19,12 +19,6 @@ class XRestService {
       'Content-type': 'application/x-www-form-urlencoded',
       'Accept': 'application/json',
     };
-
-    final account = await AppStorage().getAccount();
-    final token = account?.token;
-    if (token?.isNotEmpty == true) {
-      addAuthorization(token!);
-    }
   }
 
   void addAuthorization(String token) {
@@ -69,7 +63,7 @@ class XRestService {
           '> GET RESPONSE [${response.statusCode}]<${uri.toString()}\n${response.body}');
       return response;
     } catch (e) {
-      logW('> API CATCH Exception< $e');
+      logW('> API CATCH Exception< ${e.toString()}');
       rethrow;
     }
   }

@@ -6,9 +6,11 @@ import 'package:tiktok_tool/src/presentation/tiktok_management/stream_container/
 import 'package:tiktok_tool/src/presentation/widget/action.dart';
 import 'package:tiktok_tool/src/presentation/widget/appbar.dart';
 import 'package:tiktok_tool/src/presentation/widget/host.dart';
+import 'package:tiktok_tool/src/presentation/widget/layout.dart';
+import 'package:tiktok_tool/src/presentation/widget/page.dart';
 
 @RoutePage()
-class RoomPage extends StatelessWidget {
+class RoomPage extends StatelessWidget with DynamicLayout {
   final String hostId;
 
   const RoomPage({super.key, required this.hostId});
@@ -29,6 +31,17 @@ class RoomPage extends StatelessWidget {
         children: [
           const StreamStatusBarWidget(),
           Divider(color: context.color.background),
+          Expanded(child: buildDynamicLayout(context))
+        ],
+      ),
+    );
+  }
+
+  @override
+  Widget buildPortraitLayout(BuildContext context) {
+    return XSinglePageLayoutBuilder(
+      child: Column(
+        children: [
           HostProfileWidget(hostId: hostId),
           Divider(color: context.color.background),
           Expanded(child: RoomListWidget(hostId: hostId))

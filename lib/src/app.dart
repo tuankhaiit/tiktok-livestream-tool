@@ -10,6 +10,7 @@ import 'package:tiktok_tool/src/router/auto_route.dart';
 import 'package:tiktok_tool/src/router/navigator.dart';
 import 'package:tiktok_tool/src/router/route_observer.dart';
 import 'package:tiktok_tool/src/theme/theme.dart';
+import 'package:tiktok_tool/src/utils/log.dart';
 
 import 'di/di.dart';
 import 'localization/utils.dart';
@@ -34,12 +35,17 @@ class TiktokApp extends StatelessWidget {
   Widget _buildMaterialApp() {
     final appRouter = XDI.I<XRouter>();
     return BlocListener<AccountBloc, AccountState>(
-      listener: (context, state) {
+      listener: (_, state) {
+        final context = XNavigator.context;
         final current = appRouter.current.name;
         const splash = SplashRoute.name;
         const login = LoginRoute.name;
+        logE('listen: ${current} $splash $login');
         if (state.isAnonymous) {
+          logE('listen: isAnonymous');
           if (current != splash && current != login) {
+            logE('listen: login');
+            context.router.removeWhere((route) => true);
             XNavigator.login(context);
           }
         }

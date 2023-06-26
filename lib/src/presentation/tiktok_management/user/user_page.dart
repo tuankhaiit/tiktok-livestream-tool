@@ -6,6 +6,8 @@ import 'package:tiktok_tool/src/network/result.dart';
 import 'package:tiktok_tool/src/presentation/index.dart';
 import 'package:tiktok_tool/src/presentation/widget/appbar.dart';
 import 'package:tiktok_tool/src/presentation/widget/host.dart';
+import 'package:tiktok_tool/src/presentation/widget/layout.dart';
+import 'package:tiktok_tool/src/presentation/widget/page.dart';
 import 'package:tiktok_tool/src/presentation/widget/room.dart';
 import 'package:tiktok_tool/src/router/navigator.dart';
 
@@ -14,7 +16,7 @@ import '../../../domain/model/user.dart';
 import '../../widget/user.dart';
 
 @RoutePage()
-class PotentialUsersPage extends StatelessWidget {
+class PotentialUsersPage extends StatelessWidget with DynamicLayout {
   final String? hostId;
   final String? roomId;
 
@@ -30,7 +32,14 @@ class PotentialUsersPage extends StatelessWidget {
       appBar: MyAppBar(
         title: const Text('Khách hàng tiềm năng'),
       ),
-      body: Column(
+      body: buildDynamicLayout(context),
+    );
+  }
+
+  @override
+  Widget buildPortraitLayout(BuildContext context) {
+    return XSinglePageLayoutBuilder(
+      child: Column(
         children: [
           HostProfileWidget(
             hostId: hostId,
@@ -99,7 +108,8 @@ class PotentialUsersPage extends StatelessWidget {
                         return UserItemWidget(
                           user: item,
                           onClick: (item) {
-                            XNavigator.comment(context, hostId, roomId, item.uniqueId);
+                            XNavigator.comment(
+                                context, hostId, roomId, item.uniqueId);
                           },
                         );
                       },

@@ -1,18 +1,15 @@
 import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
-import 'package:tiktok_tool/src/di/di.dart';
-import 'package:tiktok_tool/src/domain/model/host.dart';
-import 'package:tiktok_tool/src/domain/repository/host_repository.dart';
-import 'package:tiktok_tool/src/network/result.dart';
 import 'package:tiktok_tool/src/presentation/index.dart';
-import 'package:tiktok_tool/src/presentation/tiktok_management/host/widget/host_item.dart';
 import 'package:tiktok_tool/src/presentation/tiktok_management/host/widget/host_list.dart';
 import 'package:tiktok_tool/src/presentation/tiktok_management/stream_container/input_nickname/input_nickname_dialog.dart';
 import 'package:tiktok_tool/src/presentation/tiktok_management/stream_container/stream_status/widget/stream_status_bar.dart';
 import 'package:tiktok_tool/src/presentation/widget/appbar.dart';
+import 'package:tiktok_tool/src/presentation/widget/layout.dart';
+import 'package:tiktok_tool/src/presentation/widget/page.dart';
 
 @RoutePage()
-class HostPage extends StatelessWidget {
+class HostPage extends StatelessWidget with DynamicLayout {
   const HostPage({super.key});
 
   @override
@@ -36,9 +33,14 @@ class HostPage extends StatelessWidget {
         children: [
           const StreamStatusBarWidget(),
           Divider(color: context.color.background),
-          const Expanded(child: HostListWidget())
+          Expanded(child: buildDynamicLayout(context))
         ],
       ),
     );
+  }
+
+  @override
+  Widget buildPortraitLayout(BuildContext context) {
+    return const XSinglePageLayoutBuilder(child: HostListWidget());
   }
 }

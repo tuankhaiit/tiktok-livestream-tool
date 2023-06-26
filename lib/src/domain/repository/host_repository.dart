@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:tiktok_tool/src/domain/model/comment.dart';
 import 'package:tiktok_tool/src/domain/model/room.dart';
 import 'package:tiktok_tool/src/domain/model/user.dart';
@@ -37,9 +35,9 @@ abstract class HostRepository {
 
   Future<XApiSnapshot<UserModel>> getUserProfile(String uniqueId);
 
-  Future<XApiSnapshot<Bool>> isRecording(String uniqueId);
+  Future<XApiSnapshot<bool>> isRecording(String uniqueId);
 
-  Future<XApiSnapshot<Bool>> startRecord(String uniqueId);
+  Future<XApiSnapshot<bool>> startRecord(String uniqueId);
 
-  Future<XApiSnapshot<Bool>> stopRecord(String uniqueId);
+  Future<XApiSnapshot<bool>> stopRecord(String uniqueId);
 }

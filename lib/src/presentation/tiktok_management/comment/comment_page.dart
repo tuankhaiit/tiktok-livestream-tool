@@ -7,7 +7,10 @@ import 'package:tiktok_tool/src/network/result.dart';
 import 'package:tiktok_tool/src/presentation/index.dart';
 import 'package:tiktok_tool/src/presentation/widget/comment.dart';
 import 'package:tiktok_tool/src/presentation/widget/host.dart';
+import 'package:tiktok_tool/src/presentation/widget/layout.dart';
+import 'package:tiktok_tool/src/presentation/widget/page.dart';
 import 'package:tiktok_tool/src/presentation/widget/room.dart';
+import 'package:tiktok_tool/src/presentation/widget/scroll.dart';
 import 'package:tiktok_tool/src/router/navigator.dart';
 
 import '../../../di/di.dart';
@@ -16,7 +19,7 @@ import '../../widget/appbar.dart';
 import '../stream_container/stream_status/widget/stream_status_bar.dart';
 
 @RoutePage()
-class CommentPage extends StatelessWidget {
+class CommentPage extends StatelessWidget with DynamicLayout {
   final String? hostId;
   final String? roomId;
   final String? uniqueId;
@@ -39,6 +42,17 @@ class CommentPage extends StatelessWidget {
         children: [
           const StreamStatusBarWidget(),
           Divider(color: context.color.background),
+          Expanded(child: buildDynamicLayout(context)),
+        ],
+      ),
+    );
+  }
+
+  @override
+  Widget buildPortraitLayout(BuildContext context) {
+    return XSinglePageLayoutBuilder(
+      child: Column(
+        children: [
           HostProfileWidget(hostId: hostId, roomId: roomId),
           Expanded(child: _buildComments(context))
         ],
@@ -99,31 +113,34 @@ class CommentPage extends StatelessWidget {
                   ),
                 ),
                 Expanded(
-                  child: Scrollbar(
-                    thickness: 10,
-                    interactive: true,
-                    trackVisibility: true,
-                    radius: const Radius.circular(5),
-                    child: ListView.separated(
-                      itemBuilder: (context, index) {
-                        final item = comments.elementAt(index);
-                        return CommentItemWidget(
-                          key: ValueKey('comment_page_item_${item.uniqueId}'),
-                          comment: item,
-                          onClick: (item) {
-                            if (uniqueId == null) {
-                              XNavigator.comment(
-                                  context, hostId, roomId, item.uniqueId);
-                            }
-                          },
-                        );
-                      },
-                      separatorBuilder: (context, index) {
-                        return Divider(
-                          color: context.color.onPrimary,
-                        );
-                      },
-                      itemCount: comments.length,
+                  child: ScrollConfiguration(
+                    behavior: CustomScrollBehavior(),
+                    child: Scrollbar(
+                      thickness: 10,
+                      interactive: true,
+                      trackVisibility: true,
+                      radius: const Radius.circular(5),
+                      child: ListView.separated(
+                        itemBuilder: (context, index) {
+                          final item = comments.elementAt(index);
+                          return CommentItemWidget(
+                            key: ValueKey('comment_page_item_${item.uniqueId}'),
+                            comment: item,
+                            onClick: (item) {
+                              if (uniqueId == null) {
+                                XNavigator.comment(
+                                    context, hostId, roomId, item.uniqueId);
+                              }
+                            },
+                          );
+                        },
+                        separatorBuilder: (context, index) {
+                          return Divider(
+                            color: context.color.onPrimary,
+                          );
+                        },
+                        itemCount: comments.length,
+                      ),
                     ),
                   ),
                 )

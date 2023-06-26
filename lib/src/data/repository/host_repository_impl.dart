@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:tiktok_tool/src/data/network/dto/room_resp_dto.dart';
 import 'package:tiktok_tool/src/data/network/request/host_request.dart';
 import 'package:tiktok_tool/src/data/network/request/record_request.dart';
@@ -33,7 +31,9 @@ class HostRepositoryImpl implements HostRepository {
         BasicAuthenticationRequest(username: username, password: password);
     final snapshot = XApiHandler(restService: service).execute(
       request,
-      (json) => AccountResponseDTO.fromJson(json).toModel(),
+      (json) {
+        return AccountResponseDTO.fromJson(json).toModel();
+      },
     );
     return snapshot;
   }
@@ -171,26 +171,26 @@ class HostRepositoryImpl implements HostRepository {
   }
 
   @override
-  Future<XApiSnapshot<Bool>> isRecording(String uniqueId) {
+  Future<XApiSnapshot<bool>> isRecording(String uniqueId) {
     final request = CheckRecordingRequest(uniqueId: uniqueId);
     final snapshot = XApiHandler(restService: service)
-        .execute(request, (result) => result as Bool);
+        .execute(request, (result) => result as bool);
     return snapshot;
   }
 
   @override
-  Future<XApiSnapshot<Bool>> startRecord(String uniqueId) {
+  Future<XApiSnapshot<bool>> startRecord(String uniqueId) {
     final request = StartRecordRequest(uniqueId: uniqueId);
     final snapshot = XApiHandler(restService: service)
-        .execute(request, (result) => result as Bool);
+        .execute(request, (result) => result as bool);
     return snapshot;
   }
 
   @override
-  Future<XApiSnapshot<Bool>> stopRecord(String uniqueId) {
+  Future<XApiSnapshot<bool>> stopRecord(String uniqueId) {
     final request = StopRecordRequest(uniqueId: uniqueId);
     final snapshot = XApiHandler(restService: service)
-        .execute(request, (result) => result as Bool);
+        .execute(request, (result) => result as bool);
     return snapshot;
   }
 }

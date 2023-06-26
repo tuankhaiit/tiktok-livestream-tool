@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tiktok_tool/src/presentation/widget/scroll.dart';
 import 'package:tiktok_tool/src/socket/socket_connector.dart';
 
 import '../../../../../domain/model/comment.dart';
@@ -121,12 +122,15 @@ abstract class _CommentListState<T extends StatefulWidget> extends State<T> {
           onDoubleTapDown: (_) {
             isScrollManual = true;
           },
-          child: ListView.builder(
-            controller: controller,
-            itemBuilder: (context, index) {
-              return CommentItemWidget(comment: comments[index]);
-            },
-            itemCount: comments.length,
+          child: ScrollConfiguration(
+            behavior: CustomScrollBehavior(),
+            child: ListView.builder(
+              controller: controller,
+              itemBuilder: (context, index) {
+                return CommentItemWidget(comment: comments[index]);
+              },
+              itemCount: comments.length,
+            ),
           ),
         ),
         if (hasNewMessage)

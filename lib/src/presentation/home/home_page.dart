@@ -29,7 +29,7 @@ class HomePage extends StatelessWidget {
             FutureBuilder(
               future: AppStorage().getAccount(),
               builder: (context, snapshot) {
-                if (snapshot.hasData || snapshot.requireData != null) {
+                if (snapshot.hasData && snapshot.requireData != null) {
                   final account = snapshot.requireData!;
                   return Container(
                     width: double.infinity,
@@ -42,7 +42,7 @@ class HomePage extends StatelessWidget {
                     ),
                   );
                 } else {
-                  return Container();
+                  return const SizedBox.shrink();
                 }
               },
             ),
