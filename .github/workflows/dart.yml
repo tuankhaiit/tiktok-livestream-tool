@@ -69,6 +69,12 @@ jobs:
           flutter pub get
           flutter packages pub run build_runner build --delete-conflicting-outputs
 
+      # START BUILD WEB ----------------------
+      - name: Build Web
+        if: matrix.target == 'Android'
+        run: flutter build web -t ./lib/main.dart --release
+      # END BUILD ANDROID ------------------------
+
       # START BUILD ANDROID ----------------------
       - name: Build Android
         if: matrix.target == 'Android'
@@ -159,6 +165,16 @@ jobs:
         with:
           name: ${{ matrix.artifact_name }}
           path: ${{ matrix.build_path }}
+
+      # DISTRIBUTE WEB TO FIREBASE
+      - name: Distribute Web app to Firebase Hosting
+        if: matrix.target == 'Android'
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: '${{ secrets.GITHUB_TOKEN }}'
+          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_TIKTOK_TOOL_APP }}'
+          channelId: live
+          projectId: tiktok-tool-app
 
       # DISTRIBUTE APK TO APP CENTER
       - name: Distribute Android to App Center
