@@ -15,6 +15,8 @@ class AccountResponseDTO {
   final dynamic avatar;
   @JsonKey(name: 'token')
   final dynamic token;
+  @JsonKey(name: 'role')
+  final dynamic role;
   @JsonKey(name: 'createTime')
   final dynamic createTime;
 
@@ -24,6 +26,7 @@ class AccountResponseDTO {
     required this.nickname,
     required this.avatar,
     required this.token,
+    required this.role,
     required this.createTime,
   });
 
@@ -36,6 +39,7 @@ class AccountResponseDTO {
         nickname: nickname,
         avatar: avatar ?? '',
         token: token ?? '',
+        role: role ?? '',
         createTime: createTime ?? 0,
       );
 }

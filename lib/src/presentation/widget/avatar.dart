@@ -37,7 +37,7 @@ class AvatarWidget extends StatelessWidget {
                   );
                 },
               )
-            : Container(),
+            : const SizedBox.shrink(),
       ),
     );
   }

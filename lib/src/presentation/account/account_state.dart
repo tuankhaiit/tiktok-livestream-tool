@@ -12,6 +12,6 @@ class AccountState with _$AccountState {
 
 extension AccountStateExt on AccountState {
   bool get isAnonymous {
-    return account == null || account?.isAnonymous() == true;
+    return account == null || account?.isAnonymous == true;
   }
 }

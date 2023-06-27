@@ -31,7 +31,7 @@ class HostResponseDTO {
       _$HostResponseDTOFromJson(json);
 
   HostModel toModel() => HostModel(
-        userId: hostId ?? '',
+        hostId: hostId ?? '',
         uniqueId: uniqueId ?? '',
         nickname: nickname?.toString().trim() ?? '',
         avatar: avatar ?? '',

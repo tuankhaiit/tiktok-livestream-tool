@@ -23,9 +23,9 @@ extension DateHelpers on DateTime {
 
   String dateFormatted() {
     if (isToday()) {
-      return 'Hôm nay';
+      return 'hôm nay';
     } else if (isYesterday()) {
-      return 'Hôm qua';
+      return 'hôm qua';
     } else {
       return DateFormat('dd/MM/yyyy').format(this);
     }

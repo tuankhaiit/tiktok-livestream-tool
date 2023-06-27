@@ -5,6 +5,7 @@ import 'package:tiktok_tool/src/di/di.dart';
 import 'package:tiktok_tool/src/domain/model/account.dart';
 import 'package:tiktok_tool/src/presentation/account/account_bloc.dart';
 import 'package:tiktok_tool/src/presentation/index.dart';
+import 'package:tiktok_tool/src/presentation/widget/dialog.dart';
 import 'package:tiktok_tool/src/router/navigator.dart';
 
 import '../tiktok_management/stream_container/stream_status/widget/stream_status_bar.dart';
@@ -37,7 +38,10 @@ class HomePage extends StatelessWidget {
                         horizontal: 14, vertical: 30),
                     child: Column(
                       children: [
-                        Text('Hello ${account.nickname}', style: context.textTheme.titleMedium,),
+                        Text(
+                          'Hello ${account.nickname}',
+                          style: context.textTheme.titleMedium,
+                        ),
                       ],
                     ),
                   );
@@ -61,7 +65,16 @@ class HomePage extends StatelessWidget {
             ),
             TextButton(
               onPressed: () {
-                XDI.I<AccountBloc>().onUserLoggedOut();
+                XDialog.showActionDialog(
+                  context,
+                  child: const Text('Bạn có chắc chắn muốn đăng xuất?'),
+                  actions: [
+                    XDialogAction.cancel(context),
+                    XDialogAction.ok(context, onTap: () {
+                      XDI.I<AccountBloc>().onUserLoggedOut();
+                    }),
+                  ],
+                );
               },
               child: const Text('Đăng xuất'),
             ),

@@ -11,6 +11,7 @@ class AccountModel with _$AccountModel {
     required String nickname,
     required String? avatar,
     required String token,
+    required String role,
     required int createTime,
   }) = _AccountModel;
 
@@ -22,12 +23,13 @@ class AccountModel with _$AccountModel {
     nickname: '',
     avatar: null,
     token: '',
+    role: '',
     createTime: 0
   );
 }
 
 extension AccountModelExt on AccountModel {
-  bool isAnonymous() {
-    return id <= 0 || username.isEmpty;
-  }
+  bool get isAnonymous => id <= 0 || token.isEmpty;
+
+  bool get isAdminRole => role == 'admin';
 }

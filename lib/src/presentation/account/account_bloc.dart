@@ -29,7 +29,10 @@ class AccountBloc extends Cubit<AccountState> {
   }
 
   onUserLoggedOut() async {
-    AppStorage().clearAccount();
+    final account = await AppStorage().getAccount();
+    await AppStorage().saveAccount(
+      AccountModel.empty().copyWith(username: account?.username ?? ''),
+    );
     XDI.I<XRestService>().removeAuthorization();
     SocketService.setAccountId('');
     emit(state.copyWith(account: null));

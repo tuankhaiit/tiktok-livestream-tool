@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:sizer/sizer.dart';
 import 'package:tiktok_tool/src/presentation/index.dart';
 import 'package:tiktok_tool/src/router/navigator.dart';
 
@@ -83,7 +84,7 @@ class _InputNicknameState extends State<_InputNicknameWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final width = min(MediaQuery.of(context).size.width * 0.85, 600.0);
+    final width = min(85.w, 600.0);
     return Container(
       alignment: Alignment.center,
       padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),

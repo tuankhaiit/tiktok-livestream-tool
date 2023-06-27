@@ -101,7 +101,7 @@ class CommentPage extends StatelessWidget with DynamicLayout {
                         child: Expanded(
                           child: roomId != null
                               ? RoomInfoWidget(roomId: roomId!)
-                              : Container(),
+                              : const SizedBox.shrink(),
                         ),
                       ),
                       Text(
@@ -121,6 +121,7 @@ class CommentPage extends StatelessWidget with DynamicLayout {
                       trackVisibility: true,
                       radius: const Radius.circular(5),
                       child: ListView.separated(
+                        reverse: true,
                         itemBuilder: (context, index) {
                           final item = comments.elementAt(index);
                           return CommentItemWidget(

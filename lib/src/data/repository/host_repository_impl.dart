@@ -65,6 +65,18 @@ class HostRepositoryImpl implements HostRepository {
   }
 
   @override
+  Future<XApiSnapshot<bool>> deleteHostAssignment(
+      String? accountId, String? hostId) {
+    final request =
+        DeleteHostAssignmentRequest(accountId: accountId, hostId: hostId);
+    final snapshot = XApiHandler(restService: service).execute(
+      request,
+      (json) => true,
+    );
+    return snapshot;
+  }
+
+  @override
   Future<XApiSnapshot<Iterable<RoomModel>>> getRooms(String hostId) {
     final request = GetRoomsRequest(hostId: hostId);
     final snapshot = XApiHandler(restService: service).execute(

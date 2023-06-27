@@ -13,19 +13,17 @@ abstract class HostRepository {
 
   Future<XApiSnapshot<HostModel>> getHostDetail(String? hostId, String? roomId);
 
+  Future<XApiSnapshot<bool>> deleteHostAssignment(String? accountId, String? hostId);
+
   Future<XApiSnapshot<Iterable<RoomModel>>> getRooms(String hostId);
 
   Future<XApiSnapshot<RoomModel>> getRoomDetail(String roomId);
 
-  Future<XApiSnapshot<Iterable<CommentModel>>> getCommentsByHost(
-    String hostId,
-    String? uniqueId,
-  );
+  Future<XApiSnapshot<Iterable<CommentModel>>> getCommentsByHost(String hostId,
+      String? uniqueId,);
 
-  Future<XApiSnapshot<Iterable<CommentModel>>> getCommentsByRoom(
-    String roomId,
-    String? uniqueId,
-  );
+  Future<XApiSnapshot<Iterable<CommentModel>>> getCommentsByRoom(String roomId,
+      String? uniqueId,);
 
   Future<XApiSnapshot<Iterable<UserModel>>> getPotentialUsersByHost(
       String hostId);

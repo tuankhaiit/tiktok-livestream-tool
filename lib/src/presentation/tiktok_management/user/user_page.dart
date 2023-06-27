@@ -85,7 +85,7 @@ class PotentialUsersPage extends StatelessWidget with DynamicLayout {
                         child: Expanded(
                           child: roomId != null
                               ? RoomInfoWidget(roomId: roomId!)
-                              : Container(),
+                              : const SizedBox.shrink(),
                         ),
                       ),
                       Text(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tiktok_tool/src/presentation/index.dart';
+import 'package:tiktok_tool/src/presentation/widget/action.dart';
 
 import '../../di/di.dart';
 import '../../domain/model/host.dart';
@@ -23,7 +24,8 @@ class _HostProfileState extends State<HostProfileWidget> {
 
   @override
   void initState() {
-    XDI.I<HostRepository>()
+    XDI
+        .I<HostRepository>()
         .getHostDetail(widget.hostId, widget.roomId)
         .then((value) {
       if (mounted) {
@@ -71,16 +73,9 @@ class _HostProfileState extends State<HostProfileWidget> {
                   size: 26,
                 ),
               ),
-            IconButton(
+            JoinLiveStreamActionWidget(
               key: const ValueKey('room_page_start_record_action'),
-              onPressed: () async {
-                XNavigator.livestream(context, hostModel.uniqueId);
-              },
-              icon: const Icon(
-                Icons.play_circle,
-                size: 26,
-                color: Colors.green,
-              ),
+              uniqueId: hostModel.uniqueId,
             )
           ],
         ),

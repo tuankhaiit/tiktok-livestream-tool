@@ -1,15 +1,14 @@
 import 'package:logger/logger.dart';
+import 'package:tiktok_tool/src/configuration/env/ENV.dart';
 
 class _MyFilter extends LogFilter {
   @override
   bool shouldLog(LogEvent event) {
-    return true;
+    return ENV.isDebug;
   }
 }
 
 class XLog {
-  static const _isDebug = true;
-
   static final Logger _logger = Logger(
     filter: _MyFilter(),
     // Use the default LogFilter (-> only log in debug mode)
@@ -34,44 +33,32 @@ class XLog {
 
   /// Log a message at level [Level.verbose].
   static void v(dynamic message, [dynamic error, StackTrace? stackTrace]) {
-    if (_isDebug) {
-      _logger.v(message, error, stackTrace);
-    }
+    _logger.v(message, error, stackTrace);
   }
 
   /// Log a message at level [Level.debug].
   static void d(dynamic message, [dynamic error, StackTrace? stackTrace]) {
-    if (_isDebug) {
-      _logger.d(message, error, stackTrace);
-    }
+    _logger.d(message, error, stackTrace);
   }
 
   /// Log a message at level [Level.info].
   static void i(dynamic message, [dynamic error, StackTrace? stackTrace]) {
-    if (_isDebug) {
-      _logger.i(message, error, stackTrace);
-    }
+    _logger.i(message, error, stackTrace);
   }
 
   /// Log a message at level [Level.warning].
   static void w(dynamic message, [dynamic error, StackTrace? stackTrace]) {
-    if (_isDebug) {
-      _logger.w(message, error, stackTrace);
-    }
+    _logger.w(message, error, stackTrace);
   }
 
   /// Log a message at level [Level.error].
   static void e(dynamic message, [dynamic error, StackTrace? stackTrace]) {
-    if (_isDebug) {
-      _logger.e(message, error, stackTrace);
-    }
+    _logger.e(message, error, stackTrace);
   }
 
   /// Log a message at level [Level.wtf].
   static void wtf(dynamic message, [dynamic error, StackTrace? stackTrace]) {
-    if (_isDebug) {
-      _logger.wtf(message, error, stackTrace);
-    }
+    _logger.wtf(message, error, stackTrace);
   }
 }
 

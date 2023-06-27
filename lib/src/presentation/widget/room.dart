@@ -17,7 +17,7 @@ class RoomInfoWidget extends StatelessWidget {
       builder: (context, snapshot) {
         if (snapshot.hasData && snapshot.requireData.hasData) {
           final roomModel = snapshot.requireData.requireData;
-          return Text(roomModel.displayTitle());
+          return Text('Phiên live lúc ${roomModel.displayTitle()}');
         }
         return Container();
       },

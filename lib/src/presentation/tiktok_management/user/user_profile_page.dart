@@ -1,8 +1,10 @@
 import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tiktok_tool/src/domain/model/user.dart';
 import 'package:tiktok_tool/src/domain/repository/host_repository.dart';
 import 'package:tiktok_tool/src/presentation/index.dart';
+import 'package:tiktok_tool/src/presentation/widget/action.dart';
 import 'package:tiktok_tool/src/presentation/widget/appbar.dart';
 import 'package:tiktok_tool/src/utils/log.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -22,16 +24,9 @@ class UserProfilePage extends StatelessWidget {
       appBar: MyAppBar(
         title: const Text('Profile'),
         actions: [
-          IconButton(
+          JoinLiveStreamActionWidget(
             key: const ValueKey('room_page_start_record_action'),
-            onPressed: () async {
-              XNavigator.livestream(context, uniqueId);
-            },
-            icon: const Icon(
-              Icons.play_circle,
-              size: 26,
-              color: Colors.green,
-            ),
+            uniqueId: uniqueId,
           )
         ],
       ),

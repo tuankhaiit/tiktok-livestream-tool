@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:tiktok_tool/src/data/service/app_storage.dart';
 import 'package:tiktok_tool/src/presentation/index.dart';
 import 'package:tiktok_tool/src/presentation/widget/scroll.dart';
 
@@ -46,6 +47,12 @@ class _HostListState extends State<HostListWidget> {
     });
   }
 
+  void deleteHost(HostModel host) async {
+    final account = await AppStorage().getAccount();
+    if (account == null) return;
+    XDI.I<HostRepository>().deleteHostAssignment(account.id.toString(), host.hostId);
+  }
+
   @override
   Widget build(BuildContext context) {
     return RefreshIndicator(
@@ -71,6 +78,12 @@ class _HostListState extends State<HostListWidget> {
                           host: item,
                           onStop: () {
                             _stopRecord(context, index, item);
+                          },
+                          onRemove: () {
+                            deleteHost(item);
+                            setState(() {
+                              hosts.remove(item);
+                            });
                           },
                         );
                       },

@@ -25,6 +25,7 @@ mixin _$AccountModel {
   String get nickname => throw _privateConstructorUsedError;
   String? get avatar => throw _privateConstructorUsedError;
   String get token => throw _privateConstructorUsedError;
+  String get role => throw _privateConstructorUsedError;
   int get createTime => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -45,6 +46,7 @@ abstract class $AccountModelCopyWith<$Res> {
       String nickname,
       String? avatar,
       String token,
+      String role,
       int createTime});
 }
 
@@ -66,6 +68,7 @@ class _$AccountModelCopyWithImpl<$Res, $Val extends AccountModel>
     Object? nickname = null,
     Object? avatar = freezed,
     Object? token = null,
+    Object? role = null,
     Object? createTime = null,
   }) {
     return _then(_value.copyWith(
@@ -89,6 +92,10 @@ class _$AccountModelCopyWithImpl<$Res, $Val extends AccountModel>
           ? _value.token
           : token // ignore: cast_nullable_to_non_nullable
               as String,
+      role: null == role
+          ? _value.role
+          : role // ignore: cast_nullable_to_non_nullable
+              as String,
       createTime: null == createTime
           ? _value.createTime
           : createTime // ignore: cast_nullable_to_non_nullable
@@ -111,6 +118,7 @@ abstract class _$$_AccountModelCopyWith<$Res>
       String nickname,
       String? avatar,
       String token,
+      String role,
       int createTime});
 }
 
@@ -130,6 +138,7 @@ class __$$_AccountModelCopyWithImpl<$Res>
     Object? nickname = null,
     Object? avatar = freezed,
     Object? token = null,
+    Object? role = null,
     Object? createTime = null,
   }) {
     return _then(_$_AccountModel(
@@ -153,6 +162,10 @@ class __$$_AccountModelCopyWithImpl<$Res>
           ? _value.token
           : token // ignore: cast_nullable_to_non_nullable
               as String,
+      role: null == role
+          ? _value.role
+          : role // ignore: cast_nullable_to_non_nullable
+              as String,
       createTime: null == createTime
           ? _value.createTime
           : createTime // ignore: cast_nullable_to_non_nullable
@@ -170,6 +183,7 @@ class _$_AccountModel implements _AccountModel {
       required this.nickname,
       required this.avatar,
       required this.token,
+      required this.role,
       required this.createTime});
 
   factory _$_AccountModel.fromJson(Map<String, dynamic> json) =>
@@ -186,11 +200,13 @@ class _$_AccountModel implements _AccountModel {
   @override
   final String token;
   @override
+  final String role;
+  @override
   final int createTime;
 
   @override
   String toString() {
-    return 'AccountModel(id: $id, username: $username, nickname: $nickname, avatar: $avatar, token: $token, createTime: $createTime)';
+    return 'AccountModel(id: $id, username: $username, nickname: $nickname, avatar: $avatar, token: $token, role: $role, createTime: $createTime)';
   }
 
   @override
@@ -205,6 +221,7 @@ class _$_AccountModel implements _AccountModel {
                 other.nickname == nickname) &&
             (identical(other.avatar, avatar) || other.avatar == avatar) &&
             (identical(other.token, token) || other.token == token) &&
+            (identical(other.role, role) || other.role == role) &&
             (identical(other.createTime, createTime) ||
                 other.createTime == createTime));
   }
@@ -212,7 +229,7 @@ class _$_AccountModel implements _AccountModel {
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
-      runtimeType, id, username, nickname, avatar, token, createTime);
+      runtimeType, id, username, nickname, avatar, token, role, createTime);
 
   @JsonKey(ignore: true)
   @override
@@ -235,6 +252,7 @@ abstract class _AccountModel implements AccountModel {
       required final String nickname,
       required final String? avatar,
       required final String token,
+      required final String role,
       required final int createTime}) = _$_AccountModel;
 
   factory _AccountModel.fromJson(Map<String, dynamic> json) =
@@ -250,6 +268,8 @@ abstract class _AccountModel implements AccountModel {
   String? get avatar;
   @override
   String get token;
+  @override
+  String get role;
   @override
   int get createTime;
   @override

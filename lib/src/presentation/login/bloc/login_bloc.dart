@@ -4,13 +4,16 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:tiktok_tool/src/data/service/app_storage.dart';
 import 'package:tiktok_tool/src/domain/model/account.dart';
 import 'package:tiktok_tool/src/domain/repository/host_repository.dart';
-import 'package:tiktok_tool/src/network/http.dart';
 import 'package:tiktok_tool/src/presentation/login/bloc/login_state.dart';
-import 'package:tiktok_tool/src/socket/socket_connector.dart';
 
 import '../../../di/di.dart';
 
 class LoginBloc extends Cubit<LoginState> {
+  final TextEditingController usernameController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  final FocusNode usernameFocus = FocusNode();
+  final FocusNode passwordFocus = FocusNode();
+
   LoginBloc()
       : super(const LoginState(
           username: '',
@@ -23,6 +26,16 @@ class LoginBloc extends Cubit<LoginState> {
     });
     passwordController.addListener(() {
       onPasswordChange(passwordController.text);
+    });
+
+    AppStorage().getAccount().then((account) {
+      final username = account?.username;
+      if (account != null && username != null) {
+        usernameController.text = account.username;
+        passwordFocus.requestFocus();
+      } else {
+        usernameFocus.requestFocus();
+      }
     });
   }
 
@@ -73,9 +86,4 @@ class LoginBloc extends Cubit<LoginState> {
       account: account,
     ));
   }
-
-  final TextEditingController usernameController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
-  final FocusNode usernameFocus = FocusNode();
-  final FocusNode passwordFocus = FocusNode();
 }

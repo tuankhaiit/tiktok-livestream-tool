@@ -16,7 +16,7 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$HostModel {
-  String get userId => throw _privateConstructorUsedError;
+  String get hostId => throw _privateConstructorUsedError;
   String get uniqueId => throw _privateConstructorUsedError;
   String get nickname => throw _privateConstructorUsedError;
   String get avatar => throw _privateConstructorUsedError;
@@ -34,7 +34,7 @@ abstract class $HostModelCopyWith<$Res> {
       _$HostModelCopyWithImpl<$Res, HostModel>;
   @useResult
   $Res call(
-      {String userId,
+      {String hostId,
       String uniqueId,
       String nickname,
       String avatar,
@@ -55,7 +55,7 @@ class _$HostModelCopyWithImpl<$Res, $Val extends HostModel>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? userId = null,
+    Object? hostId = null,
     Object? uniqueId = null,
     Object? nickname = null,
     Object? avatar = null,
@@ -63,9 +63,9 @@ class _$HostModelCopyWithImpl<$Res, $Val extends HostModel>
     Object? createTime = null,
   }) {
     return _then(_value.copyWith(
-      userId: null == userId
-          ? _value.userId
-          : userId // ignore: cast_nullable_to_non_nullable
+      hostId: null == hostId
+          ? _value.hostId
+          : hostId // ignore: cast_nullable_to_non_nullable
               as String,
       uniqueId: null == uniqueId
           ? _value.uniqueId
@@ -99,7 +99,7 @@ abstract class _$$_HostModelCopyWith<$Res> implements $HostModelCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {String userId,
+      {String hostId,
       String uniqueId,
       String nickname,
       String avatar,
@@ -118,7 +118,7 @@ class __$$_HostModelCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? userId = null,
+    Object? hostId = null,
     Object? uniqueId = null,
     Object? nickname = null,
     Object? avatar = null,
@@ -126,9 +126,9 @@ class __$$_HostModelCopyWithImpl<$Res>
     Object? createTime = null,
   }) {
     return _then(_$_HostModel(
-      userId: null == userId
-          ? _value.userId
-          : userId // ignore: cast_nullable_to_non_nullable
+      hostId: null == hostId
+          ? _value.hostId
+          : hostId // ignore: cast_nullable_to_non_nullable
               as String,
       uniqueId: null == uniqueId
           ? _value.uniqueId
@@ -158,7 +158,7 @@ class __$$_HostModelCopyWithImpl<$Res>
 
 class _$_HostModel implements _HostModel {
   const _$_HostModel(
-      {required this.userId,
+      {required this.hostId,
       required this.uniqueId,
       required this.nickname,
       required this.avatar,
@@ -166,7 +166,7 @@ class _$_HostModel implements _HostModel {
       required this.createTime});
 
   @override
-  final String userId;
+  final String hostId;
   @override
   final String uniqueId;
   @override
@@ -180,7 +180,7 @@ class _$_HostModel implements _HostModel {
 
   @override
   String toString() {
-    return 'HostModel(userId: $userId, uniqueId: $uniqueId, nickname: $nickname, avatar: $avatar, isRecording: $isRecording, createTime: $createTime)';
+    return 'HostModel(hostId: $hostId, uniqueId: $uniqueId, nickname: $nickname, avatar: $avatar, isRecording: $isRecording, createTime: $createTime)';
   }
 
   @override
@@ -188,7 +188,7 @@ class _$_HostModel implements _HostModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_HostModel &&
-            (identical(other.userId, userId) || other.userId == userId) &&
+            (identical(other.hostId, hostId) || other.hostId == hostId) &&
             (identical(other.uniqueId, uniqueId) ||
                 other.uniqueId == uniqueId) &&
             (identical(other.nickname, nickname) ||
@@ -202,7 +202,7 @@ class _$_HostModel implements _HostModel {
 
   @override
   int get hashCode => Object.hash(
-      runtimeType, userId, uniqueId, nickname, avatar, isRecording, createTime);
+      runtimeType, hostId, uniqueId, nickname, avatar, isRecording, createTime);
 
   @JsonKey(ignore: true)
   @override
@@ -213,7 +213,7 @@ class _$_HostModel implements _HostModel {
 
 abstract class _HostModel implements HostModel {
   const factory _HostModel(
-      {required final String userId,
+      {required final String hostId,
       required final String uniqueId,
       required final String nickname,
       required final String avatar,
@@ -221,7 +221,7 @@ abstract class _HostModel implements HostModel {
       required final int createTime}) = _$_HostModel;
 
   @override
-  String get userId;
+  String get hostId;
   @override
   String get uniqueId;
   @override

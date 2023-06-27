@@ -13,6 +13,7 @@ AccountResponseDTO _$AccountResponseDTOFromJson(Map<String, dynamic> json) =>
       nickname: json['nickname'],
       avatar: json['avatar'],
       token: json['token'],
+      role: json['role'],
       createTime: json['createTime'],
     );
 
@@ -23,5 +24,6 @@ Map<String, dynamic> _$AccountResponseDTOToJson(AccountResponseDTO instance) =>
       'nickname': instance.nickname,
       'avatar': instance.avatar,
       'token': instance.token,
+      'role': instance.role,
       'createTime': instance.createTime,
     };

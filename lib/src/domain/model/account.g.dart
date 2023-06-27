@@ -13,6 +13,7 @@ _$_AccountModel _$$_AccountModelFromJson(Map<String, dynamic> json) =>
       nickname: json['nickname'] as String,
       avatar: json['avatar'] as String?,
       token: json['token'] as String,
+      role: json['role'] as String,
       createTime: json['createTime'] as int,
     );
 
@@ -23,5 +24,6 @@ Map<String, dynamic> _$$_AccountModelToJson(_$_AccountModel instance) =>
       'nickname': instance.nickname,
       'avatar': instance.avatar,
       'token': instance.token,
+      'role': instance.role,
       'createTime': instance.createTime,
     };

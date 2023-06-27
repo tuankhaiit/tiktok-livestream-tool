@@ -52,7 +52,10 @@ class LoginPage extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 const SizedBox(height: 30),
-                Text('Tiktok Connector', style: context.textTheme.titleLarge),
+                Text(
+                  'Tiktok Connector',
+                  style: context.textTheme.titleLarge?.copyWith(fontSize: 26),
+                ),
                 const SizedBox(height: 30),
                 ClearableTextField(
                   controller: bloc.usernameController,
@@ -65,6 +68,7 @@ class LoginPage extends StatelessWidget {
                 ),
                 const SizedBox(height: 14),
                 ClearableTextField(
+                  obscureText: true,
                   controller: bloc.passwordController,
                   focusNode: bloc.passwordFocus,
                   decoration: const InputDecoration(hintText: 'Mật khẩu'),
