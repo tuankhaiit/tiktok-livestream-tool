@@ -11,7 +11,7 @@
 	<key>provisioningProfiles</key>
 	<dict>
 		<key>com.tuankhaiit.tiktoktool</key>
-		<string>Tiktok Tools</string>
+		<string>Khai Tran - Tiktok Tools - Mobile - Adhoc</string>
 	</dict>
 	<key>signingCertificate</key>
 	<string>Apple Distribution</string>
