@@ -176,7 +176,7 @@ jobs:
         if: hashFiles('tiktok_tool.ipa') != ''
         uses: wzieba/AppCenter-Github-Action@v1
         with:
-          appName: tuankhai0811/Flutter-Architecture-iOS
+          appName: tuankhai0811/Tiktok-Connector-iOS
           token: ${{ secrets.APP_CENTER_IOS_TOKEN }}
           group: Public
           file: tiktok_tool.ipa
