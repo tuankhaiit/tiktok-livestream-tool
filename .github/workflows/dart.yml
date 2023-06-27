@@ -29,13 +29,13 @@ jobs:
             file_name: app-release.apk
             artifact_name: android_artifact
             appcenter_name: Tiktok-Connector
-#           - os: macos-latest
-#             target: iOS
-#             build_target: ipa
-#             build_path: ./build/ios/ipa/flutter_architecture.ipa
-#             file_name: flutter_architecture.ipa
-#             artifact_name: ios_artifact
-#             appcenter_name: Tiktok-Connector-iOS
+          - os: macos-latest
+            target: iOS
+            build_target: ipa
+            build_path: ./build/ios/ipa/tiktok_tool.ipa
+            file_name: tiktok_tool.ipa
+            artifact_name: ios_artifact
+            appcenter_name: Tiktok-Connector-iOS
       # Disable fail-fast as we want results from all even if one fails.
       fail-fast: false
     steps:
@@ -89,26 +89,24 @@ jobs:
       - name: Install the Apple certificate and provisioning profile
         if: matrix.target == 'iOS'
         env:
-          P12_PASSWORD: 123456
-          KEYCHAIN_PASSWORD: 123456
-          #BUILD_CERTIFICATE_BASE64: ${{ secrets.BUILD_CERTIFICATE_BASE64 }}
-          #P12_PASSWORD: ${{ secrets.P12_PASSWORD }}
-          #BUILD_PROVISION_PROFILE_BASE64: ${{ secrets.BUILD_PROVISION_PROFILE_BASE64 }}
-          #KEYCHAIN_PASSWORD: ${{ secrets.KEYCHAIN_PASSWORD }}
+          BUILD_CERTIFICATE_BASE64: ${{ secrets.BUILD_CERTIFICATE_BASE64 }}
+          P12_PASSWORD: ${{ secrets.P12_PASSWORD }}
+          BUILD_PROVISION_PROFILE_BASE64: ${{ secrets.BUILD_PROVISION_PROFILE_BASE64 }}
+          KEYCHAIN_PASSWORD: ${{ secrets.KEYCHAIN_PASSWORD }}
         run: |
-          cd kt_app/ios
+          cd ios
           # create variables
-          CERTIFICATE_PATH=./Certificates_123456.p12
-          PP_PATH=./Flutter_Architecture_Adhoc.mobileprovision
-          KEYCHAIN_PATH=$RUNNER_TEMP/app-signing.keychain-db
-          #CERTIFICATE_PATH=$RUNNER_TEMP/build_certificate.p12
-          #PP_PATH=$RUNNER_TEMP/build_pp.mobileprovision
+          #CERTIFICATE_PATH=./Certificates.p12
+          #PP_PATH=./Mobile_Adhoc.mobileprovision
           #KEYCHAIN_PATH=$RUNNER_TEMP/app-signing.keychain-db
+          CERTIFICATE_PATH=$RUNNER_TEMP/build_certificate.p12
+          PP_PATH=$RUNNER_TEMP/build_pp.mobileprovision
+          KEYCHAIN_PATH=$RUNNER_TEMP/app-signing.keychain-db
 
 
           # import certificate and provisioning profile from secrets
-          #echo -n "$BUILD_CERTIFICATE_BASE64" | base64 --decode --output $CERTIFICATE_PATH
-          #echo -n "$BUILD_PROVISION_PROFILE_BASE64" | base64 --decode --output $PP_PATH
+          echo -n "$BUILD_CERTIFICATE_BASE64" | base64 --decode --output $CERTIFICATE_PATH
+          echo -n "$BUILD_PROVISION_PROFILE_BASE64" | base64 --decode --output $PP_PATH
 
           # create temporary keychain
           security create-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
@@ -127,8 +125,8 @@ jobs:
       - name: Build iOS
         if: matrix.target == 'iOS'
         run: |
-          cd kt_app
-          flutter build ipa -t ./lib/main_dev.dart --no-sound-null-safety --release --export-options-plist=./ios/ExportOptions.plist
+          flutter build ipa -t ./lib/main.dart --release
+          #flutter build ipa -t ./lib/main.dart --release --export-options-plist=./ios/ExportOptions.plist
           #cd build/ios/iphoneos
           #mkdir Payload
           #cd Payload
@@ -161,7 +159,7 @@ jobs:
       # UPLOAD IPA TO ARTIFACT BEFORE DISTRIBUTE TO APP CENTER
       - name: Upload iOS to artifact
         if: matrix.target == 'iOS'
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: ${{ matrix.artifact_name }}
           path: ${{ matrix.build_path }}
@@ -189,24 +187,24 @@ jobs:
           debug: false
 
   # DISTRIBUTE IOS TO APP CENTER
-#   upload:
-#     name: Distribute iOS to AppCenter
-#     runs-on: ubuntu-latest
-#     needs: build
-#     steps:
-#       - name: Get artifact
-#         uses: actions/download-artifact@v2
-#         with:
-#           name: ios_artifact
-#       - name: Check files
-#         run: ls -R
-#       - name: Upload file to App Center
-#         if: hashFiles('flutter_architecture.ipa') != ''
-#         uses: wzieba/AppCenter-Github-Action@v1
-#         with:
-#           appName: tuankhai0811/Flutter-Architecture-iOS
-#           token: ${{ secrets.APP_CENTER_IOS_TOKEN }}
-#           group: Publish
-#           file: flutter_architecture.ipa
-#           notifyTesters: false
-#           debug: false
+  upload:
+    name: Distribute iOS to AppCenter
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Get artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: ios_artifact
+      - name: Check files
+        run: ls -R
+      - name: Upload file to App Center
+        if: hashFiles('tiktok_tool.ipa') != ''
+        uses: wzieba/AppCenter-Github-Action@v1
+        with:
+          appName: tuankhai0811/Flutter-Architecture-iOS
+          token: ${{ secrets.APP_CENTER_IOS_TOKEN }}
+          group: Public
+          file: tiktok_tool.ipa
+          notifyTesters: true
+          debug: false
