@@ -120,15 +120,7 @@ jobs:
       # BUILD IPA FILE
       - name: Build iOS
         if: matrix.target == 'iOS'
-        run: |
-          flutter build ipa -t ./lib/main.dart --release
-          #flutter build ipa -t ./lib/main.dart --release --export-options-plist=./ios/ExportOptions.plist
-          #cd build/ios/iphoneos
-          #mkdir Payload
-          #cd Payload
-          #ln -s ../Runner.app
-          #cd ..
-          #zip -r app.ipa Payload
+        run: flutter build ipa -t ./lib/main.dart --release --export-options-plist=./ios/ExportOptions.plist
 
       # CLEAN UP KEYCHAIN AND PROVISIONING PROFILE
       - name: Clean up keychain and provisioning profile
@@ -137,20 +129,6 @@ jobs:
           security delete-keychain $RUNNER_TEMP/app-signing.keychain-db
           rm -rf ~/Library/MobileDevice/Provisioning\ Profiles/
       # END BUILD IOS ----------------------------
-
-      # Uncomment this step to verify the use of 'dart format' on each commit.
-      # - name: Verify formatting
-      #   run: dart format --output=none --set-exit-if-changed .
-
-      # Consider passing '--fatal-infos' for slightly stricter analysis.
-      #- name: Analyze project source
-      #  run: dart analyze
-
-      # Your project will need to have tests in test/ and a dependency on
-      # package:test for this step to succeed. Note that Flutter projects will
-      # want to change this to 'flutter test'.
-      #- name: Run tests
-      #  run: dart test
 
       # UPLOAD IPA TO ARTIFACT BEFORE DISTRIBUTE TO APP CENTER
       - name: Upload iOS to artifact
