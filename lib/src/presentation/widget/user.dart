@@ -43,7 +43,6 @@ class UserItemWidget extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                     style: context.textTheme.titleSmall?.copyWith(fontSize: 14),
                   ),
-                  const SizedBox(height: 2),
                   SelectableText(user.phoneNumber)
                 ],
               ),

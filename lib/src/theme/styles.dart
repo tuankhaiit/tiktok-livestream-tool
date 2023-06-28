@@ -17,7 +17,7 @@ class XStyles {
   );
 
   static const button = TextStyle(
-    fontSize: 16,
+    fontSize: 15,
     fontWeight: FontWeight.w600,
     fontFamily: XFonts.myriadpro,
   );
