@@ -10,6 +10,5 @@ class MainActivity : FlutterActivity() {
         super.onCreate(savedInstanceState)
         Distribute.setEnabled(true)
         AppCenter.start(application, "050400c1-4825-4f1e-86f4-f92f9b13e89a", Distribute::class.java)
-        Distribute.checkForUpdate()
     }
 }

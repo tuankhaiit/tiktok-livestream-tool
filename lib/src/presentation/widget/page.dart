@@ -41,7 +41,7 @@ class XSinglePageLayoutBuilder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      alignment: Alignment.center,
+      alignment: Alignment.topCenter,
       color: context.theme.scaffoldBackgroundColor,
       child: Container(
         constraints: const BoxConstraints(maxWidth: 840),
