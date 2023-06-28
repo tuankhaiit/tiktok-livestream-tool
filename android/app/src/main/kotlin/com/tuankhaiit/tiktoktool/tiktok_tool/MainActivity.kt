@@ -9,7 +9,7 @@ class MainActivity : FlutterActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Distribute.setEnabled(true)
-        AppCenter.start(application, "8129f156-9ece-4540-bf1d-bd97aa6a152a", Distribute::class.java)
+        AppCenter.start(application, "050400c1-4825-4f1e-86f4-f92f9b13e89a", Distribute::class.java)
         Distribute.checkForUpdate()
     }
 }
