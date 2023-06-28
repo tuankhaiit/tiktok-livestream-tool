@@ -8,7 +8,7 @@ part 'room.freezed.dart';
 class RoomModel with _$RoomModel {
   const factory RoomModel({
     required String roomId,
-    required String userId,
+    required String hostId,
     required String uniqueId,
     required String nickname,
     required String avatar,

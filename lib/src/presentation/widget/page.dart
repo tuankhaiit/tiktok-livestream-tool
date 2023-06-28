@@ -42,7 +42,7 @@ class XSinglePageLayoutBuilder extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       alignment: Alignment.center,
-      color: context.color.background,
+      color: context.theme.scaffoldBackgroundColor,
       child: Container(
         constraints: const BoxConstraints(maxWidth: 840),
         color: context.theme.scaffoldBackgroundColor,

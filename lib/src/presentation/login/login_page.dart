@@ -8,6 +8,7 @@ import 'package:tiktok_tool/src/presentation/login/bloc/login_state.dart';
 import 'package:tiktok_tool/src/presentation/widget/page.dart';
 import 'package:tiktok_tool/src/presentation/widget/textfield.dart';
 import 'package:tiktok_tool/src/router/navigator.dart';
+import 'package:tiktok_tool/widget/dismiss_keyboard.dart';
 
 @RoutePage()
 class LoginPage extends StatelessWidget {
@@ -39,14 +40,15 @@ class LoginPage extends StatelessWidget {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        title: const Text('Đăng nhập'),
+        title: const Text('Đăng nhập Tiktok Connector'),
       ),
       body: XSinglePageLayoutBuilder(
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 20),
-          margin:
-              EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
-          alignment: Alignment.center,
+          margin: EdgeInsets.only(
+              bottom: MediaQuery.of(context).viewInsets.bottom),
+          alignment: const Alignment(0.0, -.3),
+          constraints: const BoxConstraints(maxWidth: 600),
           child: SingleChildScrollView(
             child: Column(
               mainAxisSize: MainAxisSize.min,
@@ -54,13 +56,15 @@ class LoginPage extends StatelessWidget {
                 const SizedBox(height: 30),
                 Text(
                   'Tiktok Connector',
-                  style: context.textTheme.titleLarge?.copyWith(fontSize: 26),
+                  style: context.textTheme.titleLarge
+                      ?.copyWith(fontSize: 26, fontWeight: FontWeight.w700),
                 ),
                 const SizedBox(height: 30),
                 ClearableTextField(
                   controller: bloc.usernameController,
                   focusNode: bloc.usernameFocus,
-                  decoration: const InputDecoration(hintText: 'Tên đăng nhập'),
+                  decoration:
+                  const InputDecoration(hintText: 'Tên đăng nhập'),
                   textInputAction: TextInputAction.next,
                   onSubmitted: (_) {
                     bloc.onFocusPassword();
@@ -86,6 +90,7 @@ class LoginPage extends StatelessWidget {
                 const SizedBox(height: 30),
                 FilledButton(
                   onPressed: () {
+                    context.dismissKeyboard();
                     bloc.submit();
                   },
                   child: const Text('Đăng nhập'),

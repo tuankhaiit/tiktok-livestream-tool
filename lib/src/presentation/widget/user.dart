@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:tiktok_tool/src/domain/model/user.dart';
 import 'package:tiktok_tool/src/presentation/index.dart';
 import 'package:tiktok_tool/src/presentation/widget/avatar.dart';
+import 'package:tiktok_tool/src/utils/log.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 typedef OnUserClick = void Function(UserModel comment);
 
@@ -26,7 +28,7 @@ class UserItemWidget extends StatelessWidget {
             AvatarWidget(
               key: ValueKey('user_avatar_${user.uniqueId}'),
               url: user.avatar,
-              size: 40,
+              size: 46,
               uniqueId: user.uniqueId,
             ),
             const SizedBox(width: 10),
@@ -41,14 +43,21 @@ class UserItemWidget extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                     style: context.textTheme.titleSmall?.copyWith(fontSize: 14),
                   ),
-                  Text(
-                    user.phoneNumber,
-                    maxLines: 3,
-                    overflow: TextOverflow.ellipsis,
-                  ),
+                  const SizedBox(height: 2),
+                  SelectableText(user.phoneNumber)
                 ],
               ),
             ),
+            IconButton(
+              onPressed: () async {
+                try {
+                  await launchUrl(Uri.parse('tel:${user.phoneNumber}'));
+                } catch (e) {
+                  logE(e);
+                }
+              },
+              icon: Icon(Icons.phone, color: context.color.primary, size: 24),
+            )
           ],
         ),
       ),

@@ -121,7 +121,7 @@ class _ActionDialogWidget extends StatelessWidget {
       child: Material(
         type: MaterialType.transparency,
         child: Container(
-          constraints: BoxConstraints(maxWidth: min(600, 85.w)),
+          constraints: BoxConstraints(maxWidth: min(500, 85.w)),
           decoration: BoxDecoration(
             color: context.theme.dialogBackgroundColor,
             borderRadius: BorderRadius.circular(radius),

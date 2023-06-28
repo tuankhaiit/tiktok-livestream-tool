@@ -11,6 +11,8 @@ import 'package:tiktok_tool/src/router/auto_route.dart';
 import 'package:tiktok_tool/src/router/navigator.dart';
 import 'package:tiktok_tool/src/router/route_observer.dart';
 import 'package:tiktok_tool/src/theme/theme.dart';
+import 'package:tiktok_tool/widget/dismiss_keyboard.dart';
+import 'package:tiktok_tool/widget/scroll.dart';
 
 import 'di/di.dart';
 import 'localization/utils.dart';
@@ -50,26 +52,32 @@ class TiktokApp extends StatelessWidget {
       },
       child: Sizer(
         builder: (context, _, __) {
-          return MaterialApp.router(
-            localizationsDelegates: [
-              S.delegate,
-              GlobalMaterialLocalizations.delegate,
-              GlobalWidgetsLocalizations.delegate,
-              GlobalCupertinoLocalizations.delegate,
-            ],
-            supportedLocales: const [
-              Locale('vi', ''),
-            ],
-            onGenerateTitle: (BuildContext context) => S.of(context).appName,
-            theme: XTheme.light(),
-            darkTheme: XTheme.light(),
-            routeInformationParser:
-                appRouter.defaultRouteParser(includePrefixMatches: true),
-            routerDelegate: AutoRouterDelegate(
-              appRouter,
-              navigatorObservers: () => [XRouteObserver()],
+          return DismissKeyboardWidget(
+            child: ScrollConfiguration(
+              behavior: CustomScrollBehavior(),
+              child: MaterialApp.router(
+                localizationsDelegates: [
+                  S.delegate,
+                  GlobalMaterialLocalizations.delegate,
+                  GlobalWidgetsLocalizations.delegate,
+                  GlobalCupertinoLocalizations.delegate,
+                ],
+                supportedLocales: const [
+                  Locale('vi', ''),
+                ],
+                onGenerateTitle: (BuildContext context) =>
+                    S.of(context).appName,
+                theme: XTheme.light(),
+                darkTheme: XTheme.light(),
+                routeInformationParser:
+                    appRouter.defaultRouteParser(includePrefixMatches: true),
+                routerDelegate: AutoRouterDelegate(
+                  appRouter,
+                  navigatorObservers: () => [XRouteObserver()],
+                ),
+                builder: EasyLoading.init(),
+              ),
             ),
-            builder: EasyLoading.init(),
           );
         },
       ),

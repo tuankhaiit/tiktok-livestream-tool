@@ -35,7 +35,7 @@ class RoomResponseDTO {
 
   RoomModel toModel() => RoomModel(
         roomId: roomId ?? '',
-        userId: hostId ?? '',
+        hostId: hostId ?? '',
         uniqueId: uniqueId ?? '',
         nickname: nickname?.toString().trim() ?? '',
         avatar: avatar ?? '',

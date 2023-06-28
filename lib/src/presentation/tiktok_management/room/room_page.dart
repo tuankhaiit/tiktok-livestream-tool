@@ -1,6 +1,7 @@
 import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
 import 'package:tiktok_tool/src/presentation/index.dart';
+import 'package:tiktok_tool/src/presentation/tiktok_management/room/room_page_horizontal.dart';
 import 'package:tiktok_tool/src/presentation/tiktok_management/room/widget/room_list.dart';
 import 'package:tiktok_tool/src/presentation/tiktok_management/stream_container/stream_status/widget/stream_status_bar.dart';
 import 'package:tiktok_tool/src/presentation/widget/action.dart';
@@ -8,6 +9,7 @@ import 'package:tiktok_tool/src/presentation/widget/appbar.dart';
 import 'package:tiktok_tool/src/presentation/widget/host.dart';
 import 'package:tiktok_tool/src/presentation/widget/layout.dart';
 import 'package:tiktok_tool/src/presentation/widget/page.dart';
+import 'package:tiktok_tool/src/router/navigator.dart';
 
 @RoutePage()
 class RoomPage extends StatelessWidget with DynamicLayout {
@@ -44,9 +46,21 @@ class RoomPage extends StatelessWidget with DynamicLayout {
         children: [
           HostProfileWidget(hostId: hostId),
           Divider(color: context.color.background),
-          Expanded(child: RoomListWidget(hostId: hostId))
+          Expanded(
+            child: RoomListWidget(
+              hostId: hostId,
+              onItemTap: (room) {
+                XNavigator.comment(context, null, room.roomId, null);
+              },
+            ),
+          )
         ],
       ),
     );
+  }
+
+  @override
+  Widget buildLandscapeLayout(BuildContext context) {
+    return RoomPageHorizontalWrapper(hostId: hostId);
   }
 }

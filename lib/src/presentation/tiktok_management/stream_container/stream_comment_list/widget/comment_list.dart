@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:tiktok_tool/src/presentation/widget/scroll.dart';
+import 'package:tiktok_tool/src/domain/model/comment.dart';
+import 'package:tiktok_tool/src/presentation/widget/comment.dart';
 import 'package:tiktok_tool/src/socket/socket_connector.dart';
-
-import '../../../../../domain/model/comment.dart';
-import '../../../../widget/comment.dart';
-
 
 class StreamCommentListWidget extends StatefulWidget {
   const StreamCommentListWidget({super.key});
@@ -39,7 +36,6 @@ class _StreamSocialListState extends _CommentListState<StreamSocialListWidget> {
     });
     super.initState();
   }
-
 }
 
 abstract class _CommentListState<T extends StatefulWidget> extends State<T> {
@@ -122,15 +118,12 @@ abstract class _CommentListState<T extends StatefulWidget> extends State<T> {
           onDoubleTapDown: (_) {
             isScrollManual = true;
           },
-          child: ScrollConfiguration(
-            behavior: CustomScrollBehavior(),
-            child: ListView.builder(
-              controller: controller,
-              itemBuilder: (context, index) {
-                return CommentItemWidget(comment: comments[index]);
-              },
-              itemCount: comments.length,
-            ),
+          child: ListView.builder(
+            controller: controller,
+            itemBuilder: (context, index) {
+              return CommentItemWidget(comment: comments[index]);
+            },
+            itemCount: comments.length,
           ),
         ),
         if (hasNewMessage)
@@ -154,7 +147,7 @@ abstract class _CommentListState<T extends StatefulWidget> extends State<T> {
                   });
                 },
                 child: const Text(
-                  'New messages',
+                  'Có thông báo mới',
                   style: TextStyle(fontSize: 12),
                 ),
               ),

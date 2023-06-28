@@ -119,7 +119,7 @@ class SocketService {
     socket.once('tiktokConnected', (data) {
       final room = RoomModel(
         roomId: data['roomId'],
-        userId: data['roomInfo']['owner_user_id'].toString(),
+        hostId: data['roomInfo']['owner_user_id'].toString(),
         uniqueId: data['roomInfo']['owner']['display_id'].toString(),
         nickname: data['roomInfo']['owner']['nickname'].toString(),
         avatar: (data['roomInfo']['owner']['avatar_thumb']['url_list']

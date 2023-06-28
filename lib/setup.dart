@@ -16,9 +16,9 @@ import 'package:tiktok_tool/src/theme/theme.dart';
 void run() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  SystemChrome.setPreferredOrientations([
-    DeviceOrientation.portraitUp,
-  ]);
+  // SystemChrome.setPreferredOrientations([
+  //   DeviceOrientation.portraitUp,
+  // ]);
   SystemChrome.setSystemUIOverlayStyle(XTheme.barOverLayStyle);
 
   await _registerDI();

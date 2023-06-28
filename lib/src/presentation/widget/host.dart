@@ -55,9 +55,9 @@ class _HostProfileState extends State<HostProfileWidget> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(hostModel.nickname,
+                  SelectableText(hostModel.nickname,
                       style: context.textTheme.titleMedium),
-                  Text('@${hostModel.uniqueId}'),
+                  SelectableText('@${hostModel.uniqueId}'),
                 ],
               ),
             ),

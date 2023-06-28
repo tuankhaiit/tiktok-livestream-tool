@@ -5,8 +5,9 @@ import 'package:tiktok_tool/src/presentation/tiktok_management/stream_container/
 import 'package:tiktok_tool/src/presentation/tiktok_management/stream_container/stream_status/bloc/stream_status_bloc.dart';
 import 'package:tiktok_tool/src/presentation/tiktok_management/stream_container/stream_status/bloc/stream_status_state.dart';
 import 'package:tiktok_tool/src/presentation/tiktok_management/stream_container/stream_status/widget/stream_status_bar.dart';
+import 'package:tiktok_tool/src/presentation/widget/layout.dart';
 
-class LiveStreamContainerWidget extends StatelessWidget {
+class LiveStreamContainerWidget extends StatelessWidget with DynamicLayout {
   final VoidCallback? onStatusTap;
 
   const LiveStreamContainerWidget({super.key, this.onStatusTap});
@@ -27,32 +28,64 @@ class LiveStreamContainerWidget extends StatelessWidget {
             },
             builder: (context, state) {
               if (state.status == 'Online') {
-                return Column(
-                  children: [
-                    Expanded(
-                      flex: 1,
-                      child: Column(
-                        children: const [
-                          HeaderWidget(title: 'Notification'),
-                          Expanded(child: StreamSocialListWidget())
-                        ],
-                      ),
-                    ),
-                    Expanded(
-                      flex: 3,
-                      child: Column(
-                        children: const [
-                          HeaderWidget(title: 'Comment'),
-                          Expanded(child: StreamCommentListWidget())
-                        ],
-                      ),
-                    )
-                  ],
-                );
+                return buildDynamicLayout(context);
               } else {
-                return Container();
+                return const SizedBox.shrink();
               }
             },
+          ),
+        )
+      ],
+    );
+  }
+
+  @override
+  Widget buildPortraitLayout(BuildContext context) {
+    return Column(
+      children: [
+        Expanded(
+          flex: 1,
+          child: Column(
+            children: const [
+              HeaderWidget(title: 'Thông báo'),
+              Expanded(child: StreamSocialListWidget())
+            ],
+          ),
+        ),
+        Expanded(
+          flex: 3,
+          child: Column(
+            children: const [
+              HeaderWidget(title: 'Bình luận'),
+              Expanded(child: StreamCommentListWidget())
+            ],
+          ),
+        )
+      ],
+    );
+  }
+
+  @override
+  Widget buildLandscapeLayout(BuildContext context) {
+    return Row(
+      children: [
+        Expanded(
+          flex: 1,
+          child: Column(
+            children: const [
+              HeaderWidget(title: 'Thông báo'),
+              Expanded(child: StreamSocialListWidget())
+            ],
+          ),
+        ),
+        const VerticalDivider(),
+        Expanded(
+          flex: 3,
+          child: Column(
+            children: const [
+              HeaderWidget(title: 'Bình luận'),
+              Expanded(child: StreamCommentListWidget())
+            ],
           ),
         )
       ],

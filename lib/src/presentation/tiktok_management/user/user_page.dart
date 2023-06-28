@@ -38,16 +38,14 @@ class PotentialUsersPage extends StatelessWidget with DynamicLayout {
 
   @override
   Widget buildPortraitLayout(BuildContext context) {
-    return XSinglePageLayoutBuilder(
-      child: Column(
-        children: [
-          HostProfileWidget(
-            hostId: hostId,
-            roomId: roomId,
-          ),
-          Expanded(child: _buildUsers(context))
-        ],
-      ),
+    return Column(
+      children: [
+        HostProfileWidget(
+          hostId: hostId,
+          roomId: roomId,
+        ),
+        Expanded(child: _buildUsers(context))
+      ],
     );
   }
 
@@ -97,28 +95,30 @@ class PotentialUsersPage extends StatelessWidget with DynamicLayout {
                   ),
                 ),
                 Expanded(
-                  child: Scrollbar(
-                    thickness: 10,
-                    interactive: true,
-                    trackVisibility: true,
-                    radius: const Radius.circular(5),
-                    child: ListView.separated(
-                      itemBuilder: (context, index) {
-                        final item = users.elementAt(index);
-                        return UserItemWidget(
-                          user: item,
-                          onClick: (item) {
-                            XNavigator.comment(
-                                context, hostId, roomId, item.uniqueId);
-                          },
-                        );
-                      },
-                      separatorBuilder: (context, index) {
-                        return Divider(
-                          color: context.color.onPrimary,
-                        );
-                      },
-                      itemCount: users.length,
+                  child: XSinglePageLayoutBuilder(
+                    child: Scrollbar(
+                      thickness: 10,
+                      interactive: true,
+                      trackVisibility: true,
+                      radius: const Radius.circular(5),
+                      child: ListView.separated(
+                        itemBuilder: (context, index) {
+                          final item = users.elementAt(index);
+                          return UserItemWidget(
+                            user: item,
+                            onClick: (item) {
+                              XNavigator.comment(
+                                  context, hostId, roomId, item.uniqueId);
+                            },
+                          );
+                        },
+                        separatorBuilder: (context, index) {
+                          return Divider(
+                            color: context.color.onPrimary,
+                          );
+                        },
+                        itemCount: users.length,
+                      ),
                     ),
                   ),
                 )

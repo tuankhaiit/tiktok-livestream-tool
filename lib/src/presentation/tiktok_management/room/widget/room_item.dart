@@ -5,10 +5,13 @@ import 'package:tiktok_tool/src/presentation/index.dart';
 import 'package:tiktok_tool/src/router/navigator.dart';
 import 'package:tiktok_tool/src/utils/date.dart';
 
+typedef OnRoomTap = void Function(RoomModel room);
+
 class RoomItemWidget extends StatelessWidget {
   final RoomModel data;
+  final OnRoomTap? onTap;
 
-  const RoomItemWidget({super.key, required this.data});
+  const RoomItemWidget({super.key, required this.data, this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +20,7 @@ class RoomItemWidget extends StatelessWidget {
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
       onTap: () {
-        XNavigator.comment(context, null, data.roomId, null);
+        onTap?.call(data);
       },
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),

@@ -6,24 +6,30 @@ import 'package:tiktok_tool/src/domain/model/room.dart';
 import 'package:tiktok_tool/src/domain/repository/host_repository.dart';
 import 'package:tiktok_tool/src/presentation/index.dart';
 import 'package:tiktok_tool/src/presentation/tiktok_management/room/widget/room_item.dart';
-import 'package:tiktok_tool/src/presentation/widget/scroll.dart';
+import 'package:tiktok_tool/src/presentation/widget/page.dart';
+import 'package:tiktok_tool/src/utils/log.dart';
 
 class RoomListWidget extends StatefulWidget {
   final String hostId;
+  final OnRoomTap? onItemTap;
 
-  const RoomListWidget({super.key, required this.hostId});
+  const RoomListWidget({super.key, required this.hostId, this.onItemTap});
 
   @override
   State<StatefulWidget> createState() => _RoomListState();
 }
 
 class _RoomListState extends State<RoomListWidget> {
+  late final ScrollController controller;
   final List<RoomModel> rooms = [];
   bool loading = false;
 
   @override
   void initState() {
+    controller = ScrollController();
+
     fetchData();
+    logE('load room');
     super.initState();
   }
 
@@ -74,19 +80,32 @@ class _RoomListState extends State<RoomListWidget> {
                   ),
                 ),
                 Expanded(
-                  child: ScrollConfiguration(
-                    behavior: CustomScrollBehavior(),
-                    child: ListView.separated(
-                      itemBuilder: (context, index) {
-                        final item = rooms.elementAt(index);
-                        return RoomItemWidget(data: item);
-                      },
-                      separatorBuilder: (context, index) {
-                        return Divider(
-                          color: context.color.onPrimary,
-                        );
-                      },
-                      itemCount: rooms.length,
+                  child: XSinglePageLayoutBuilder(
+                    child: Scrollbar(
+                      controller: controller,
+                      thickness: 10,
+                      interactive: true,
+                      trackVisibility: true,
+                      radius: const Radius.circular(5),
+                      child: ListView.separated(
+                        shrinkWrap: true,
+                        controller: controller,
+                        itemBuilder: (context, index) {
+                          final item = rooms.elementAt(index);
+                          return RoomItemWidget(
+                            key: ValueKey(
+                                'host_${item.hostId}_room_item_${item.roomId}'),
+                            data: item,
+                            onTap: widget.onItemTap,
+                          );
+                        },
+                        separatorBuilder: (context, index) {
+                          return Divider(
+                            color: context.color.onPrimary,
+                          );
+                        },
+                        itemCount: rooms.length,
+                      ),
                     ),
                   ),
                 )

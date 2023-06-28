@@ -1,6 +1,6 @@
 import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tiktok_tool/src/di/di.dart';
 import 'package:tiktok_tool/src/domain/model/user.dart';
 import 'package:tiktok_tool/src/domain/repository/host_repository.dart';
 import 'package:tiktok_tool/src/presentation/index.dart';
@@ -8,9 +8,6 @@ import 'package:tiktok_tool/src/presentation/widget/action.dart';
 import 'package:tiktok_tool/src/presentation/widget/appbar.dart';
 import 'package:tiktok_tool/src/utils/log.dart';
 import 'package:url_launcher/url_launcher.dart';
-
-import '../../../di/di.dart';
-import '../../../router/navigator.dart';
 
 @RoutePage()
 class UserProfilePage extends StatelessWidget {
@@ -77,11 +74,11 @@ class UserProfilePage extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 14),
-          Text(
+          SelectableText(
             user.nickname,
             style: context.textTheme.titleLarge,
           ),
-          Text(
+          SelectableText(
             '@${user.uniqueId}',
             style: context.textTheme.bodyLarge,
           ),
@@ -99,7 +96,7 @@ class UserProfilePage extends StatelessWidget {
                     size: 22,
                   ),
                   const SizedBox(width: 11),
-                  Text(
+                  SelectableText(
                     user.phoneNumber,
                     style: context.textTheme.bodyLarge,
                   )
@@ -119,10 +116,10 @@ class UserProfilePage extends StatelessWidget {
                 ),
                 const SizedBox(width: 10),
                 Expanded(
-                  child: Text(
+                  child: SelectableText(
                     url,
                     maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(overflow: TextOverflow.ellipsis),
                   ),
                 )
               ],

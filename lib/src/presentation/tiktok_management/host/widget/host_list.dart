@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:tiktok_tool/src/data/service/app_storage.dart';
 import 'package:tiktok_tool/src/presentation/index.dart';
-import 'package:tiktok_tool/src/presentation/widget/scroll.dart';
+import 'package:tiktok_tool/widget/scroll.dart';
 
 import '../../../../di/di.dart';
 import '../../../../domain/model/host.dart';
@@ -68,33 +68,30 @@ class _HostListState extends State<HostListWidget> {
               children: [
                 Divider(color: context.color.background),
                 Expanded(
-                  child: ScrollConfiguration(
-                    behavior: CustomScrollBehavior(),
-                    child: ListView.separated(
-                      itemBuilder: (context, index) {
-                        final item = hosts.elementAt(index);
-                        return HostItemWidget(
-                          key: ValueKey('room_page_item_${item.uniqueId}'),
-                          host: item,
-                          onStop: () {
-                            _stopRecord(context, index, item);
-                          },
-                          onRemove: () {
-                            deleteHost(item);
-                            setState(() {
-                              hosts.remove(item);
-                            });
-                          },
-                        );
-                      },
-                      separatorBuilder: (context, index) {
-                        return Divider(
-                          color: context.color.onPrimary,
-                        );
-                      },
-                      itemCount: hosts.length,
-                    ),
-                  ),
+                  child: ListView.separated(
+                    itemBuilder: (context, index) {
+                      final item = hosts.elementAt(index);
+                      return HostItemWidget(
+                        key: ValueKey('room_page_item_${item.uniqueId}'),
+                        host: item,
+                        onStop: () {
+                          _stopRecord(context, index, item);
+                        },
+                        onRemove: () {
+                          deleteHost(item);
+                          setState(() {
+                            hosts.remove(item);
+                          });
+                        },
+                      );
+                    },
+                    separatorBuilder: (context, index) {
+                      return Divider(
+                        color: context.color.onPrimary,
+                      );
+                    },
+                    itemCount: hosts.length,
+                  )
                 )
               ],
             ),

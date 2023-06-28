@@ -17,7 +17,7 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$RoomModel {
   String get roomId => throw _privateConstructorUsedError;
-  String get userId => throw _privateConstructorUsedError;
+  String get hostId => throw _privateConstructorUsedError;
   String get uniqueId => throw _privateConstructorUsedError;
   String get nickname => throw _privateConstructorUsedError;
   String get avatar => throw _privateConstructorUsedError;
@@ -37,7 +37,7 @@ abstract class $RoomModelCopyWith<$Res> {
   @useResult
   $Res call(
       {String roomId,
-      String userId,
+      String hostId,
       String uniqueId,
       String nickname,
       String avatar,
@@ -60,7 +60,7 @@ class _$RoomModelCopyWithImpl<$Res, $Val extends RoomModel>
   @override
   $Res call({
     Object? roomId = null,
-    Object? userId = null,
+    Object? hostId = null,
     Object? uniqueId = null,
     Object? nickname = null,
     Object? avatar = null,
@@ -73,9 +73,9 @@ class _$RoomModelCopyWithImpl<$Res, $Val extends RoomModel>
           ? _value.roomId
           : roomId // ignore: cast_nullable_to_non_nullable
               as String,
-      userId: null == userId
-          ? _value.userId
-          : userId // ignore: cast_nullable_to_non_nullable
+      hostId: null == hostId
+          ? _value.hostId
+          : hostId // ignore: cast_nullable_to_non_nullable
               as String,
       uniqueId: null == uniqueId
           ? _value.uniqueId
@@ -114,7 +114,7 @@ abstract class _$$_RoomModelCopyWith<$Res> implements $RoomModelCopyWith<$Res> {
   @useResult
   $Res call(
       {String roomId,
-      String userId,
+      String hostId,
       String uniqueId,
       String nickname,
       String avatar,
@@ -135,7 +135,7 @@ class __$$_RoomModelCopyWithImpl<$Res>
   @override
   $Res call({
     Object? roomId = null,
-    Object? userId = null,
+    Object? hostId = null,
     Object? uniqueId = null,
     Object? nickname = null,
     Object? avatar = null,
@@ -148,9 +148,9 @@ class __$$_RoomModelCopyWithImpl<$Res>
           ? _value.roomId
           : roomId // ignore: cast_nullable_to_non_nullable
               as String,
-      userId: null == userId
-          ? _value.userId
-          : userId // ignore: cast_nullable_to_non_nullable
+      hostId: null == hostId
+          ? _value.hostId
+          : hostId // ignore: cast_nullable_to_non_nullable
               as String,
       uniqueId: null == uniqueId
           ? _value.uniqueId
@@ -185,7 +185,7 @@ class __$$_RoomModelCopyWithImpl<$Res>
 class _$_RoomModel implements _RoomModel {
   const _$_RoomModel(
       {required this.roomId,
-      required this.userId,
+      required this.hostId,
       required this.uniqueId,
       required this.nickname,
       required this.avatar,
@@ -196,7 +196,7 @@ class _$_RoomModel implements _RoomModel {
   @override
   final String roomId;
   @override
-  final String userId;
+  final String hostId;
   @override
   final String uniqueId;
   @override
@@ -212,7 +212,7 @@ class _$_RoomModel implements _RoomModel {
 
   @override
   String toString() {
-    return 'RoomModel(roomId: $roomId, userId: $userId, uniqueId: $uniqueId, nickname: $nickname, avatar: $avatar, status: $status, commentCount: $commentCount, createTime: $createTime)';
+    return 'RoomModel(roomId: $roomId, hostId: $hostId, uniqueId: $uniqueId, nickname: $nickname, avatar: $avatar, status: $status, commentCount: $commentCount, createTime: $createTime)';
   }
 
   @override
@@ -221,7 +221,7 @@ class _$_RoomModel implements _RoomModel {
         (other.runtimeType == runtimeType &&
             other is _$_RoomModel &&
             (identical(other.roomId, roomId) || other.roomId == roomId) &&
-            (identical(other.userId, userId) || other.userId == userId) &&
+            (identical(other.hostId, hostId) || other.hostId == hostId) &&
             (identical(other.uniqueId, uniqueId) ||
                 other.uniqueId == uniqueId) &&
             (identical(other.nickname, nickname) ||
@@ -235,7 +235,7 @@ class _$_RoomModel implements _RoomModel {
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, roomId, userId, uniqueId,
+  int get hashCode => Object.hash(runtimeType, roomId, hostId, uniqueId,
       nickname, avatar, status, commentCount, createTime);
 
   @JsonKey(ignore: true)
@@ -248,7 +248,7 @@ class _$_RoomModel implements _RoomModel {
 abstract class _RoomModel implements RoomModel {
   const factory _RoomModel(
       {required final String roomId,
-      required final String userId,
+      required final String hostId,
       required final String uniqueId,
       required final String nickname,
       required final String avatar,
@@ -259,7 +259,7 @@ abstract class _RoomModel implements RoomModel {
   @override
   String get roomId;
   @override
-  String get userId;
+  String get hostId;
   @override
   String get uniqueId;
   @override
