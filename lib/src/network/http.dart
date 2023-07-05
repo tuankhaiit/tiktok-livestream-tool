@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:tiktok_tool/src/configuration/env/ENV.dart';
-import 'package:tiktok_tool/src/data/service/app_storage.dart';
 import 'package:tiktok_tool/src/network/request.dart';
 import 'package:tiktok_tool/src/router/navigator.dart';
 
@@ -88,8 +87,12 @@ class XRestService {
 extension ResponseExtension on http.Response {
   bool isSuccess() => statusCode <= 299;
 
+  bool isUnAuthorize() {
+    return statusCode == 401 || statusCode == 403;
+  }
+
   http.Response catchUnAuthorize() {
-    if (statusCode == 401) {
+    if (isUnAuthorize()) {
       XNavigator.login(XNavigator.context);
     }
     return this;

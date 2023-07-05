@@ -71,7 +71,6 @@ class LoginBloc extends Cubit<LoginState> {
 
   void _login() async {
     EasyLoading.show();
-    await Future.delayed(const Duration(seconds: 2));
     final snapshot = await repository.login(state.username, state.password);
     EasyLoading.dismiss();
     if (snapshot.hasData) {

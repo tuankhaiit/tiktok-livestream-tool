@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:ffi';
 import 'dart:isolate';
 
 import 'package:flutter/foundation.dart';
@@ -23,6 +24,10 @@ class XApiHandler {
       XRestRequest request, XDataTransform<T> transform) async {
     try {
       final response = await restService.execute(request);
+      if (response.isUnAuthorize()) {
+        response.catchUnAuthorize();
+        return XApiSnapshot.withError(XHttpException(null), 'Vui lòng đăng nhập lại');
+      }
       final BaseResponseDTO baseResponseDTO;
       if (kIsWeb) {
         baseResponseDTO = BaseResponseDTO.fromJson(jsonDecode(response.body));
