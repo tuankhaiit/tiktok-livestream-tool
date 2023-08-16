@@ -3,6 +3,6 @@ class ENV {
 
   static late final bool isDebug;
 
-  static const String socketServer = 'https://cloudtiktoktool.tuankhaiit.com';
-  static const String apiServer = 'https://cloudtiktoktool.tuankhaiit.com';
+  static const String socketServer = 'https://tiktoktool.tuankhaiit.com';
+  static const String apiServer = 'https://tiktoktool.tuankhaiit.com';
 }
